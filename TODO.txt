@@ -1,0 +1,5 @@
+Lorsqu'on rendra notre code, il faudra expliqer nos choix pour les APIs
+
+BDD : MySQL
+TCP/UDP : TCP
+Interface graphique : Java Sinwg
