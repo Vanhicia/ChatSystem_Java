@@ -26,5 +26,4 @@ public class Agent {
 		return horodate;
 	}
 	
-	//public startSession
 }

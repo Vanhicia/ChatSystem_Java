@@ -29,5 +29,10 @@ public class Controller {
 	public void refreshWindows() {
 		
 	}
+	
+	public void startSession(int id) {
+		ClientTCP client = new ClientTCP(1024+model.getId()+id);
+		
+	}
 
 }
