@@ -3,9 +3,13 @@ public class Controller {
 	private Agent model;
 	private Window view;
 	
-	public Controller(Agent model, Window view) {
-		this.model = model;
+	public Controller(Window view) {
+		this.model =null;
 		this.view = view;
+	}
+	
+	public void createAgent(String pseudo) {
+		this.model = new Agent(pseudo);
 	}
 	
 	public void changePseudo(String pseudo) {
