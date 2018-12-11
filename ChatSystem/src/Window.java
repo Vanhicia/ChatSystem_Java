@@ -1,60 +1,73 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.EventQueue;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
+import javax.swing.JTextPane;
+import java.awt.Color;
+import java.awt.Button;
+import java.awt.Panel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import java.awt.SystemColor;
 
-public class Window implements ActionListener {
-	public String pseudo;
-	public JFrame f; 
-	
+public class Window {
+
+	private JFrame frame;
+	private JTextField textField;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Window window = new Window();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
 	public Window() {
-		
-		 this.f = new JFrame(); //Creating instance of JFrame
-		
-		//Add filed for pseudo
-		JTextField fieldPseudo = new JTextField();
-		fieldPseudo.setBounds(128, 28, 150, 20);
-		f.getContentPane().add(fieldPseudo);
-		fieldPseudo.setColumns(50);
-		
-		JLabel lblPseudo = new JLabel("Pseudo");
-		lblPseudo.setBounds(65, 31, 70, 14);
-		f.getContentPane().add(lblPseudo);
-		
-		this.pseudo = fieldPseudo.getText(); 
-		
-		// Add button "create Account"
-		JButton b = new JButton("Create account");
-		b.setBounds(130,100,300,40); // x y width height
-		b.addActionListener(this);
-		f.add(b);
-		
-		
-		f.setSize(500,500);//width x height  
-		f.setLayout(null);
-		f.setVisible(true);
+		initialize();
 	}
 
-	public void launchConnection() {
-		Controller c = new Controller(this);
-		c.createAgent(this.pseudo);
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
-		// Add button "Launch Session"
-		JButton b = new JButton("Launch Session");
-		b.setBounds(130,100,300,40); // x y width height
-		b.addActionListener(this);
-		f.add(b);
-		f.setLayout(null);
-		f.setContentPane(b);
-
-		f.repaint();
-
-		f.setVisible(true);
+		JTextPane txtpnPseudo = new JTextPane();
+		txtpnPseudo.setBounds(93, 92, 68, 39);
+		txtpnPseudo.setBackground(SystemColor.control);
+		txtpnPseudo.setText("Pseudo");
+		frame.getContentPane().add(txtpnPseudo);
+		
+		textField = new JTextField();
+		textField.setBounds(162, 92, 166, 39);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		Button button = new Button("Create Account");
+		button.setBounds(121, 141, 197, 51);
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		frame.getContentPane().add(button);
 	}
-	
-	public void actionPerformed(ActionEvent e) {
-		launchConnection();
-	}
-	
-
 }
