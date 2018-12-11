@@ -1,20 +1,20 @@
 
 public class Controller {
-	private Agent model;
+	private User user;
 	private Window view;
 	
 	public Controller(Window view) {
-		this.model =null;
+		this.user = null;
 		this.view = view;
 	}
 	
-	public void createAgent(String pseudo) {
-		this.model = new Agent(pseudo);
+	public void createUser(String pseudo, int port) throws ExceptionPort {
+		this.user = new User(pseudo, port);
 	}
 	
 	public void changePseudo(String pseudo) {
 		if (this.checkUnicityPseudo(pseudo)==true) {
-			model.setPseudo(pseudo);
+			user.setPseudo(pseudo);
 		} 
 		else {
 			// affichage d'un message d'erreur
@@ -31,7 +31,7 @@ public class Controller {
 	}
 	
 	public void startSession(int id) {
-		ClientTCP client = new ClientTCP(1024+model.getId()+id);
+		ClientTCP client = new ClientTCP(1024+user.getId()+id);
 		
 	}
 
