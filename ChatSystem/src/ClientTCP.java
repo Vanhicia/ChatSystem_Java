@@ -5,10 +5,11 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class ClientTCP {
-	public Socket link;
-	public BufferedReader in;
-	public PrintWriter out;
+public class ClientTCP implements Runnable {
+	private Socket link;
+	private BufferedReader in;
+	private PrintWriter out;
+	private boolean isStopped = false;
 	
 	public ClientTCP (int port) {
 		try {
@@ -18,6 +19,14 @@ public class ClientTCP {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean isStopped() {
+		return isStopped;
+	}
+	
+	public void stopSClient( ) {
+		this.isStopped = true;
 	}
 	
 	public String receiveData () {
@@ -40,6 +49,13 @@ public class ClientTCP {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void run() {
+		while(!isStopped()) {
+			
+		}
+		closeConnection();
 	}
 }
 

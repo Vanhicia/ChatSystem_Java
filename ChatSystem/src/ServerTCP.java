@@ -5,12 +5,13 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerTCP {
-	public int num;
-	public ServerSocket servSocket;
-	public Socket link;
-	public BufferedReader in;
-	public PrintWriter out;
+public class ServerTCP implements Runnable {
+	private int num;
+	private ServerSocket servSocket;
+	private Socket link;
+	private BufferedReader in;
+	private PrintWriter out;
+	private boolean isStopped = false;
 	
 	public ServerTCP (int num) {
 		this.num = num;
@@ -22,6 +23,14 @@ public class ServerTCP {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean isStopped() {
+		return isStopped;
+	}
+	
+	public void stopServer( ) {
+		this.isStopped = true;
 	}
 	
 	public String receiveData () {
@@ -44,6 +53,13 @@ public class ServerTCP {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void run() {
+		while(!isStopped()) {
+			
+		}
+		closeConnection();
 	}
 	
 }

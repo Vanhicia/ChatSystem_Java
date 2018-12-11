@@ -2,14 +2,18 @@
 public class Controller {
 	private User user;
 	private Window view;
+	private CommunicationController cc;
+	private int port; 
 	
-	public Controller(Window view) {
+	public Controller(int port, Window view) {
 		this.user = null;
 		this.view = view;
+		this.port = port;
 	}
 	
-	public void createUser(String pseudo, int port) throws ExceptionPort {
-		this.user = new User(pseudo, port);
+	public void createUser(int id, String pseudo) throws ExceptionPort {
+		this.user = new User(id, pseudo);
+		this.cc = new CommunicationController(port);
 	}
 	
 	public void changePseudo(String pseudo) {
