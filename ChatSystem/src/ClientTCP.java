@@ -11,9 +11,9 @@ public class ClientTCP implements Runnable {
 	private PrintWriter out;
 	private boolean isStopped = false;
 	
-	public ClientTCP (int port) {
+	public ClientTCP (InetAddress address, int port) {
 		try {
-			this.link = new Socket(InetAddress.getLocalHost(),port);
+			this.link = new Socket(address,port);
 			this.in = new BufferedReader(new InputStreamReader(link.getInputStream()));
 			this.out = new PrintWriter(link.getOutputStream(),true);
 		} catch (IOException e) {

@@ -6,7 +6,7 @@ public class History {
 	
 	public History(int id) {
 		this.userId = id;
-		this.history = new ArrayList<>();
+		this.history = new ArrayList<Message>();
 	}
 	
 	public void addEntry(Message msg) {

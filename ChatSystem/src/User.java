@@ -1,23 +1,26 @@
+import java.net.InetAddress;
+import java.util.UUID;
+
 //import java.sql.Time;
 
 public class User {
-	private int id;
+	private UUID id;
 	private String pseudo;
-	private long horodate;
+	private InetAddress address; //adresseIP
+	private long timeConnection;
+	private int portUDP;
+	private int portTCP;
 	
-	public User(int id, String pseudo) {
-		/*if (port<10000 && port>11000) {
-				throw new ExceptionPort("Incorrect port : the port must be between 10000 and 11000");
-		}
-		else {
-			this.port = port;
-		}*/
+	public User(UUID id, String pseudo, InetAddress address, long timeConnection, int portUDP, int portTCP) {
 		this.id = id;
 		this.pseudo = pseudo;
-		this.horodate = System.currentTimeMillis();
+		this.address = address;
+		this.timeConnection = timeConnection;
+		this.portUDP = portUDP;
+		this.portTCP = portTCP;
 	}
 	
-	public int getId() {
+	public UUID getId() {
 		return id;
 	}
 	
@@ -29,8 +32,12 @@ public class User {
 		this.pseudo = pseudo;
 	}
 	
-	public long getHorodate() {
-		return horodate;
+	public InetAddress getAddress() {
+		return address;
+	}
+	
+	public long getTimeConnection() {
+		return timeConnection;
 	}
 	
 }

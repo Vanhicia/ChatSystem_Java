@@ -6,17 +6,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerTCP implements Runnable {
-	private int num;
+	private int port;
 	private ServerSocket servSocket;
 	private Socket link;
 	private BufferedReader in;
 	private PrintWriter out;
 	private boolean isStopped = false;
 	
-	public ServerTCP (int num) {
-		this.num = num;
+	public ServerTCP (int port) {
+		this.port = port;
 		try {
-			this.servSocket = new ServerSocket(num);
+			this.servSocket = new ServerSocket(port);
 			this.link = servSocket.accept();
 			this.in = new BufferedReader(new InputStreamReader(link.getInputStream()));
 			this.out = new PrintWriter(link.getOutputStream(),true);

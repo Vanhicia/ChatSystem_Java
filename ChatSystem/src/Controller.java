@@ -1,41 +1,41 @@
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.UUID;
 
 public class Controller {
 	private User user;
 	private Window view;
 	private CommunicationController cc;
-	private int port; 
 	
-	public Controller(int port, Window view) {
+	public Controller(int portUDP, int portTCP) {
 		this.user = null;
-		this.view = view;
-		this.port = port;
+		this.view = new Window();
 	}
 	
-	public void createUser(int id, String pseudo) throws ExceptionPort {
-		this.user = new User(id, pseudo);
-		this.cc = new CommunicationController(port);
+	public User getUser() {
+		return user;
+	}
+	
+	public void connect(String pseudo, int portUDP, int portTCP) {
+		try {
+			this.user = new User(UUID.randomUUID(), pseudo, InetAddress.getLocalHost(), System.currentTimeMillis(), cc.getPortUDP(), cc.getPortTCP());
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		this.cc = new CommunicationController(portUDP, portTCP);
+		/* Send the pseudo in broadcast */
 	}
 	
 	public void changePseudo(String pseudo) {
-		if (this.checkUnicityPseudo(pseudo)==true) {
+		if (cc.checkUnicityPseudo(pseudo)==true) {
 			user.setPseudo(pseudo);
 		} 
 		else {
 			// affichage d'un message d'erreur
 		}		
 	}
-	
-	public boolean checkUnicityPseudo(String pseudo) {
-		// voir comment accéder à la base de données
-		return true;
-	}
-	
-	public void refreshWindows() {
 		
-	}
-	
-	public void startSession(int id) {
-		ClientTCP client = new ClientTCP(1024+user.getId()+id);
+	public void refreshWindows() {
 		
 	}
 

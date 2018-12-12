@@ -4,20 +4,34 @@ import java.util.List;
 
 public class CommunicationController {
 	private User user;
-	private ServerTCP server;
-	private int port;
-	private List<Session> sessions;
+	//private ServerTCP server;
+	private int portUDP; // used for broadcast
+	private int portTCP; // used for conversations
+	//private List<Session> sessions;
 	
-	public CommunicationController(int port) {
-		this.port = port;
-		server = new ServerTCP(port);
-		new Thread(server).start();
+	public CommunicationController(int portUDP, int portTCP) {
+		this.portUDP = portUDP;
+		this.portTCP = portTCP;
+		// create a server UDP
+		//TO DO
+		
+		/*server = new ServerTCP(port);
+		new Thread(server).start(); */
 	}
 	
-	public void beginNewSession(int id, int port) {
-		ClientTCP client = new ClientTCP(port);
+	public int getPortUDP() {
+		return portUDP;
+	}
+	
+	public int getPortTCP() {
+		return portTCP;
+	}
+	
+	public void startSession(User userDist) {
+		//create a thread ClientTCP
+		ClientTCP client = new ClientTCP(userDist.getAddress(), portTCP);
 		new Thread(client).start();
-		Session session = new Session();
+		//Session session = new Session();
 	}
 	
 	public void closeSession(Session s) {
@@ -40,6 +54,14 @@ public class CommunicationController {
 			}
 			i++;
 		}
-		this.port = i;
+		this.portUDP = i;
+	}
+	
+	/* Return true if the pseudo is not used by another user yet */
+	public boolean checkUnicityPseudo(String pseudo) {
+		// send a message with the pseudo in broadcast
+		// if no response, the pseudo is unique
+		//TODO
+		return true;
 	}
 }
