@@ -9,12 +9,17 @@ public class CommunicationController {
 	public CommunicationController(int port) {
 		this.port = port;
 		server = new ServerTCP(port);
+		new Thread(server).start();
 	}
 	
 	public void beginNewSession(int id, int port) {
 		ClientTCP client = new ClientTCP(port);
-		Session session = ;
+		new Thread(client).start();
+		Session session = new Session();
 	}
 	
+	public void closeSession(Session s) {
+		
+	}
 	
 }
