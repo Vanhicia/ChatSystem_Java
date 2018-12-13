@@ -29,13 +29,13 @@ class ClientHandler implements Runnable {
 		return input;
 	}
 	
-	public void sendData(String data) {
-		out.println(data);
+	public void sendData(Message data) {
+		out.println(data.msg);
 	}
 	
   public void run() {
 	  // Wait for input from client and send response back to client
-	  sendData("Connexion OK with Server");
+	  //sendData("Connexion OK with Server");
 	  System.out.println(receiveData());
 	  
 

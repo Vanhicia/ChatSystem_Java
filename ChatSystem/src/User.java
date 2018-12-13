@@ -8,16 +8,12 @@ public class User {
 	private String pseudo;
 	private InetAddress address; //adresseIP
 	private long timeConnection;
-	private int portUDP;
-	private int portTCP;
 	
-	public User(UUID id, String pseudo, InetAddress address, long timeConnection, int portUDP, int portTCP) {
+	public User(UUID id, String pseudo, InetAddress address, long timeConnection) {
 		this.id = id;
 		this.pseudo = pseudo;
 		this.address = address;
 		this.timeConnection = timeConnection;
-		this.portUDP = portUDP;
-		this.portTCP = portTCP;
 	}
 	
 	public UUID getId() {

@@ -39,8 +39,8 @@ public class ClientTCP implements Runnable {
 		return input;
 	}
 	
-	public void sendData(String data) {
-		out.println(data);
+	public void sendData(Message data) {
+		out.println(data.msg);
 	}
 	
 	public void closeConnection() {
