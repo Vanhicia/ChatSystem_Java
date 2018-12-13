@@ -45,7 +45,6 @@ public class ClientTCP implements Runnable {
 	
 	public void closeConnection() {
 		try {
-			System.out.println("Client close");
 			link.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -53,7 +52,9 @@ public class ClientTCP implements Runnable {
 	}
 	
 	public void run() {
-		System.out.println(receiveData());
+		while(!isStopped()) {
+			
+		}
 		closeConnection();
 	}
 }
