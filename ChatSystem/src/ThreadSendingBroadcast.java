@@ -20,20 +20,19 @@ public class ThreadSendingBroadcast implements Runnable {
 	}
 	
     public void run() {
-    	try {
-	        byte[] buffer = new byte[1024];
-	        
+    	try {	        
 	        // Convert the object Packet to bytes
 	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	        ObjectOutputStream oos = new ObjectOutputStream(baos);
 	        oos.writeObject(packet);
 	        oos.close();
 	        byte[] data = baos.toByteArray();
-	        DatagramPacket outPacket = new DatagramPacket(data, data.length, InetAddress.getByName("255.255.255.255"),9000) ;
-	               
+	        // Packet in broadcast
+	        // port UDP = 1233
+	        DatagramPacket outPacket = new DatagramPacket(data, data.length, InetAddress.getByName("255.255.255.255"),1233) ;
+	        socket.send(outPacket);
 	        socket.close();  
     	} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }     
