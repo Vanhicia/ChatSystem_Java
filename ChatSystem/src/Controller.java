@@ -6,7 +6,7 @@ import java.util.UUID;
 public class Controller {
 	private User user;
 	private Window view;
-	private Network cc;
+	private Network nw = null;
 	
 	public Controller() {
 		this.user = null;
@@ -17,18 +17,26 @@ public class Controller {
 		return user;
 	}
 	
-	public void connect(String pseudo, int portUDP, int portTCP) {
+	/*public void setUser(User user) {
+		this.user = user;
+	}*/
+	
+	public Network getNetwork() {
+		return this.nw;
+	}
+	
+	public void connect(String pseudo) {
 		try {
 			this.user = new User(UUID.randomUUID(), pseudo, InetAddress.getLocalHost(), System.currentTimeMillis());
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		this.cc = new Network(portUDP, portTCP);
+		this.nw = new Network(this, this.user);
 		/* Send the pseudo in broadcast */
 	}
 	
 	public void changePseudo(String pseudo) {
-		if (cc.checkUnicityPseudo(pseudo)==true) {
+		if (nw.checkUnicityPseudo(pseudo)==true) {
 			user.setPseudo(pseudo);
 		} 
 		else {

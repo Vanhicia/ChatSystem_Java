@@ -6,12 +6,12 @@ import java.net.DatagramSocket;
 
 /* Listen and notify when a packet is received */
 
-public class ThreadUDPListener implements Runnable {
+public class ThreadUDPListening implements Runnable {
 	private Controller contr;
 	private User localUser;
 	private DatagramSocket socket;
 	
-	public ThreadUDPListener (Controller contr, User user, DatagramSocket socket) {
+	public ThreadUDPListening (Controller contr, User user, DatagramSocket socket) {
 		this.contr=contr;
 		this.localUser = user;
 		this.socket = socket;
@@ -20,10 +20,11 @@ public class ThreadUDPListener implements Runnable {
 	public void run() {
 		byte[] data = new byte[1024*4];
 		while (this.socket.isClosed()==false) {
+			System.out.println("Listening...");
 			try {				
 				DatagramPacket inPacket = new DatagramPacket(data, data.length);
 				socket.receive(inPacket);
-				System.out.println("Datagram received!");
+				System.out.println("Datagram received");
 				
 				//Deserialize packet
 				ByteArrayInputStream bais = new ByteArrayInputStream(data);

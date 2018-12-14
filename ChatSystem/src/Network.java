@@ -3,29 +3,44 @@ import java.net.*;
 import java.util.List;
 
 public class Network {
+	private Controller contr;
 	private User user;
 	//private ServerTCP server;
-	private int portUDP; // used for broadcast
-	private int portTCP; // used for conversations
+	private int portUDP = 1233; // used for broadcast
+	private int portTCP = 1234; // used for conversations
+	private ThreadUDPListening UDPListener;
+	private DatagramSocket UDPsocket;
+	
 	//private List<Session> sessions;
 	
-	public Network(int portUDP, int portTCP) {
-		this.portUDP = portUDP;
-		this.portTCP = portTCP;
-		// create a server UDP
-		//TO DO
+	public Network(Controller contr, User user) {
+		this.contr = contr;
+		this.user = user;
 		
-		/*server = new ServerTCP(port);
-		new Thread(server).start(); */
+		// create a ThreadUDPListener
+		try {
+			this.UDPsocket = new DatagramSocket(portUDP);
+			this.UDPListener = new ThreadUDPListening(this.contr, this.user, this.UDPsocket);
+			Thread threadListening = new Thread(this.UDPListener);
+			threadListening.start();
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		
+		this.sendUDPPacket(new UDPPacket(this.user,null,"UserConnected"));
 	}
 	
-	public int getPortUDP() {
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	/*public int getPortUDP() {
 		return portUDP;
 	}
 	
 	public int getPortTCP() {
 		return portTCP;
-	}
+	}*/
 	
 	public void startSession(User userDist) {
 		//create a thread ClientTCP
@@ -38,30 +53,21 @@ public class Network {
 		
 	}
 	
-	//Check if a server is listening on a port number (that is between 1 and 1024)   
-	public void portScanner() {
-		int i=1;
-		boolean connect = false;
-		while(i<1024 && !connect) {
-			try {
-				Socket link = new Socket(InetAddress.getLocalHost(), i) ;
-				System.out.println("Server is listening on port "+i+" of localhost");
-				connect = true ;
-			} catch (UnknownHostException e) {
-				System.out.println("Server is not listening on port "+i+" of localhost");
-			} catch (IOException e) {
-				System.out.println("Server is not listening on port "+i+" of localhost");
-			}
-			i++;
-		}
-		this.portUDP = i;
-	}
-	
 	/* Return true if the pseudo is not used by another user yet */
 	public boolean checkUnicityPseudo(String pseudo) {
 		// send a message with the pseudo in broadcast
 		// if no response, the pseudo is unique
 		//TODO
 		return true;
+	}
+	
+	public void sendUDPPacket(UDPPacket packet) {
+		ThreadSendingBroadcast tsb = new ThreadSendingBroadcast(this.UDPsocket, packet);
+		Thread threadSending = new Thread(tsb);
+		threadSending.start();
+	}
+	
+	public void closeUDPSocket() {
+		this.UDPsocket.close();
 	}
 }

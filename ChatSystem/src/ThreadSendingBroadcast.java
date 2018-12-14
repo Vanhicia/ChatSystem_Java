@@ -8,9 +8,9 @@ import java.net.SocketException;
 
 public class ThreadSendingBroadcast implements Runnable {
 	private DatagramSocket socket;
-	private Packet packet;
+	private UDPPacket packet;
 	
-	public ThreadSendingBroadcast(DatagramSocket socket, Packet packet) {
+	public ThreadSendingBroadcast(DatagramSocket socket, UDPPacket packet) {
 		this.socket = socket;
 		this.packet = packet;
 	}
@@ -27,6 +27,7 @@ public class ThreadSendingBroadcast implements Runnable {
 	        // port UDP = 1233
 	        DatagramPacket outPacket = new DatagramPacket(data, data.length, InetAddress.getByName("255.255.255.255"),1233) ;
 	        socket.send(outPacket);
+	        System.out.println("Datagram in broadcast send");
 	        //socket.close();  
     	} catch (IOException e) {
 			e.printStackTrace();
