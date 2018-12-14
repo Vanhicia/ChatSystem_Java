@@ -15,20 +15,20 @@ public class mainTest {
 		
 		try {
 			User srcUser = new User(UUID.randomUUID(), "Coco", InetAddress.getLocalHost(), 1);
-			User srcUser_bis = new User(UUID.randomUUID(), "Lala", InetAddress.getLocalHost(), 1);
+			//User srcUser_bis = new User(UUID.randomUUID(), "Lala", InetAddress.getLocalHost(), 1);
 			User destUser = new User(UUID.randomUUID(), "Mimi", InetAddress.getLocalHost(), 1);
 	
 			System.out.println("Try to connect with Server");
 	
 				
 			ClientTCP c1 = new ClientTCP(InetAddress.getLocalHost(),1234);
-			ClientTCP c2 = new ClientTCP(InetAddress.getLocalHost(),1234);
+			//ClientTCP c2 = new ClientTCP(InetAddress.getLocalHost(),1234);
 			c1.sendData(new Message("Hello1", srcUser, destUser));
-			c2.sendData(new Message("Hello2 !!!!!!!!", srcUser_bis, destUser));
+			//c2.sendData(new Message("Hello2 !!!!!!!!", srcUser_bis, destUser));
 			System.out.println(c1.receiveData());
-			System.out.println(c2.receiveData());
-			c1.closeConnection();
-			c2.closeConnection();
+			//System.out.println(c2.receiveData());
+			//c1.closeConnection();
+			//c2.closeConnection();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}

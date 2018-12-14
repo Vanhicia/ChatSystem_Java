@@ -30,12 +30,14 @@ class ClientHandler implements Runnable {
 	}
 	
 	public void sendData(Message data) {
-		out.println(data.msg);
+		out.println(data.getSrcUser().getPseudo()+": "+data.msg);
 	}
 	
   public void run() {
 	  // Wait for input from client and send response back to client
 	  //sendData("Connexion OK with Server");
+	  
+	  
 	  System.out.println(receiveData());
 	  
 

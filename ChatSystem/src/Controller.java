@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.UUID;
@@ -5,9 +6,9 @@ import java.util.UUID;
 public class Controller {
 	private User user;
 	private Window view;
-	private CommunicationController cc;
+	private Network cc;
 	
-	public Controller(int portUDP, int portTCP) {
+	public Controller() {
 		this.user = null;
 		this.view = new Window();
 	}
@@ -18,11 +19,11 @@ public class Controller {
 	
 	public void connect(String pseudo, int portUDP, int portTCP) {
 		try {
-			this.user = new User(UUID.randomUUID(), pseudo, InetAddress.getLocalHost(), System.currentTimeMillis(), cc.getPortUDP(), cc.getPortTCP());
+			this.user = new User(UUID.randomUUID(), pseudo, InetAddress.getLocalHost(), System.currentTimeMillis());
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		this.cc = new CommunicationController(portUDP, portTCP);
+		this.cc = new Network(portUDP, portTCP);
 		/* Send the pseudo in broadcast */
 	}
 	
@@ -35,6 +36,24 @@ public class Controller {
 		}		
 	}
 		
+	/*
+	public String receiveData () {
+		String input = null;
+		try {
+			input = in.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return input;
+	}
+	
+
+
+	public Message contructMessage() {
+		new Message("Connexion OK with Server",)
+	}
+	*/
+	
 	public void refreshWindows() {
 		
 	}

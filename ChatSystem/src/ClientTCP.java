@@ -40,7 +40,7 @@ public class ClientTCP implements Runnable {
 	}
 	
 	public void sendData(Message data) {
-		out.println(data.msg);
+		out.println(data.getSrcUser().getPseudo()+": "+data.msg);
 	}
 	
 	public void closeConnection() {
@@ -53,7 +53,11 @@ public class ClientTCP implements Runnable {
 	}
 	
 	public void run() {
-		System.out.println(receiveData());
+		String msg = receiveData();
+		if (msg!=null) {
+			System.out.println(msg);
+		}
+
 		closeConnection();
 	}
 }

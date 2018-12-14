@@ -3,9 +3,9 @@ import java.time.LocalDateTime;
 
 public class Message extends Packet {
 	private static final long serialVersionUID = 1L;
-	public int idMessage;
-	public String msg;
-	public File file;
+	//public int idMessage;
+	public String msg =null;
+	public File file=null;
 	public LocalDateTime dateMessage;
 	
 	public Message(String msg, User srcUser, User destUser) {
@@ -20,14 +20,21 @@ public class Message extends Packet {
 		this.dateMessage= LocalDateTime.now();  
 	}
 
-	public int getIdMessage() {
+	public Message(String msg, File file, User srcUser, User destUser) {
+		super(srcUser, destUser);
+		this.msg = msg;
+		this.file = file;
+		this.dateMessage= LocalDateTime.now();  
+	}
+	
+/*	public int getIdMessage() {
 		return idMessage;
 	}
 
 	public void setIdMessage(int idMessage) {
 		this.idMessage = idMessage;
 	}
-
+*/
 	public String getMsg() {
 		return msg;
 	}
