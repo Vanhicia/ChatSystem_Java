@@ -2,14 +2,14 @@ import java.io.IOException;
 import java.net.*;
 import java.util.List;
 
-public class CommunicationController {
+public class Network {
 	private User user;
 	//private ServerTCP server;
 	private int portUDP; // used for broadcast
 	private int portTCP; // used for conversations
 	//private List<Session> sessions;
 	
-	public CommunicationController(int portUDP, int portTCP) {
+	public Network(int portUDP, int portTCP) {
 		this.portUDP = portUDP;
 		this.portTCP = portTCP;
 		// create a server UDP
