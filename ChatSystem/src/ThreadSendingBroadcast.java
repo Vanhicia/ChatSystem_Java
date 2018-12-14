@@ -10,18 +10,14 @@ public class ThreadSendingBroadcast implements Runnable {
 	private DatagramSocket socket;
 	private Packet packet;
 	
-	public ThreadSendingBroadcast(int port, Packet packet) {
-		try {
-			this.socket = new DatagramSocket(port);
-			this.packet = packet;
-		} catch (SocketException e) {
-			e.printStackTrace();
-		}
+	public ThreadSendingBroadcast(DatagramSocket socket, Packet packet) {
+		this.socket = socket;
+		this.packet = packet;
 	}
 	
     public void run() {
     	try {	        
-	        // Convert the object Packet to bytes
+	        // Serialize the packet to bytes
 	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	        ObjectOutputStream oos = new ObjectOutputStream(baos);
 	        oos.writeObject(packet);
@@ -31,7 +27,7 @@ public class ThreadSendingBroadcast implements Runnable {
 	        // port UDP = 1233
 	        DatagramPacket outPacket = new DatagramPacket(data, data.length, InetAddress.getByName("255.255.255.255"),1233) ;
 	        socket.send(outPacket);
-	        socket.close();  
+	        //socket.close();  
     	} catch (IOException e) {
 			e.printStackTrace();
 		}
