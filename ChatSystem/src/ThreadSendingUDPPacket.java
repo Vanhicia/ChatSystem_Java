@@ -6,13 +6,15 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-public class ThreadSendingBroadcast implements Runnable {
+public class ThreadSendingUDPPacket implements Runnable {
 	private DatagramSocket socket;
 	private UDPPacket packet;
+	private InetAddress address;
 	
-	public ThreadSendingBroadcast(DatagramSocket socket, UDPPacket packet) {
+	public ThreadSendingUDPPacket(DatagramSocket socket, UDPPacket packet, InetAddress address) {
 		this.socket = socket;
 		this.packet = packet;
+		this.address = address;
 	}
 	
     public void run() {
@@ -25,7 +27,7 @@ public class ThreadSendingBroadcast implements Runnable {
 	        byte[] data = baos.toByteArray();
 	        // Packet in broadcast
 	        // port UDP = 1233
-	        DatagramPacket outPacket = new DatagramPacket(data, data.length, InetAddress.getByName("255.255.255.255"),1233) ;
+	        DatagramPacket outPacket = new DatagramPacket(data, data.length, address, 1235) ;
 	        socket.send(outPacket);
 	        System.out.println("Datagram in broadcast send");
 	        //socket.close();  

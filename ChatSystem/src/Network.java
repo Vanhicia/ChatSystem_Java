@@ -5,14 +5,12 @@ import java.util.List;
 public class Network {
 	private Controller contr;
 	private User user;
-	//private ServerTCP server;
-	private int portUDP = 1233; // used for broadcast
-	private int portTCP = 1234; // used for conversations
 	private ThreadUDPListening UDPListener;
 	private DatagramSocket UDPsocket;
-	
-	//private List<Session> sessions;
-	
+
+    protected static int portUDP = 1233;
+    protected static int portTCP = 1234;
+		
 	public Network(Controller contr, User user) {
 		this.contr = contr;
 		this.user = user;
@@ -20,14 +18,19 @@ public class Network {
 		// create a ThreadUDPListener
 		try {
 			this.UDPsocket = new DatagramSocket(portUDP);
-			this.UDPListener = new ThreadUDPListening(this.contr, this.user, this.UDPsocket);
+			this.UDPListener = new ThreadUDPListening(this.contr, this, this.user, this.UDPsocket);
 			Thread threadListening = new Thread(this.UDPListener);
 			threadListening.start();
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
 		
-		this.sendUDPPacket(new UDPPacket(this.user,null,"UserConnected"));
+		/* Send the pseudo chosen in broadcast */
+		this.sendUDPPacketBroadcast(new UDPPacket(this.user,null,"NewPseudo"));
+		/* Wait a answer */
+		// TODO
+		/* Send the identity of the new user in broadcast */
+		this.sendUDPPacketBroadcast(new UDPPacket(this.user,null,"UserConnected"));
 	}
 	
 	public void setUser(User user) {
@@ -46,7 +49,6 @@ public class Network {
 		//create a thread ClientTCP
 		ClientTCP client = new ClientTCP(userDist.getAddress(), portTCP);
 		new Thread(client).start();
-		//Session session = new Session();
 	}
 	
 	public void closeSession(Session s) {
@@ -61,10 +63,23 @@ public class Network {
 		return true;
 	}
 	
-	public void sendUDPPacket(UDPPacket packet) {
-		ThreadSendingBroadcast tsb = new ThreadSendingBroadcast(this.UDPsocket, packet);
+	/* Send the UDP packet to the address indicated */
+	public void sendUDPPacketUnicast(UDPPacket packet, InetAddress address) {
+		ThreadSendingUDPPacket tsb = new ThreadSendingUDPPacket(this.UDPsocket, packet, address);
 		Thread threadSending = new Thread(tsb);
 		threadSending.start();
+	}
+	
+	/* Send the UDP packet in broadcast */
+	public void sendUDPPacketBroadcast(UDPPacket packet) {
+		try {
+			ThreadSendingUDPPacket tsb = new ThreadSendingUDPPacket(this.UDPsocket, packet, InetAddress.getByName("255.255.255.255"));
+			Thread threadSending = new Thread(tsb);
+			threadSending.start();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void closeUDPSocket() {
