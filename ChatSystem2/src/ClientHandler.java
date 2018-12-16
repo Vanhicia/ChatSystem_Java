@@ -1,12 +1,15 @@
+package main;
+
 import java.lang.Runnable;
 import java.net.Socket;
 import java.io.*;
 
-class ClientHandler implements Runnable {
+public class ClientHandler implements Runnable {
 	private Socket clientSocket;
 	private BufferedReader in;
 	private PrintWriter out;
-	  
+	private boolean running = true;
+        
 	public ClientHandler(Socket clientSocket) {
 	    this.clientSocket = clientSocket;
 	    
@@ -22,7 +25,7 @@ class ClientHandler implements Runnable {
 	public String receiveData () {
 		String input = null;
 		try {
-			input = in.readLine();
+                    input = in.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -33,24 +36,34 @@ class ClientHandler implements Runnable {
 		out.println(data.getSrcUser().getPseudo()+": "+data.msg);
 	}
 	
-  public void run() {
-	  // Wait for input from client and send response back to client
-	  //sendData("Connexion OK with Server");
-	  
-	  
-	  System.out.println(receiveData());
-	  
+        public void run() {
 
 
+          while(running){
+             // Wait for input from client and send response back to client
+             //sendData("Connexion OK with Server");
+             String msg = receiveData();
+             if (msg!=null){
+                System.out.println(msg); 
+
+             }
+
+
+        }
+
+  
+}
+   public void close() {
       try {
-    	// Close all streams and sockets
-        out.close();
-		in.close();
-	    clientSocket.close();
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-  }
+          // Close all streams and sockets
+          out.close();
+          in.close();
+          clientSocket.close();
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+    }
+
   
   
 }
