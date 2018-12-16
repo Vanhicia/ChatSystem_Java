@@ -5,8 +5,10 @@
  */
 package main.gui;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import main.User;
-//import main.ManagerServer;
+import main.ManagerServer;
 import javax.swing.WindowConstants;
 /**
  *
@@ -16,7 +18,8 @@ public class LoginWindow extends javax.swing.JFrame {
     
     private User user;
     private int port;
-
+    private static Thread manager=null;
+    private static ManagerServer server=null;
 
     /**
      * Creates new form LoginWindow
@@ -50,7 +53,7 @@ public class LoginWindow extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         Port = new javax.swing.JTextField();
         LogInButton = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        title = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,10 +80,10 @@ public class LoginWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 102, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("CHAT SYSTEM");
+        title.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        title.setForeground(new java.awt.Color(102, 102, 255));
+        title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title.setText("CHAT SYSTEM");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,7 +101,7 @@ public class LoginWindow extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)))
+                        .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(161, 161, 161)
@@ -109,7 +112,7 @@ public class LoginWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -131,18 +134,32 @@ public class LoginWindow extends javax.swing.JFrame {
         this.port=Integer.parseInt(Port.getText());
         System.err.println(this.user.getPseudo());
         try {
-             ChatWindow chat = new ChatWindow(this.port, this.user); 
-             chat.displayWindow();
-             
+
+            server = new ManagerServer(this.port);
+            manager = new Thread();
+            manager.start();
+            manager.join();
+
+            
+            
+            ChatWindow chat = new ChatWindow(this.server, this.port, this.user); 
+            chat.displayWindow();
+            this.setVisible(false);
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            this.dispose();
+            
+
+        
         } catch(IOException e){
             System.out.println("Error with manager server, port already use");
-        }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } 
       
       
        
-       this.setVisible(false);
-       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-       this.dispose();
+
+       
     }//GEN-LAST:event_LogInButtonActionPerformed
 
     private void PortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PortActionPerformed
@@ -194,6 +211,6 @@ public class LoginWindow extends javax.swing.JFrame {
     private javax.swing.JTextField Pseudo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

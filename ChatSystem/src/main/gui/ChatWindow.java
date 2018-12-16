@@ -8,18 +8,25 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import javax.swing.WindowConstants;
 //import main.ManagerServer;
 //import main.ClientHandler;
 import main.User;
+import main.ClientTCP;
+import main.ManagerServer;
+import main.Message;
 /**
  *
  * @author katran
  */
 public class ChatWindow extends javax.swing.JFrame {
-    //private ManagerServer server;
+    private ManagerServer server;
     //private ClientHandler server;
     private User user;
     private int port;
+
     /**
      * Creates new form ChatWindow
      */
@@ -33,13 +40,15 @@ public class ChatWindow extends javax.swing.JFrame {
         //this.server=new ClientHandler(new ServerSocket(port).accept());
     }
     
-    public ChatWindow(int port, User user) throws IOException {
+    public ChatWindow(ManagerServer server, int port, User user) throws IOException {
         initComponents();
-        //this.server=new ManagerServer(port);
+        this.server=server;
         this.port=port;
         this.user=user;
         this.YourPseudo.setText("Pseudo : "+this.user.getPseudo());
         this.Port.setText("Port : "+ Integer.toString(this.port));
+        
+
     }
     public void displayWindow() throws IOException{
        this.setVisible(true);
@@ -59,14 +68,14 @@ public class ChatWindow extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         message = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        sendButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         disconnectButton = new javax.swing.JButton();
         YourPseudo = new javax.swing.JLabel();
         changePseudo = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        portConnected = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        connect = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
@@ -91,7 +100,12 @@ public class ChatWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Send");
+        sendButton.setText("Send");
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 0));
@@ -118,7 +132,12 @@ public class ChatWindow extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel3.setText("Connect with : ");
 
-        jButton4.setText("Connect");
+        connect.setText("Connect");
+        connect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connectActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel4.setText("Disconnect with");
@@ -155,7 +174,7 @@ public class ChatWindow extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
@@ -170,9 +189,9 @@ public class ChatWindow extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField2)
+                        .addComponent(portConnected)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(connect, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -191,8 +210,8 @@ public class ChatWindow extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(connect, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                            .addComponent(portConnected, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -206,7 +225,7 @@ public class ChatWindow extends javax.swing.JFrame {
                     .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -219,14 +238,33 @@ public class ChatWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_changePseudoActionPerformed
 
     private void disconnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectButtonActionPerformed
-               
-        //try {
-            //this.server.closeServer();
-            //this.server.close();
-        /*} catch (IOException ex) {
+        try {
+            if (server != null ){
+                server.closeServer();
+                this.setVisible(false);
+                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                this.dispose();
+                LoginWindow loginWindow = new LoginWindow(user);
+                loginWindow.displayWindow();
+                
+            }
+        } catch (IOException ex) {
             Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }//GEN-LAST:event_disconnectButtonActionPerformed
+
+    private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
+        try {
+            ClientTCP c = new ClientTCP(InetAddress.getLocalHost(),Integer.parseInt(portConnected.getText()));
+            displayMessage.setText("Connect with "+portConnected.getText());
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_connectActionPerformed
+
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+        
+    }//GEN-LAST:event_sendButtonActionPerformed
 
     private void messageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageActionPerformed
         // TODO add your handling code here:
@@ -265,16 +303,17 @@ public class ChatWindow extends javax.swing.JFrame {
                 new ChatWindow().setVisible(true);
             }
         });
+        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Port;
     private javax.swing.JLabel YourPseudo;
     private javax.swing.JButton changePseudo;
+    private javax.swing.JButton connect;
     private javax.swing.JButton disconnectButton;
     private javax.swing.JTextArea displayMessage;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
@@ -282,8 +321,9 @@ public class ChatWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField message;
+    private javax.swing.JTextField portConnected;
+    private javax.swing.JButton sendButton;
     // End of variables declaration//GEN-END:variables
 }
