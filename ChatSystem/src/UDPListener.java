@@ -6,16 +6,12 @@ import java.net.DatagramSocket;
 
 /* Listen and notify when a packet is received */
 
-public class ThreadUDPListening implements Runnable {
-	private Controller contr;
+public class UDPListener implements Runnable {
 	private Network nwk;
-	private User user;
 	private DatagramSocket socket;
 	
-	public ThreadUDPListening (Controller contr, Network nwk, User user, DatagramSocket socket) {
-		this.contr=contr;
+	public UDPListener (Network nwk, DatagramSocket socket) {
 		this.nwk = nwk;
-		this.user = user;
 		this.socket = socket;
 	}
 	
@@ -26,7 +22,7 @@ public class ThreadUDPListening implements Runnable {
 			try {				
 				DatagramPacket inPacket = new DatagramPacket(data, data.length);
 				socket.receive(inPacket);
-				System.out.println("Datagram received");
+				System.out.println("UDP packet received received");
 				
 				//Deserialize packet
 				ByteArrayInputStream bais = new ByteArrayInputStream(data);
@@ -45,16 +41,15 @@ public class ThreadUDPListening implements Runnable {
 	
 	/* Handle the UDP packet received */
 	public void handlePacket(UDPPacket packet) {
-		System.out.println("The UDP packet is handled");
 		String motive = packet.getMotive();
 		switch(motive) {
 			/* If the packet asked the uniqueness of a pseudo */
 			case "NewPseudo":
 				/* If the local user uses this pseudo, he/she answered with a unicast UDP packet */
-				if (packet.getSrcUser().getPseudo().equals(user.getPseudo())) {
+				if (packet.getSrcUser().getPseudo().equals(nwk.getController().getUser().getPseudo())) {
 					System.out.println("Someone would like to use your pseudo !");
 					/* Send a packet in unicast to prevent the pseudo is alreadu used */
-					this.nwk.sendUDPPacketUnicast(new UDPPacket(this.user,packet.getSrcUser(),"PseudoAlreadyUsed"),packet.getSrcUser().getAddress());
+					this.nwk.sendUDPPacketUnicast(new UDPPacket(this.nwk.getController().getUser(),packet.getSrcUser(),"PseudoAlreadyUsed"),packet.getSrcUser().getAddress());
 				}
 				break;
 			/* If the pseudo which the user wants is already used */
@@ -65,7 +60,7 @@ public class ThreadUDPListening implements Runnable {
 			/* If a new user is connected, he/she is added to the list of users */
 			case "UserConnected":
 				System.out.println("A new user is connected");
-				//contr.addUserConnected();
+				this.nwk.addUser(packet.getSrcUser());
 			/* If a user has changed his/her pseudo */
 				break;
 			case "UserUpdated":
@@ -75,7 +70,7 @@ public class ThreadUDPListening implements Runnable {
 				break;
 			case "UserDisconnected":
 				System.out.println("A user is disconnected");
-				//contr.deleteUser(packet.getSrcUser());
+				this.nwk.deleteUser(packet.getSrcUser());
 				break;
 			default :
 				System.out.println("The UDP packet motive is not recognized !");

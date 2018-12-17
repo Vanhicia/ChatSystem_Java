@@ -6,12 +6,12 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-public class ThreadSendingUDPPacket implements Runnable {
+public class UDPSender implements Runnable {
 	private DatagramSocket socket;
 	private UDPPacket packet;
 	private InetAddress address;
 	
-	public ThreadSendingUDPPacket(DatagramSocket socket, UDPPacket packet, InetAddress address) {
+	public UDPSender(DatagramSocket socket, UDPPacket packet, InetAddress address) {
 		this.socket = socket;
 		this.packet = packet;
 		this.address = address;

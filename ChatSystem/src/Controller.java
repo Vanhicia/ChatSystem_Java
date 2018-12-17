@@ -5,12 +5,12 @@ import java.util.UUID;
 
 public class Controller {
 	private User user;
-	private Window view;
+	//private Window view;
 	private Network nw = null;
 	
 	public Controller() {
 		this.user = null;
-		this.view = new Window();
+		//this.view = new Window();
 	}
 	
 	public User getUser() {
@@ -31,7 +31,8 @@ public class Controller {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		this.nw = new Network(this, this.user);
+		this.nw = new Network(this);
+		
 		/* Send the pseudo in broadcast */
 	}
 	
