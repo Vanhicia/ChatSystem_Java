@@ -13,22 +13,16 @@ public class ClientTCP implements Runnable {
 	
 	public ClientTCP (InetAddress address, int port) {
 		try {
+			System.out.println("Establishing connection. Please wait ...");
 			this.link = new Socket(address,port);
+			System.out.println("Connected: " + link);
 			this.in = new BufferedReader(new InputStreamReader(link.getInputStream()));
 			this.out = new PrintWriter(link.getOutputStream(),true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public boolean isStopped() {
-		return isStopped;
-	}
-	
-	public void stopSClient( ) {
-		this.isStopped = true;
-	}
-	
+
 	public String receiveData () {
 		String input = null;
 		try {
@@ -39,8 +33,9 @@ public class ClientTCP implements Runnable {
 		return input;
 	}
 	
-	public void sendData(Message data) {
-		out.println(data.getSrcUser().getPseudo()+": "+data.msg);
+	public void sendData(Message message) {
+		out.write(message.getSrcUser().getPseudo() + " : " +message.msg);
+		out.flush();
 	}
 	
 	public void closeConnection() {
@@ -57,8 +52,6 @@ public class ClientTCP implements Runnable {
 		if (msg!=null) {
 			System.out.println(msg);
 		}
-
-		closeConnection();
 	}
 }
 

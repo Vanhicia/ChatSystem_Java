@@ -1,11 +1,10 @@
 package main;
-
 import java.util.Observable;
 
-public class TCPListener extends Observable{
+public class TCPSender extends Observable{
 	private Message watchedValue;
 	
-	public TCPListener(Message value) {
+	public TCPSender(Message value) {
 		this.watchedValue=value;
 	}
 	public void setValue(Message value) {

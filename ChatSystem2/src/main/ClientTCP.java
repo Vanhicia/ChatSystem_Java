@@ -41,6 +41,9 @@ public class ClientTCP implements Runnable {
 		out.println(data.getSrcUser().getPseudo()+": "+data.msg);
 	}
 	
+	public void sendData(String data) {
+		out.println(data);
+	}
 	public void closeConnection() {
 		try {
 			System.out.println("Client close");
