@@ -56,7 +56,7 @@ public class ManagerServer  implements Runnable, Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		
+		//arg contains the message that we have just received with src and dest
 		
 		
 	}

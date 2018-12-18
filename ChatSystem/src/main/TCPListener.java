@@ -3,14 +3,14 @@ package main;
 import java.util.Observable;
 
 public class TCPListener extends Observable{
-	private String watchedValue;
+	private Message watchedValue;
 	
-	public TCPListener(String value) {
+	public TCPListener(Message value) {
 		this.watchedValue=value;
 	}
-	public void setValue(String value) {
+	public void setValue(Message value) {
       if(!watchedValue.equals(value)) {
-         System.out.println("Value changed to new value: "+value);
+         System.out.println("Value changed to new value: "+value.getMsg());
          watchedValue = value;
          setChanged();
          notifyObservers(value);

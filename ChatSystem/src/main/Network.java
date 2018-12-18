@@ -24,7 +24,8 @@ public class Network {
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
-		
+
+public class Login
 		/* Send the pseudo chosen in broadcast */
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"NewPseudo"));
 		/* Wait a answer */

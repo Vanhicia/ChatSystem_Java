@@ -48,9 +48,13 @@ public class ClientHandler implements Runnable {
              //sendData("Connexion OK with Server");
       		String data = receiveData();
     		if (data!=null) {
-    			Message msg = new Message(data,)
-    			this.listener.setValue(msg);
     			
+
+    			
+    			User srcUser = this.network.findUserwithIPAddress(this.clientSocket.getInetAddress());
+    			User destUser = this.network.findUserwithIPAddress(this.clientSocket.getLocalAddress());
+    			Message msg = new Message(data,srcUser,destUser);
+    			this.listener.setValue(msg);
     		}
 
         }
