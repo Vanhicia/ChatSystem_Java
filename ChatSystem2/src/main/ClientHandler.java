@@ -11,7 +11,7 @@ public class ClientHandler implements Runnable {
 	private TCPListener listener;
 	private volatile boolean running = true;
 	private Network network;
-	
+	private DataInputStream  console   = null;
 	public ClientHandler(Socket clientSocket,Network network) {
 	    this.clientSocket = clientSocket;
 	    
@@ -36,9 +36,14 @@ public class ClientHandler implements Runnable {
 		return input;
 	}
 	
-	public void sendData(Message data) {
-		out.println(data.getSrcUser().getPseudo()+": "+data.msg);
-		out.write(data.msg);
+	/*public void sendData(Message message) {
+		out.write(message.getSrcUser().getPseudo() + " : " +message.msg);
+		out.flush();
+	}*/
+	
+	public void sendData(String message) {
+		out.write("S : " +message);
+		out.flush();
 	}
 	
         public void run() {
@@ -48,14 +53,12 @@ public class ClientHandler implements Runnable {
              // Wait for input from client and send response back to client
       		String data = receiveData();
     		if (data!=null) {
-    			 System.out.println(data);
-
-    			
-    			/*User srcUser = this.network.findUserwithIPAddress(this.clientSocket.getInetAddress());
-    			User destUser = this.network.findUserwithIPAddress(this.clientSocket.getLocalAddress());
-    			Message msg = new Message(data,srcUser,destUser);*/
-    			//this.listener.setValue("test");
+    			 System.out.println("s :" +data);
+ 
     		}
+    			
+
+
 
         }
 

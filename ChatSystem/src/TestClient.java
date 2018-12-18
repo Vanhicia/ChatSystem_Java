@@ -13,10 +13,13 @@ public class TestClient {
 			ClientTCP c1 = new ClientTCP(InetAddress.getLocalHost(),1234);
 			//c1.sendData("test1");
 			c1.sendData(new Message("Hello1", contr.getUser(), destUser));
+			c1.run();
 			c1.closeConnection();
-
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}
 }
+
+// S <- C : C envoi à S et S recoit et affiche OK
+// a faitre S -> C : S envoi au bon C et C recoit et affiche
