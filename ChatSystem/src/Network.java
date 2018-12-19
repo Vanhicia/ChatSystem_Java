@@ -59,6 +59,9 @@ public class Network {
 		// send a message with the pseudo in broadcast
 		// if no response, the pseudo is unique
 		//TODO
+		// A finir !!!!!!!!!!
+		//User userTemp = new 
+		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"NewPseudo"));
 		return true;
 	}
 	
