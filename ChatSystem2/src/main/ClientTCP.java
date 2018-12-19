@@ -12,6 +12,7 @@ public class ClientTCP implements Runnable {
 	private Socket link;
 	private BufferedReader in;
 	private PrintWriter out;
+	private TCPListener listener;
 	private boolean isStopped = false;
 	
 	public ClientTCP (InetAddress address, int port) {
@@ -19,18 +20,12 @@ public class ClientTCP implements Runnable {
 			this.link = new Socket(address,port);
 			this.in = new BufferedReader(new InputStreamReader(link.getInputStream()));
 			this.out = new PrintWriter(link.getOutputStream(),true);
+			this.listener = new TCPListener(null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public boolean isStopped() {
-		return isStopped;
-	}
-	
-	public void stopSClient( ) {
-		this.isStopped = true;
-	}
 	
 	public String receiveData () {
 		String input = null;
@@ -46,6 +41,9 @@ public class ClientTCP implements Runnable {
 		out.println(data.getSrcUser().getPseudo()+": "+data.msg);
 	}
 	
+	public void sendData(String data) {
+		out.println(data);
+	}
 	public void closeConnection() {
 		try {
 			System.out.println("Client close");
@@ -58,7 +56,8 @@ public class ClientTCP implements Runnable {
 	public void run() {
 		String msg = receiveData();
 		if (msg!=null) {
-			System.out.println(msg);
+			this.listener.setValue(msg);
+			
 		}
 
 		closeConnection();

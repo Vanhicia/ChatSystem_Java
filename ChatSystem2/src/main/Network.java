@@ -1,4 +1,4 @@
-
+package main;
 import java.io.IOException;
 import java.net.*;
 import java.util.List;
@@ -24,7 +24,7 @@ public class Network {
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
-		
+
 		/* Send the pseudo chosen in broadcast */
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"NewPseudo"));
 		/* Wait a answer */
@@ -60,9 +60,6 @@ public class Network {
 		// send a message with the pseudo in broadcast
 		// if no response, the pseudo is unique
 		//TODO
-		// A finir !!!!!!!!!!
-		//User userTemp = new 
-		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"NewPseudo"));
 		return true;
 	}
 	
