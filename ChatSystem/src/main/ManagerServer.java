@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
-
+import java.util.UUID;
 public class ManagerServer  implements Runnable, Observer{
 	//
 	private static Thread threadlistener;
@@ -21,14 +21,8 @@ public class ManagerServer  implements Runnable, Observer{
 	private Network network;
 	//private History history;
 	private TCPListener listener;
-	private HashMap<User, ClientHandler> hmap;
-	
-	public ManagerServer(int port) throws IOException {
-		System.out.println("Binding to port " + port + ", please wait  ...");
-		serverSocket = new ServerSocket(port);
-		System.out.println("Server started: " + serverSocket);
-	}
-	
+	//private HashMap<User, ClientHandler> hmap;
+	private HashMap<UUID, ClientHandler> hmap;
 	public ManagerServer(int port, Network network) throws IOException {
 		System.out.println("Binding to port " + port + ", please wait  ...");
 		serverSocket = new ServerSocket(port);
@@ -37,7 +31,6 @@ public class ManagerServer  implements Runnable, Observer{
     	listener = new TCPListener(serverSocket,network);
     	threadlistener = new Thread(listener);
     	threadlistener.start();
-
 	}
         
 	public void run() {
@@ -48,9 +41,10 @@ public class ManagerServer  implements Runnable, Observer{
     }
 	
 	public void sendMessage(Message message) throws IOException {
-		while(listener.getHmap()==null) {} // maybe try to insert an observable in tcplistener and here an observer
+		while(listener.getHmap()==null) {} 
 		this.hmap=listener.getHmap();
-		this.hmap.get(message.getDestUser()).sendData(message);
+		System.out.println("send " +this.hmap.get(message.getDestUser().getId()));
+		this.hmap.get(message.getDestUser().getId()).sendData(message);
 	}
 	
 	public void closeServer() throws IOException {

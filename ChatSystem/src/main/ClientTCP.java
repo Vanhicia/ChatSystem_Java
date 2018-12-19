@@ -1,14 +1,10 @@
 
 package main;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -16,9 +12,6 @@ public class ClientTCP implements Runnable {
 	private Socket link;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
-	private TCPListener listener;
-	private boolean isStopped = false;
-	
 
 	public ClientTCP (InetAddress address, int port) {
 		try {
@@ -60,7 +53,21 @@ public class ClientTCP implements Runnable {
 	}
 	
 	public void run() {
-		System.out.println("test");
-	}
-}
+		//while(true) {
+		try {
+			Message data;
+			data = receiveData();
+			
+    		if (data!=null) {
+    			 System.out.println("c :" +data.msg);
+   
 
+    		}
+    		
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+	//}
+}

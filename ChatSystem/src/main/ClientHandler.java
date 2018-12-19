@@ -2,10 +2,11 @@ package main;
 
 import java.lang.Runnable;
 import java.net.Socket;
+import java.util.Observable;
 import java.io.*;
 import main.Message;
 
-public class ClientHandler implements Runnable {
+public class ClientHandler  extends Observable implements Runnable{
 	private Socket clientSocket;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
@@ -36,23 +37,23 @@ public class ClientHandler implements Runnable {
 		System.out.println("Paquet envoyé : "+message.msg);
 		out.writeObject(message);
 		out.flush();
+		out.close();
 	}
 		
 
         public void run() {
 
-
+//TODO : maybe an observer/observable for read several packets + add history
           //while(running){
-             // Wait for input from client and send response back to client
+            // Wait for input from client and send response back to client
 			try {
 				Message data;
 				data = receiveData();
 		
 	    		if (data!=null) {
 	    			 System.out.println("s :" +data.msg);
-	    		    if (userdest==null){
-		    			 this.userdest = data.getSrcUser();
-		    		     System.out.println(userdest);
+	    		    if (userdest==null && data.getSrcUser()!=null){
+	    		    	setUserdest(data.getSrcUser());
 	    		    }
 
 	    		}
@@ -84,6 +85,13 @@ public class ClientHandler implements Runnable {
 
 	public User getUserdest() {
 		return userdest;
+	}
+
+
+	public void setUserdest(User userdest) {
+		this.userdest = userdest;
+		setChanged();
+		notifyObservers();
 	}
 
   

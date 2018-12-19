@@ -12,15 +12,15 @@ public class TestClient {
 			UUID uidsrc = UUID.fromString("38400000-8cf0-11bd-b23e-10b96e4ef00d");
 			UUID uiddest = UUID.fromString("38400000-8cf0-11bd-b23e-10b96e4ef00d");
 			
-			User destUser = new User(uiddest, "Lili", InetAddress.getLocalHost(), 1);
-			User srcUser = new User(uidsrc, "Coco", InetAddress.getLocalHost(), 1);
+			User destUser = new User(uiddest, "S", InetAddress.getLocalHost(), 1);
+			User srcUser = new User(uidsrc, "C", InetAddress.getLocalHost(), 1);
 	//		Controller contr = new Controller();
 	//		contr.connect("Coco");
 
 			ClientTCP c1 = new ClientTCP(InetAddress.getLocalHost(),1234);		
 			c1.sendData(new Message("Hello1", srcUser, destUser));
-
-			c1.closeConnection();
+			c1.run();
+			//c1.closeConnection();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
