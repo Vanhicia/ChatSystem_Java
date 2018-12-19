@@ -6,7 +6,7 @@ import java.util.UUID;
 public class Controller {
 	private User user;
 	//private Window view;
-	private Network nw = null;
+	private Network nwk = null;
 	
 	public Controller() {
 		this.user = null;
@@ -22,26 +22,36 @@ public class Controller {
 	}*/
 	
 	public Network getNetwork() {
-		return this.nw;
+		return this.nwk;
 	}
 	
 	public void connect(String pseudo) {
 		try {
-			this.user = new User(UUID.randomUUID(), pseudo, InetAddress.getLocalHost(), System.currentTimeMillis());
+			this.user = new User(UUID.randomUUID(), "", InetAddress.getLocalHost(), System.currentTimeMillis());
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		this.nw = new Network(this);
-		
-		/* Send the pseudo in broadcast */
+		this.nwk = new Network(this);
+		changePseudo(0, pseudo);
 	}
 	
-	public void changePseudo(String pseudo) {
-		if (nw.checkUnicityPseudo(pseudo)==true) {
+	/* Option = 0 : pseudo of a new user */
+	/* Option =/= 0 : pseudo updated */
+	public void changePseudo(int option, String pseudo) {
+		if (nwk.checkUnicityPseudo(pseudo)==true) {
+			System.out.println("Your pseudo is unique");
 			user.setPseudo(pseudo);
+			if (option == 0) {
+				nwk.sendPacketUserConnected(this.user);
+			} 
+			else {
+				nwk.sendPacketUserUpdated(this.user);
+			}
 		} 
 		else {
 			// affichage d'un message d'erreur
+			System.out.println("Your pseudo is refused, it is not unique");
+			//TO DO : ask a new pseudo to the user
 		}		
 	}
 		

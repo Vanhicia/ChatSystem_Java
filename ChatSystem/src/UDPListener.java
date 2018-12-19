@@ -22,7 +22,7 @@ public class UDPListener implements Runnable {
 			try {				
 				DatagramPacket inPacket = new DatagramPacket(data, data.length);
 				socket.receive(inPacket);
-				System.out.println("UDP packet received received");
+				System.out.println("UDP packet received");
 				
 				//Deserialize packet
 				ByteArrayInputStream bais = new ByteArrayInputStream(data);
@@ -55,11 +55,11 @@ public class UDPListener implements Runnable {
 			/* If the pseudo which the user wants is already used */
 			case "PseudoAlreadyUsed":
 				System.out.println("Someone has already this pseudo, choose another one !");
-				//TO DO
+				this.nwk.setUnicityPseudo(false);
 				break;
 			/* If a new user is connected, he/she is added to the list of users */
 			case "UserConnected":
-				System.out.println("A new user is connected");
+				System.out.println("A new user is connected : " + packet.getSrcUser().getPseudo());
 				this.nwk.addUser(packet.getSrcUser());
 			/* If a user has changed his/her pseudo */
 				break;
