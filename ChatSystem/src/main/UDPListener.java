@@ -23,7 +23,7 @@ public class UDPListener implements Runnable {
 			try {				
 				DatagramPacket inPacket = new DatagramPacket(data, data.length);
 				socket.receive(inPacket);
-				System.out.println("UDP packet received received");
+				System.out.println("UDP packet received");
 				
 				//Deserialize packet
 				ByteArrayInputStream bais = new ByteArrayInputStream(data);
@@ -49,29 +49,41 @@ public class UDPListener implements Runnable {
 				/* If the local user uses this pseudo, he/she answered with a unicast UDP packet */
 				if (packet.getSrcUser().getPseudo().equals(nwk.getController().getUser().getPseudo())) {
 					System.out.println("Someone would like to use your pseudo !");
-					/* Send a packet in unicast to prevent the pseudo is alreadu used */
+					/* Send a packet in unicast to prevent the pseudo is already used */
 					this.nwk.sendUDPPacketUnicast(new UDPPacket(this.nwk.getController().getUser(),packet.getSrcUser(),"PseudoAlreadyUsed"),packet.getSrcUser().getAddress());
 				}
 				break;
-			/* If the pseudo which the user wants is already used */
+			/* If the pseudo chosen by the local user is already used */
 			case "PseudoAlreadyUsed":
 				System.out.println("Someone has already this pseudo, choose another one !");
-				//TO DO
+				this.nwk.setUnicityPseudo(false);
 				break;
-			/* If a new user is connected, he/she is added to the list of users */
+			/* If a new user is connected */
 			case "UserConnected":
-				System.out.println("A new user is connected");
+				System.out.println("A new user is connected : " + packet.getSrcUser().getPseudo());
+				/* If the local user is the previous last user connected, 
+				 * send the list of users to the new user connected
+				 */
+				if (this.nwk.lastUserConnected()) {
+					this.nwk.sendListUsersUDPPacket(packet.getSrcUser());
+				}
+				/* Add the new user to the list of users */
 				this.nwk.addUser(packet.getSrcUser());
-			/* If a user has changed his/her pseudo */
 				break;
+			/* If a user has changed his/her pseudo */
 			case "UserUpdated":
 				System.out.println("A user has changed his/her pseudo");
-				//contr.updateUser(packet.getSrcUser());
-			/* If a user is disconnected */
+				nwk.updateUser(packet.getSrcUser());
 				break;
+			/* If a user is disconnected */
 			case "UserDisconnected":
 				System.out.println("A user is disconnected");
 				this.nwk.deleteUser(packet.getSrcUser());
+				break;
+			/* If the list of Users is received */
+			case "ListUsers":
+				System.out.println("The list of users received");
+				this.nwk.setListUsers(((ListUsersUDPPacket) packet).getListUsers());
 				break;
 			default :
 				System.out.println("The UDP packet motive is not recognized !");

@@ -1,6 +1,9 @@
 package main;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,13 +14,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class ManagerServer  implements Runnable, Observer{
-	//private HashMap<InetAddress, ClientHandler> hmap;
-	private static ClientHandler clientHandler;
-	private static Thread thread;
+	//
+	private static Thread threadlistener;
 	private ServerSocket serverSocket;
 	private volatile boolean running = true ;
 	private Network network;
 	//private History history;
+	private TCPListener listener;
+	private HashMap<User, ClientHandler> hmap;
 	
 	public ManagerServer(int port) throws IOException {
 		System.out.println("Binding to port " + port + ", please wait  ...");
@@ -30,27 +34,24 @@ public class ManagerServer  implements Runnable, Observer{
 		serverSocket = new ServerSocket(port);
 		System.out.println("Server started: " + serverSocket);
 		this.network=network;
+    	listener = new TCPListener(serverSocket,network);
+    	threadlistener = new Thread(listener);
+    	threadlistener.start();
+
 	}
         
 	public void run() {
-            while (running) {
-                try {
-                    System.out.println("Waiting for a client ..."); 
-                	Socket clientsocket = serverSocket.accept();
-                    clientHandler = new ClientHandler(clientsocket, network);
-                    thread = new Thread(clientHandler);
-                    thread.start();
-                    System.out.println("Client accepted: " + clientsocket);
-                    System.out.println("Connexion with "+clientsocket.getInetAddress().toString());
-                    
-                   // hmap.put(clientsocket.getInetAddress(), clientHandler);
 
-                } catch (IOException ex) {
-                    Logger.getLogger(ManagerServer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            }
+            
+                    
+ 
     }
+	
+	public void sendMessage(Message message) throws IOException {
+		while(listener.getHmap()==null) {} // maybe try to insert an observable in tcplistener and here an observer
+		this.hmap=listener.getHmap();
+		this.hmap.get(message.getDestUser()).sendData(message);
+	}
 	
 	public void closeServer() throws IOException {
 		System.out.println("Close Server");

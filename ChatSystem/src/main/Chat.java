@@ -14,16 +14,16 @@ import java.io.IOException;
  */
 public class Chat {
     public static void main(String[] args) throws IOException{
-     try {
+ /*    try {
          // We have our @IP 
-         InetAddress IPAddress = InetAddress.getLocalHost();
+        InetAddress IPAddress = InetAddress.getLocalHost();
          User user = new User(IPAddress);
          LoginWindow loginWindow = new LoginWindow(user);
          loginWindow.displayWindow();
-         
+        
      }catch(UnknownHostException e){
          System.out.println("Error Unknow Host");
-     }   
+     }   */ 
     }
-    
+   
 }

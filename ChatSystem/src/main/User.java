@@ -1,31 +1,28 @@
 package main;
-
 import java.io.Serializable;
 import java.net.InetAddress;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
+//import java.sql.Time;
 
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private UUID id;
 	private String pseudo;
-	private final InetAddress address; //IP address
-	private  final LocalDateTime timeConnection;
+	private InetAddress address; //adresseIP
+	private long timeConnection;
 	
 	public User(UUID id, String pseudo, InetAddress address, long timeConnection) {
 		this.id = id;
 		this.pseudo = pseudo;
 		this.address = address;
-		this.timeConnection = LocalDateTime.now();
+		this.timeConnection = timeConnection;
 	}
 	
-        public User(InetAddress IPAddress) {
-		this.pseudo = "";
-		this.address = IPAddress;
-		this.timeConnection = LocalDateTime.now();
+	public UUID getId() {
+		return id;
 	}
-
+	
 	public String getPseudo() {
 		return pseudo;
 	}
@@ -38,7 +35,7 @@ public class User implements Serializable{
 		return address;
 	}
 	
-	public LocalDateTime getTimeConnection() {
+	public long getTimeConnection() {
 		return timeConnection;
 	}
 	

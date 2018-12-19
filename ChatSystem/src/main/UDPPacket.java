@@ -1,4 +1,5 @@
 package main;
+
 public class UDPPacket extends Packet{
 	private static final long serialVersionUID = 1L;
 	private String motive;
