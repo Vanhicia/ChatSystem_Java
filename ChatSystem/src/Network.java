@@ -1,10 +1,12 @@
 import java.net.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Network {
 	private Controller contr;
-	private List<User> listUsers = null;
+	private ArrayList<User> listUsers;
 	private UDPListener UDPListener;
 	private DatagramSocket UDPsocket;
 	
@@ -15,6 +17,7 @@ public class Network {
 		
 	public Network(Controller contr) {
 		this.contr = contr;
+		this.listUsers = new ArrayList<User>();
 		
 		// create a thread UDPListener
 		try {
@@ -25,14 +28,6 @@ public class Network {
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
-		
-		/* Send the pseudo chosen in broadcast */
-		//this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"NewPseudo"));
-		/* Wait a answer */
-		// TODO
-		/* Send the identity of the new user in broadcast */
-		//this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserConnected"));
-		
 	}
 		
 	public void startSession(User userDist) {
@@ -72,7 +67,7 @@ public class Network {
 		User userTemp = new User(localUser.getId(),pseudo, localUser.getAddress(), localUser.getTimeConnection());
 		this.sendUDPPacketBroadcast(new UDPPacket(userTemp,null,"NewPseudo"));
 		try {
-			TimeUnit.SECONDS.sleep(2);
+			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -88,7 +83,26 @@ public class Network {
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserUpdated"));
 	}
 	
-
+	/* Send the list of users */
+	public void sendListUsersUDPPacket(User userDest) {
+		ArrayList<User> listUsers = this.listUsers;
+		listUsers.add(this.contr.getUser()); // the local user is added to the list of users
+		this.sendUDPPacketUnicast(new ListUsersUDPPacket(this.contr.getUser(),userDest, listUsers),userDest.getAddress());
+	}
+	
+	/* Return true is the local user is the last user connected */
+	public boolean lastUserConnected() {
+		boolean last = true;
+		User localUser = this.contr.getUser();
+		Iterator<User> usersIter = this.listUsers.iterator();
+		while (last && usersIter.hasNext()) {
+			User nextUser = usersIter.next();
+			if (nextUser.getTimeConnection()>localUser.getTimeConnection()) {
+				last = false;
+			}
+		}
+		return last;
+	}
 	
 	public void addUser(User user) {
 		this.listUsers.add(user);
@@ -98,8 +112,16 @@ public class Network {
 		this.listUsers.remove(user);
 	}
 	
+	public void updateUser(User user) {
+		//TODO
+	}
+	
 	public List<User> getListUsers() {
 		return this.listUsers;
+	}
+	
+	public void setListUsers(ArrayList<User> listUsers) {
+		this.listUsers = listUsers;
 	}
 	
 	public void closeUDPSocket() {
@@ -114,11 +136,11 @@ public class Network {
 		return this.contr;
 	}
 	
-	/*public int getPortUDP() {
+	public int getPortUDP() {
 		return portUDP;
 	}
 	
 	public int getPortTCP() {
 		return portTCP;
-	}*/
+	}
 }

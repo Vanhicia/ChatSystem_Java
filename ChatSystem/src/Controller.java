@@ -17,10 +17,6 @@ public class Controller {
 		return user;
 	}
 	
-	/*public void setUser(User user) {
-		this.user = user;
-	}*/
-	
 	public Network getNetwork() {
 		return this.nwk;
 	}
