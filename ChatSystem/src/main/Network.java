@@ -88,8 +88,8 @@ public class Network {
 	
 	/* Send the list of users */
 	public void sendListUsersUDPPacket(User userDest) {
-		ArrayList<User> listUsers = this.listUsers;
-		listUsers.add(this.contr.getUser()); // the local user is added to the list of users
+		ArrayList<User> listUsersTemp = this.listUsers;
+		listUsersTemp.add(this.contr.getUser()); // the local user is added to the list of users
 		this.sendUDPPacketUnicast(new ListUsersUDPPacket(this.contr.getUser(),userDest, listUsers),userDest.getAddress());
 	}
 	
