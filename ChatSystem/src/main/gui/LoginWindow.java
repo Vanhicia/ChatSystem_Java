@@ -133,19 +133,18 @@ public class LoginWindow extends javax.swing.JFrame {
         try {
     		Controller contr = new Controller();
     		contr.connect(Pseudo.getText());
-    		/*
+    		
             server = new ManagerServer(this.port,contr.getNetwork());
-            manager = new Thread(server);
-            manager.start();
+          
             
-            */
-            ChatWindow chat = new ChatWindow(this.server, this.port, contr.getUser()); 
+            
+            ChatWindow chat = new ChatWindow(LoginWindow.server, this.port, contr.getUser(), contr.getNetwork()); 
             chat.displayWindow();
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
-            
-
+            manager =new Thread(server);
+            manager.start();
         
         } catch(IOException e){
             System.out.println("Error with manager server, port already use");

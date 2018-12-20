@@ -28,15 +28,26 @@ public class ManagerServer  implements Runnable, Observer{
 		serverSocket = new ServerSocket(port);
 		System.out.println("Server started: " + serverSocket);
 		this.network=network;
-    	listener = new TCPListener(serverSocket,network);
-    	threadlistener = new Thread(listener);
-    	threadlistener.start();
+    	//
+
 	}
         
 	public void run() {
-
-            
-                    
+		try {
+			listener = new TCPListener(serverSocket,network);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	threadlistener = new Thread(listener);
+    	threadlistener.start();
+    	try {
+			threadlistener.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+          
  
     }
 	

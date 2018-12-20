@@ -17,6 +17,7 @@ import main.User;
 import main.ClientTCP;
 import main.ManagerServer;
 import main.Message;
+import main.Network;
 /**
  *
  * @author katran
@@ -26,28 +27,21 @@ public class ChatWindow extends javax.swing.JFrame {
     //private ClientHandler server;
     private User user;
     private int port;
-
+    private Network network;
+    private User destUser;
     /**
      * Creates new form ChatWindow
      */
-    public ChatWindow() {
-        initComponents();
-    }
-    public ChatWindow(int port) throws IOException {
-        initComponents(); 
-        
-        //this.server=new ManagerServer(port);
-        //this.server=new ClientHandler(new ServerSocket(port).accept());
-    }
+
     
-    public ChatWindow(ManagerServer server, int port, User user) throws IOException {
+    public ChatWindow(ManagerServer server, int port, User user, Network network) throws IOException {
         initComponents();
         this.server=server;
         this.port=port;
         this.user=user;
         this.YourPseudo.setText("Pseudo : "+this.user.getPseudo());
         this.Port.setText("Port : "+ Integer.toString(this.port));
-        
+        this.network = network;
 
     }
     public void displayWindow() throws IOException{
@@ -254,12 +248,16 @@ public class ChatWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_disconnectButtonActionPerformed
 
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
-        //try {
-           // ClientTCP c = new ClientTCP(InetAddress.getLocalHost(),Integer.parseInt(portConnected.getText()));
-          //  displayMessage.setText("Connect with "+portConnected.getText());
-        //} catch (UnknownHostException ex) {
-          //  Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
-        //}
+        try {
+           ClientTCP c = new ClientTCP(InetAddress.getLocalHost(),Integer.parseInt(portConnected.getText()),destUser);
+           displayMessage.setText("Connect with "+portConnected.getText());
+           c.sendData(new Message("Connect with "+ this.user.getPseudo(), this.user, destUser));
+        } catch (UnknownHostException ex) {
+           Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }//GEN-LAST:event_connectActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
@@ -300,7 +298,7 @@ public class ChatWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChatWindow().setVisible(true);
+               // new ChatWindow().setVisible(true);
             }
         });
         
