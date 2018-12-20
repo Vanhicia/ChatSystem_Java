@@ -72,7 +72,7 @@ public class Network {
 		User userTemp = new User(localUser.getId(),pseudo, localUser.getAddress(), localUser.getTimeConnection());
 		this.sendUDPPacketBroadcast(new UDPPacket(userTemp,null,"NewPseudo"));
 		try {
-			TimeUnit.SECONDS.sleep(1);
+			TimeUnit.SECONDS.sleep(3);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

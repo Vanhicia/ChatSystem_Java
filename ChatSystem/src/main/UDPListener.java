@@ -23,7 +23,7 @@ public class UDPListener implements Runnable {
 			try {				
 				DatagramPacket inPacket = new DatagramPacket(data, data.length);
 				socket.receive(inPacket);
-				System.out.println("UDP packet received");
+				System.out.println("UDP packet received from " + inPacket.getAddress());
 				
 				//Deserialize packet
 				ByteArrayInputStream bais = new ByteArrayInputStream(data);
