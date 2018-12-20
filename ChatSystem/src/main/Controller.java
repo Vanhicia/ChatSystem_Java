@@ -34,6 +34,10 @@ public class Controller {
 		changePseudo(0, pseudo);
 	}
 	
+	public void disconnect() {
+		this.nwk.closeNetwork();
+	}
+	
 	/* Option = 0 : pseudo of a new user */
 	/* Option =/= 0 : pseudo updated */
 	public void changePseudo(int option, String pseudo) {

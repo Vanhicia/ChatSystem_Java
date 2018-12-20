@@ -127,7 +127,13 @@ public class Network {
 		this.listUsers = listUsers;
 	}
 	
-	public void closeUDPSocket() {
+	public void closeNetwork() {
+		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserDisconnected"));
+		try {
+			TimeUnit.SECONDS.sleep(3);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		this.UDPsocket.close();
 	}
 	

@@ -32,8 +32,6 @@ public class UDPListener implements Runnable {
 	            /* If it is not a packet from the local user */
 	            if (!(packet.getSrcUser().getId().equals(nwk.getController().getUser().getId()))) {
 	            	System.out.println("UDP packet received from " + inPacket.getAddress());
-	            	
-	            	System.out.println("address source (user) : "+ packet.getSrcUser().getAddress());
 	            	/* Handle the packet */
 	            	this.handlePacket(packet,inPacket.getAddress());
 	            }
