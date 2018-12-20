@@ -30,7 +30,7 @@ public class UDPSender implements Runnable {
 	        // port UDP = 1233
 	        DatagramPacket outPacket = new DatagramPacket(data, data.length, address, 1233) ;
 	        socket.send(outPacket);
-	        System.out.println("Datagram in broadcast send");
+	        System.out.println("Datagram in broadcast send to " + address);
 	        //socket.close();  
     	} catch (IOException e) {
 			e.printStackTrace();
