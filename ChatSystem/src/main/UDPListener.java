@@ -29,8 +29,9 @@ public class UDPListener implements Runnable {
 				ByteArrayInputStream bais = new ByteArrayInputStream(data);
 	            ObjectInputStream ois = new ObjectInputStream(bais);
 	            UDPPacket packet = (UDPPacket) ois.readObject();
-	            
-	            this.handlePacket(packet);
+	            if (packet.getSrcUser().getAddress() != this.nwk.getController().getUser().getAddress()) {
+	            	this.handlePacket(packet);
+	            }
 	            
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
