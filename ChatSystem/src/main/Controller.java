@@ -2,6 +2,7 @@ package main;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -51,6 +52,15 @@ public class Controller {
 			System.out.println("Your pseudo is refused, it is not unique");
 			//TO DO : ask a new pseudo to the user
 		}		
+	}
+	
+	public void displayAllUsers() {
+		System.out.println("Users List :");
+		ArrayList<User> listUsers = this.nwk.getListUsers();
+		for (User user : listUsers) {
+			System.out.println(user.getPseudo() + ": @IP = " + user.getAddress());
+		}
+		System.out.println("");
 	}
 		
 	/*
