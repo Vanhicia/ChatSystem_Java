@@ -119,7 +119,7 @@ public class Network {
 		//TODO
 	}
 	
-	public List<User> getListUsers() {
+	public ArrayList<User> getListUsers() {
 		return this.listUsers;
 	}
 	

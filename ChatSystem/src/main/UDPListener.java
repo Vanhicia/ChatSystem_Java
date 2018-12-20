@@ -30,6 +30,9 @@ public class UDPListener implements Runnable {
 	            ObjectInputStream ois = new ObjectInputStream(bais);
 	            UDPPacket packet = (UDPPacket) ois.readObject();
 	            if (packet.getSrcUser().getAddress() != this.nwk.getController().getUser().getAddress()) {
+	            	System.out.println("Handle received packet because adress different");
+	            	System.out.println("address source : "+ packet.getSrcUser().getAddress());
+	            	System.out.println("address local user : "+ this.nwk.getController().getUser().getAddress());
 	            	this.handlePacket(packet);
 	            }
 	            
