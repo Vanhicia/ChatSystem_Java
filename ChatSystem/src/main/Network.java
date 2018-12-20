@@ -13,7 +13,6 @@ public class Network {
 	private ArrayList<User> listUsers;
 	private UDPListener UDPListener;
 	private DatagramSocket UDPsocket;
-	private InetAddress localUserAddress = null; //address IP of the local user
 	
 	private boolean unicityPseudo;
 
@@ -47,7 +46,7 @@ public class Network {
 	
 	/* Send the UDP packet to the address indicated */
 	public void sendUDPPacketUnicast(UDPPacket packet, InetAddress address) {
-		UDPSender sender = new UDPSender(this.UDPsocket, packet, address);
+		UDPSender sender = new UDPSender(this.UDPsocket, packet, address, Network.portUDP);
 		Thread threadSender = new Thread(sender);
 		threadSender.start();
 	}
@@ -55,13 +54,12 @@ public class Network {
 	/* Send the UDP packet in broadcast */
 	public void sendUDPPacketBroadcast(UDPPacket packet) {
 		try {
-			UDPSender sender = new UDPSender(this.UDPsocket, packet, InetAddress.getByName("255.255.255.255"));
+			UDPSender sender = new UDPSender(this.UDPsocket, packet, InetAddress.getByName("255.255.255.255"), Network.portUDP);
 			Thread threadSender = new Thread(sender);
 			threadSender.start();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	/* Return true if the pseudo is not used by another user yet */
@@ -109,33 +107,6 @@ public class Network {
 		return last;
 	}
 	
-	public void initIPAddress() {
-		try { 
-		    // Énumération de toutes les cartes réseau. 
-		    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces(); 
-		    while (interfaces.hasMoreElements()) { 
-		        NetworkInterface interfaceN = (NetworkInterface) interfaces.nextElement(); 
-		        System.out.println("----> " + interfaceN.getDisplayName()); 
-		        List<InterfaceAddress> iaList= interfaceN.getInterfaceAddresses(); 
-		        for (InterfaceAddress interfaceAddress : iaList) { 
-		            System.out.println(interfaceAddress.getAddress().getHostAddress()); 
-		        } 
-		    } 
-		} catch (Exception ex) { 
-		    System.out.println("pas de carte réseau."); 
-		    ex.printStackTrace(); 
-		}
-	}
-	
-	public void setLocalUserAddress(InetAddress address) {
-		this.localUserAddress = address;
-		this.contr.getUser().setAddress(address);
-	}
-	
-	public InetAddress getLocalUserAddress() {
-		return this.localUserAddress;
-	}
-	
 	public void addUser(User user) {
 		this.listUsers.add(user);
 	}
@@ -168,11 +139,11 @@ public class Network {
 		return this.contr;
 	}
 	
-	public int getPortUDP() {
+	/*public int getPortUDP() {
 		return portUDP;
 	}
 	
 	public int getPortTCP() {
 		return portTCP;
-	}
+	}*/
 }

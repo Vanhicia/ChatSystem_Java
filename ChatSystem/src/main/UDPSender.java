@@ -11,27 +11,29 @@ public class UDPSender implements Runnable {
 	private DatagramSocket socket;
 	private UDPPacket packet;
 	private InetAddress address;
+	private int port;
 	
-	public UDPSender(DatagramSocket socket, UDPPacket packet, InetAddress address) {
+	public UDPSender(DatagramSocket socket, UDPPacket packet, InetAddress address, int port) {
 		this.socket = socket;
 		this.packet = packet;
 		this.address = address;
+		this.port = port;
 	}
 	
     public void run() {
     	try {	        
-	        // Serialize the packet to bytes
+	        // Serialize the packet
 	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	        ObjectOutputStream oos = new ObjectOutputStream(baos);
 	        oos.writeObject(packet);
 	        oos.close();
 	        byte[] data = baos.toByteArray();
-	        // Packet in broadcast
-	        // port UDP = 1233
-	        DatagramPacket outPacket = new DatagramPacket(data, data.length, address, 1233) ;
+
+	        //Send the serialized packet
+	        DatagramPacket outPacket = new DatagramPacket(data, data.length, this.address, this.port) ;
 	        socket.send(outPacket);
-	        System.out.println("Datagram in broadcast send to " + address);
-	        //socket.close();  
+	        
+	        System.out.println("Datagram send to " + this.address);
     	} catch (IOException e) {
 			e.printStackTrace();
 		}

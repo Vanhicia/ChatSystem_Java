@@ -20,26 +20,29 @@ public class UDPListener implements Runnable {
 	public void run() {
 		byte[] data = new byte[1024*4];
 		while (this.socket.isClosed()==false) {
-			System.out.println("Listening...");
 			try {				
 				DatagramPacket inPacket = new DatagramPacket(data, data.length);
 				socket.receive(inPacket);
-				System.out.println("UDP packet received from " + inPacket.getAddress());
 				
-				//Deserialize packet
+				/* Deserialize packet */
 				ByteArrayInputStream bais = new ByteArrayInputStream(data);
 	            ObjectInputStream ois = new ObjectInputStream(bais);
 	            UDPPacket packet = (UDPPacket) ois.readObject();
-	            if (!(packet.getSrcUser().getId().equals(nwk.getController().getUser().getId()))) {	       
-	            //if (!(packet.getSrcUser().getAddress().equals(this.nwk.getController().getUser().getAddress()))) {
-	            	System.out.println("Handle received packet because adress different");
-	            	System.out.println("address source : "+ packet.getSrcUser().getAddress());
-	            	System.out.println("address local user : "+ this.nwk.getController().getUser().getAddress());
+	            
+	            /* If it is not a packet from the local user */
+	            if (!(packet.getSrcUser().getId().equals(nwk.getController().getUser().getId()))) {
+	            	System.out.println("UDP packet received from " + inPacket.getAddress());
+	            	
+	            	System.out.println("address source (user) : "+ packet.getSrcUser().getAddress());
+	            	/* Handle the packet */
 	            	this.handlePacket(packet,inPacket.getAddress());
 	            }
-	            else if (this.nwk.getLocalUserAddress()==null) {
-	            	this.nwk.setLocalUserAddress(inPacket.getAddress());
-	            	System.out.println("Update local user address : " + this.nwk.getLocalUserAddress());
+	            /* Else this packet is from the local user */
+	            /* If the local user IP address is not known yet */
+	            else if (this.nwk.getController().getUser().getAddress().equals(InetAddress.getLocalHost())) {
+	            	/* The local user IP address is set */
+	            	this.nwk.getController().getUser().setAddress(inPacket.getAddress());
+	            	System.out.println("Update local user address : " + this.nwk.getController().getUser().getAddress());
 	            }
 	            
 			} catch (ClassNotFoundException e) {
@@ -59,7 +62,7 @@ public class UDPListener implements Runnable {
 				/* If the local user uses this pseudo, he/she answered with a unicast UDP packet */
 				if (packet.getSrcUser().getPseudo().equals(nwk.getController().getUser().getPseudo())) {
 					System.out.println("Someone would like to use your pseudo !");
-					/* Send a packet in unicast to prevent the pseudo is already used */
+					/* Send a packet in unicast to warn the pseudo is already used */
 					this.nwk.sendUDPPacketUnicast(new UDPPacket(this.nwk.getController().getUser(),packet.getSrcUser(),"PseudoAlreadyUsed"),address);
 				}
 				break;
@@ -79,6 +82,7 @@ public class UDPListener implements Runnable {
 				}
 				/* Add the new user to the list of users */
 				this.nwk.addUser(packet.getSrcUser());
+				this.nwk.getController().displayAllUsers();
 				break;
 			/* If a user has changed his/her pseudo */
 			case "UserUpdated":
@@ -89,11 +93,13 @@ public class UDPListener implements Runnable {
 			case "UserDisconnected":
 				System.out.println("A user is disconnected");
 				this.nwk.deleteUser(packet.getSrcUser());
+				this.nwk.getController().displayAllUsers();
 				break;
 			/* If the list of Users is received */
 			case "ListUsers":
 				System.out.println("The list of users received");
 				this.nwk.setListUsers(((ListUsersUDPPacket) packet).getListUsers());
+				this.nwk.getController().displayAllUsers();
 				break;
 			default :
 				System.out.println("The UDP packet motive is not recognized !");
