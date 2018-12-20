@@ -32,7 +32,7 @@ public class ClientTCP implements Runnable {
 		try {
           input = (Message) in.readObject();
 		} catch (IOException e) {
-			e.printStackTrace();
+
 		}
 		return input;
 	}
@@ -53,21 +53,19 @@ public class ClientTCP implements Runnable {
 	}
 	
 	public void run() {
-		//while(true) {
-		try {
-			Message data;
-			data = receiveData();
+		while(true) {
+			try {
 			
-    		if (data!=null) {
-    			 System.out.println("c :" +data.msg);
-   
-
-    		}
-    		
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				Message data;
+				data = receiveData();
+				
+	    		if (data!=null) {
+	    			 System.out.println("c :" +data.msg);
+	   
+	
+	    		}
+	    		
+			} catch (ClassNotFoundException e) {}
 		}
-		}
-	//}
+	}
 }

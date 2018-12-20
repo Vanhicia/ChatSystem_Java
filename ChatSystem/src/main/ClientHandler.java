@@ -37,17 +37,18 @@ public class ClientHandler  extends Observable implements Runnable{
 		System.out.println("Paquet envoyé : "+message.msg);
 		out.writeObject(message);
 		out.flush();
-		out.close();
+
 	}
 		
 
         public void run() {
 
-//TODO : maybe an observer/observable for read several packets + add history
-          //while(running){
+//TODO : maybe an observer/observable for read several packets (to optimize CPU resource use)
+         while(running){
             // Wait for input from client and send response back to client
 			try {
 				Message data;
+				
 				data = receiveData();
 		
 	    		if (data!=null) {
@@ -58,17 +59,10 @@ public class ClientHandler  extends Observable implements Runnable{
 
 	    		}
 	    		
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-         // }	
-
-  
+			} catch (ClassNotFoundException e) {} 
+			catch (IOException e) {}
+         }
+         this.close();
         }
         
 	   public void close() {

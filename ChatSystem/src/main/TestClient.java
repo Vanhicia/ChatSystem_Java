@@ -18,7 +18,8 @@ public class TestClient {
 	//		contr.connect("Coco");
 
 			ClientTCP c1 = new ClientTCP(InetAddress.getLocalHost(),1234);		
-			c1.sendData(new Message("Hello1", srcUser, destUser));
+			c1.sendData(new Message("Hello", srcUser, destUser));
+			c1.sendData(new Message("How are you?", srcUser, destUser));
 			c1.run();
 			//c1.closeConnection();
 		} catch (UnknownHostException e) {
