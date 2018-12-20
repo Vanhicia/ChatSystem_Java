@@ -28,7 +28,7 @@ public class UDPSender implements Runnable {
 	        byte[] data = baos.toByteArray();
 	        // Packet in broadcast
 	        // port UDP = 1233
-	        DatagramPacket outPacket = new DatagramPacket(data, data.length, address, 1235) ;
+	        DatagramPacket outPacket = new DatagramPacket(data, data.length, address, 1233) ;
 	        socket.send(outPacket);
 	        System.out.println("Datagram in broadcast send");
 	        //socket.close();  
