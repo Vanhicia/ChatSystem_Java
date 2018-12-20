@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 /* Listen and notify when a packet is received */
 
@@ -29,12 +30,12 @@ public class UDPListener implements Runnable {
 				ByteArrayInputStream bais = new ByteArrayInputStream(data);
 	            ObjectInputStream ois = new ObjectInputStream(bais);
 	            UDPPacket packet = (UDPPacket) ois.readObject();
-	            if (!packet.getSrcUser().getId().equals(nwk.getController().getUser().getId())) {	       
+	            if (!(packet.getSrcUser().getId().equals(nwk.getController().getUser().getId()))) {	       
 	            //if (!(packet.getSrcUser().getAddress().equals(this.nwk.getController().getUser().getAddress()))) {
 	            	System.out.println("Handle received packet because adress different");
 	            	System.out.println("address source : "+ packet.getSrcUser().getAddress());
 	            	System.out.println("address local user : "+ this.nwk.getController().getUser().getAddress());
-	            	this.handlePacket(packet);
+	            	this.handlePacket(packet,inPacket.getAddress());
 	            }
 	            else if (this.nwk.getLocalUserAddress()==null) {
 	            	this.nwk.setLocalUserAddress(inPacket.getAddress());
@@ -50,7 +51,7 @@ public class UDPListener implements Runnable {
 	}
 	
 	/* Handle the UDP packet received */
-	public void handlePacket(UDPPacket packet) {
+	public void handlePacket(UDPPacket packet, InetAddress address) {
 		String motive = packet.getMotive();
 		switch(motive) {
 			/* If the packet asked the uniqueness of a pseudo */
@@ -59,7 +60,7 @@ public class UDPListener implements Runnable {
 				if (packet.getSrcUser().getPseudo().equals(nwk.getController().getUser().getPseudo())) {
 					System.out.println("Someone would like to use your pseudo !");
 					/* Send a packet in unicast to prevent the pseudo is already used */
-					this.nwk.sendUDPPacketUnicast(new UDPPacket(this.nwk.getController().getUser(),packet.getSrcUser(),"PseudoAlreadyUsed"),packet.getSrcUser().getAddress());
+					this.nwk.sendUDPPacketUnicast(new UDPPacket(this.nwk.getController().getUser(),packet.getSrcUser(),"PseudoAlreadyUsed"),address);
 				}
 				break;
 			/* If the pseudo chosen by the local user is already used */
