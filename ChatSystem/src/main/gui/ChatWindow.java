@@ -244,7 +244,7 @@ public class ChatWindow extends javax.swing.JFrame {
                 this.setVisible(false);
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 this.dispose();
-                LoginWindow loginWindow = new LoginWindow(user);
+                LoginWindow loginWindow = new LoginWindow();
                 loginWindow.displayWindow();
                 
             }
@@ -254,12 +254,12 @@ public class ChatWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_disconnectButtonActionPerformed
 
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
-        try {
-            ClientTCP c = new ClientTCP(InetAddress.getLocalHost(),Integer.parseInt(portConnected.getText()));
-            displayMessage.setText("Connect with "+portConnected.getText());
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //try {
+           // ClientTCP c = new ClientTCP(InetAddress.getLocalHost(),Integer.parseInt(portConnected.getText()));
+          //  displayMessage.setText("Connect with "+portConnected.getText());
+        //} catch (UnknownHostException ex) {
+          //  Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+        //}
     }//GEN-LAST:event_connectActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed

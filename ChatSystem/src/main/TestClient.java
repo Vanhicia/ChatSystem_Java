@@ -14,10 +14,11 @@ public class TestClient {
 			
 			User destUser = new User(uiddest, "S", InetAddress.getLocalHost(), 1);
 			User srcUser = new User(uidsrc, "C", InetAddress.getLocalHost(), 1);
-	//		Controller contr = new Controller();
-	//		contr.connect("Coco");
+			//Controller contr = new Controller();
+			//contr.connect("Coco");
 
-			ClientTCP c1 = new ClientTCP(InetAddress.getLocalHost(),1234);		
+			//ClientTCP c1 = new ClientTCP(InetAddress.getLocalHost(),1234);		
+			ClientTCP c1 = new ClientTCP(srcUser.getAddress(),1234, destUser);	
 			c1.sendData(new Message("Hello", srcUser, destUser));
 			c1.sendData(new Message("How are you?", srcUser, destUser));
 			c1.run();

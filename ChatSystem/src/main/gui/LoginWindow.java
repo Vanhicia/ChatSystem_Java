@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import main.User;
+import main.Controller;
 import main.ManagerServer;
 import javax.swing.WindowConstants;
 /**
@@ -16,7 +17,7 @@ import javax.swing.WindowConstants;
  */
 public class LoginWindow extends javax.swing.JFrame {
     
-    private User user;
+  
     private int port;
     private static Thread manager=null;
     private static ManagerServer server=null;
@@ -27,10 +28,7 @@ public class LoginWindow extends javax.swing.JFrame {
     public LoginWindow() {
         initComponents();
     }
-    public LoginWindow(User user) {
-        initComponents();
-        this.user=user;
-    }
+
     
     /**
      * Dispaly LoginWindow
@@ -130,19 +128,18 @@ public class LoginWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
-        this.user.setPseudo(Pseudo.getText());
+        
         this.port=Integer.parseInt(Port.getText());
-        System.err.println(this.user.getPseudo());
         try {
-
-            server = new ManagerServer(this.port);
-            manager = new Thread();
+    		Controller contr = new Controller();
+    		contr.connect(Pseudo.getText());
+    		/*
+            server = new ManagerServer(this.port,contr.getNetwork());
+            manager = new Thread(server);
             manager.start();
-            manager.join();
-
             
-            
-            ChatWindow chat = new ChatWindow(this.server, this.port, this.user); 
+            */
+            ChatWindow chat = new ChatWindow(this.server, this.port, contr.getUser()); 
             chat.displayWindow();
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -152,10 +149,7 @@ public class LoginWindow extends javax.swing.JFrame {
         
         } catch(IOException e){
             System.out.println("Error with manager server, port already use");
-        } catch (InterruptedException ex) {
-            Logger.getLogger(LoginWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-      
+        }
       
        
 

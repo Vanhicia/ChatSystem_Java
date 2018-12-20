@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package main;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import main.gui.LoginWindow;
 import java.io.IOException;
 /**
@@ -14,16 +12,8 @@ import java.io.IOException;
  */
 public class Chat {
     public static void main(String[] args) throws IOException{
- /*    try {
-         // We have our @IP 
-        InetAddress IPAddress = InetAddress.getLocalHost();
-         User user = new User(IPAddress);
-         LoginWindow loginWindow = new LoginWindow(user);
+         LoginWindow loginWindow = new LoginWindow();
          loginWindow.displayWindow();
         
-     }catch(UnknownHostException e){
-         System.out.println("Error Unknow Host");
-     }   */ 
     }
-   
 }
