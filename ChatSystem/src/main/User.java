@@ -34,6 +34,9 @@ public class User implements Serializable{
 	public InetAddress getAddress() {
 		return address;
 	}
+	public void setAddress(InetAddress address) {
+		this.address = address;
+	}
 	
 	public long getTimeConnection() {
 		return timeConnection;

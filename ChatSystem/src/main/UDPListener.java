@@ -29,11 +29,16 @@ public class UDPListener implements Runnable {
 				ByteArrayInputStream bais = new ByteArrayInputStream(data);
 	            ObjectInputStream ois = new ObjectInputStream(bais);
 	            UDPPacket packet = (UDPPacket) ois.readObject();
-	            if (packet.getSrcUser().getAddress() != this.nwk.getController().getUser().getAddress()) {
+	            if (!packet.getSrcUser().getId().equals(nwk.getController().getUser().getId())) {	       
+	            //if (!(packet.getSrcUser().getAddress().equals(this.nwk.getController().getUser().getAddress()))) {
 	            	System.out.println("Handle received packet because adress different");
 	            	System.out.println("address source : "+ packet.getSrcUser().getAddress());
 	            	System.out.println("address local user : "+ this.nwk.getController().getUser().getAddress());
 	            	this.handlePacket(packet);
+	            }
+	            else if (this.nwk.getLocalUserAddress()==null) {
+	            	this.nwk.setLocalUserAddress(inPacket.getAddress());
+	            	System.out.println("Update local user address : " + this.nwk.getLocalUserAddress());
 	            }
 	            
 			} catch (ClassNotFoundException e) {
@@ -49,7 +54,7 @@ public class UDPListener implements Runnable {
 		String motive = packet.getMotive();
 		switch(motive) {
 			/* If the packet asked the uniqueness of a pseudo */
-			case "NewPseudo":
+			case "NewPseudo":				
 				/* If the local user uses this pseudo, he/she answered with a unicast UDP packet */
 				if (packet.getSrcUser().getPseudo().equals(nwk.getController().getUser().getPseudo())) {
 					System.out.println("Someone would like to use your pseudo !");
