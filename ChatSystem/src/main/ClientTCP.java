@@ -12,14 +12,14 @@ public class ClientTCP implements Runnable {
 	private Socket link;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
-
+	private History history;
+	private User userdistant;
 	public ClientTCP (InetAddress address, int port) {
 		try {
 			System.out.println("Establishing connection. Please wait ...");
  			this.link = new Socket(address,port);
  			System.out.println("Connected: " + link);
 			this.out = new ObjectOutputStream(new BufferedOutputStream(link.getOutputStream()));
-			System.out.println("Test");
 			this.in = new ObjectInputStream(link.getInputStream());
 
 		} catch (IOException e) {
@@ -41,6 +41,7 @@ public class ClientTCP implements Runnable {
 		System.out.println("Paquet envoyé : "+message.msg);
 		out.writeObject(message);
 		out.flush();
+		//this.history.addEntry(message);
 	}
 	
 	public void closeConnection() {
@@ -60,9 +61,10 @@ public class ClientTCP implements Runnable {
 				data = receiveData();
 				
 	    		if (data!=null) {
-	    			 System.out.println("c :" +data.msg);
+	    			System.out.println("c :" +data.msg);
 	   
-	
+		    		//this.history.addEntry(data);
+		    		//this.history.printHistory();
 	    		}
 	    		
 			} catch (ClassNotFoundException e) {}

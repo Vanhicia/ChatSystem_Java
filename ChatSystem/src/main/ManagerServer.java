@@ -43,7 +43,7 @@ public class ManagerServer  implements Runnable, Observer{
 	public void sendMessage(Message message) throws IOException {
 		while(listener.getHmap()==null) {} 
 		this.hmap=listener.getHmap();
-		System.out.println("send " +this.hmap.get(message.getDestUser().getId()));
+		System.out.println("manager send " +this.hmap.get(message.getDestUser().getId()));
 		this.hmap.get(message.getDestUser().getId()).sendData(message);
 	}
 	

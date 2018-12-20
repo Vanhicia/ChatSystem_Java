@@ -13,10 +13,11 @@ public class ClientHandler  extends Observable implements Runnable{
 	private volatile boolean running = true;
 	private Network network;
 	private User userdest=null;
+	private History history;
 	
 	public ClientHandler(Socket clientSocket,Network network) {
 	    this.clientSocket = clientSocket;
-	    
+
 	    // Create input buffer and output buffer
 		try {
 			this.out = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -34,10 +35,11 @@ public class ClientHandler  extends Observable implements Runnable{
 		return input;
 	}
 	public void sendData(Message message) throws IOException {
-		System.out.println("Paquet envoyé : "+message.msg);
+		//System.out.println("Paquet envoyé : "+message.msg);
+		this.history.addEntry(message);
+		this.history.printHistory();
 		out.writeObject(message);
 		out.flush();
-
 	}
 		
 
@@ -51,14 +53,17 @@ public class ClientHandler  extends Observable implements Runnable{
 				
 				data = receiveData();
 		
-	    		if (data!=null) {
-	    			 System.out.println("s :" +data.msg);
+	    		if (data!=null) { 
 	    		    if (userdest==null && data.getSrcUser()!=null){
 	    		    	setUserdest(data.getSrcUser());
+	    			    this.history = new History(userdest);
 	    		    }
+	    		    
+		    		this.history.addEntry(data);
 
+		    		
 	    		}
-	    		
+
 			} catch (ClassNotFoundException e) {} 
 			catch (IOException e) {}
          }
@@ -86,9 +91,6 @@ public class ClientHandler  extends Observable implements Runnable{
 		this.userdest = userdest;
 		setChanged();
 		notifyObservers();
-	}
-
-  
-  
+	} 
 }
 

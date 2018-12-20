@@ -8,20 +8,24 @@ public class History {
 	
 	public History(User dest) {
 		this.userDistant = dest;
-		this.history = new ArrayList<Message>();
+		this.history = new ArrayList<>();
 	}
 	
 	public void addEntry(Message msg) {
 		this.history.add(msg);
-		if (this.history.size()<=10) {
-			deleteEntry();
-		}
 	}
 	
 	public void deleteEntry() {
 		this.history.remove(0);
 	}
 
+	public void printHistory() {
+		System.out.println("history");
+		for (Message tmp : this.history) {
+			System.out.println(tmp.msg);
+		}
+	}
+	
 	public List<Message> getHistory() {
 		return history;
 	}
