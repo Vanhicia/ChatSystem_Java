@@ -78,11 +78,11 @@ public class Network {
 	}
 	
 	/* Send the identity of the new user in broadcast */
-	public void sendPacketUserConnected(User user) {
+	public void sendUDPPacketUserConnected(User user) {
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserConnected"));
 	}
 	/* Send the identity of the updated user in broadcast */
-	public void sendPacketUserUpdated(User user) {
+	public void sendUDPPacketUserUpdated(User user) {
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserUpdated"));
 	}
 	

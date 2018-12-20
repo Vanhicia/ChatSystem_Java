@@ -9,7 +9,7 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private UUID id;
 	private String pseudo;
-	private InetAddress address; //adresseIP
+	private InetAddress address; //IP address
 	private long timeConnection;
 	
 	public User(UUID id, String pseudo, InetAddress address, long timeConnection) {

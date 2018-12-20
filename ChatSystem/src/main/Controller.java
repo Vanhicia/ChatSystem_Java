@@ -40,10 +40,10 @@ public class Controller {
 			System.out.println("Your pseudo is unique");
 			user.setPseudo(pseudo);
 			if (option == 0) {
-				nwk.sendPacketUserConnected(this.user);
+				nwk.sendUDPPacketUserConnected(this.user);
 			} 
 			else {
-				nwk.sendPacketUserUpdated(this.user);
+				nwk.sendUDPPacketUserUpdated(this.user);
 			}
 		} 
 		else {
