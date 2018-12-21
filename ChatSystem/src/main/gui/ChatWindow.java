@@ -274,11 +274,13 @@ public class ChatWindow extends javax.swing.JFrame {
     }                                                
 
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {                                        
-        try {
+    	try {
            String pseudo = pseudoConnected.getText();
-           destUser = network.findUserWithPseudo(pseudo); 
-           ClientTCP c = new ClientTCP(InetAddress.getLocalHost(),1234,destUser);
+           destUser = network.getListUsers().get(0);//network.findUserWithPseudo(pseudo); 
+           System.out.println(destUser.getPseudo());
+           ClientTCP c = new ClientTCP(this.destUser.getAddress(),1234,destUser);
            displayMessage.setText("Connect with "+pseudoConnected.getText());
+           //displayMessage.setText("Adress"+destUser.getAddress().toString());
            c.sendData(new Message("Connect with "+ this.user.getPseudo(), this.user, destUser));
         } catch (UnknownHostException ex) {
            Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -286,6 +288,7 @@ public class ChatWindow extends javax.swing.JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 	}
+    	
     }                                       
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
