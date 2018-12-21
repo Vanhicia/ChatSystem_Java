@@ -26,9 +26,9 @@ public class LoginWindow extends javax.swing.JFrame {
     /**
      * Creates new form LoginWindow
      */
-    public LoginWindow() {
+    public LoginWindow(Controller c) {
         initComponents();
-        this.contr = new Controller();
+        this.contr = c;
     }
 
     
@@ -131,7 +131,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
     private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
 
-    		Controller contr = new Controller();
+    		
     		contr.connect(Pseudo.getText());
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -176,7 +176,7 @@ public class LoginWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginWindow().setVisible(true);
+               // new LoginWindow().setVisible(true);
             }
         });
     }

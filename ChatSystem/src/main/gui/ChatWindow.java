@@ -264,8 +264,8 @@ public class ChatWindow extends javax.swing.JFrame {
                 this.setVisible(false);
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 this.dispose();
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.displayWindow();
+                //LoginWindow loginWindow = new LoginWindow();
+                //loginWindow.displayWindow();
                 
             }
         } catch (IOException ex) {
