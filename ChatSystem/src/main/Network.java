@@ -84,7 +84,7 @@ public class Network {
 		Iterator<User> usersIter = this.listUsers.iterator();
 		while (unicity && usersIter.hasNext()) {
 			User nextUser = usersIter.next();
-			if (nextUser.getPseudo() == pseudo) {
+			if (nextUser.getPseudo().equals(pseudo)) {
 				unicity = false;
 			}
 		}
@@ -130,7 +130,7 @@ public class Network {
 		Iterator<User> usersIter = this.listUsers.iterator();
 		while (!delete && usersIter.hasNext()) {
 			User nextUser = usersIter.next();
-			if (nextUser.getId() == user.getId()) {
+			if (nextUser.getId().equals(user.getId())) {
 				this.listUsers.remove(nextUser);
 			}
 		}
@@ -145,7 +145,7 @@ public class Network {
 		Iterator<User> usersIter = this.listUsers.iterator();
 		while (!update && usersIter.hasNext()) {
 			User nextUser = usersIter.next();
-			if (nextUser.getId() == user.getId()) {
+			if (nextUser.getId().equals(user.getId())) {
 				update = true;
 				nextUser.setPseudo(user.getPseudo());
 			}
