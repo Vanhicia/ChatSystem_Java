@@ -74,7 +74,7 @@ public class Controller implements Observer{
 	}
 	
 	public void displayAllUsers() {
-		System.out.println("Users List :");
+		System.out.println("List of users :");
 		ArrayList<User> listUsers = this.nwk.getListUsers();
 		for (User user : listUsers) {
 			System.out.println(user.getPseudo() + ": @IP = " + user.getAddress());
