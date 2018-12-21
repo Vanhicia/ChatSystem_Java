@@ -84,13 +84,17 @@ public class Network {
 		System.out.println("Send a request of user list");
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"RequestListUsers"));
 	}
-	/* Send the identity of the new user in broadcast */
+	/* Send the identity of the new user to all connected users */
 	public void sendUDPPacketUserConnected() {
-		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserConnected"));
+		for (User destUser : this.listUsers) {
+			this.sendUDPPacketUnicast(new UDPPacket(this.contr.getUser(),destUser,"UserConnected"), destUser.getAddress());
+		}
 	}
-	/* Send the identity of the updated user in broadcast */
+	/* Send the identity of the updated user to all connected users */
 	public void sendUDPPacketUserUpdated() {
-		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserUpdated"));
+		for (User destUser : this.listUsers) {
+			this.sendUDPPacketUnicast(new UDPPacket(this.contr.getUser(),destUser,"UserUpdated"), destUser.getAddress());
+		}
 	}
 	
 	/* Send the list of users */
