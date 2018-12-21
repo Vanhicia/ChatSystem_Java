@@ -99,7 +99,7 @@ public class UDPListener implements Runnable {
 				srcUser.setAddress(address);
 				this.nwk.addUser(srcUser);
 				this.nwk.getController().displayAllUsers();
-				this.nwk.getController().refreshWindows();
+
 				break;
 			default :
 				System.out.println("The UDP packet motive is not recognized !");

@@ -190,7 +190,11 @@ public class Contact extends javax.swing.JFrame {
            System.out.println(destUser.getPseudo());
            ClientTCP c = new ClientTCP(this.destUser.getAddress(),1234,destUser);
            c.sendData(new Message("Connect with "+ this.user.getPseudo(), this.user, destUser));
-           new ChatWindow(c,this.user,destUser);
+           ChatWindow chat =new ChatWindow(c,this.user,destUser);
+           chat.displayWindow();
+           this.setVisible(false);
+           setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+           this.dispose();
         } catch (UnknownHostException ex) {
            Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException e) {

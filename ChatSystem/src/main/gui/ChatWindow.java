@@ -30,7 +30,10 @@ public class ChatWindow extends javax.swing.JFrame {
         this.c = c;
     }
     
-    
+    public void displayWindow() throws IOException{
+        this.setVisible(true);
+
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
