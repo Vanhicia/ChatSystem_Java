@@ -105,16 +105,27 @@ public class Network {
 		return last;
 	}
 	
+	/* Add a User in the listUsers */
 	public void addUser(User user) {
 		this.listUsers.add(user);
 	}
 	
+	/* Remove a User from the listUsers */
 	public void deleteUser(User user) {
 		this.listUsers.remove(user);
 	}
 	
+	/* Upadate a User, ie change his/her pseudo */
 	public void updateUser(User user) {
-		//TODO
+		boolean update = false;
+		Iterator<User> usersIter = this.listUsers.iterator();
+		while (!update && usersIter.hasNext()) {
+			User nextUser = usersIter.next();
+			if (nextUser.getId() == user.getId()) {
+				update = true;
+				nextUser.setPseudo(user.getPseudo());
+			}
+		}
 	}
 	
 	public ArrayList<User> getListUsers() {

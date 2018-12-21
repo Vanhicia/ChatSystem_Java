@@ -80,7 +80,8 @@ public class UDPListener implements Runnable {
 					this.nwk.sendListUsersUDPPacket(packet.getSrcUser(), address);
 				}
 				/* Wait few milliseconds 
-				 * in order to send the listUsers without the destination User */
+				 * in order to send the listUsers without the new user
+				 */
 				try {
 					Thread.sleep((long)10);
 				} catch (InterruptedException e) {
@@ -94,6 +95,7 @@ public class UDPListener implements Runnable {
 			case "UserUpdated":
 				System.out.println("A user has changed his/her pseudo");
 				nwk.updateUser(packet.getSrcUser());
+				this.nwk.getController().displayAllUsers();
 				break;
 			/* If a user is disconnected */
 			case "UserDisconnected":
@@ -106,7 +108,6 @@ public class UDPListener implements Runnable {
 				System.out.println("The list of users received");
 				/* Get the list of Users */
 				this.nwk.setListUsers(((ListUsersUDPPacket) packet).getListUsers());
-				this.nwk.getController().displayAllUsers();
 				/* Add the user, who sent the packet, to the list of Users */
 				this.nwk.addUser(packet.getSrcUser());
 				this.nwk.getController().displayAllUsers();
