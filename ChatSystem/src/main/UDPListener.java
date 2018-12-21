@@ -68,7 +68,9 @@ public class UDPListener implements Runnable {
 			case "UserConnected":
 				System.out.println("A new user is connected : " + packet.getSrcUser().getPseudo() + " " + address);
 				/* Add the new user to the list of users */
-				this.nwk.addUser(packet.getSrcUser());
+				User newUser = packet.getSrcUser();
+				newUser.setAddress(address);
+				this.nwk.addUser(newUser);
 				this.nwk.getController().displayAllUsers();
 				this.nwk.getController().refreshWindows();
 				break;
