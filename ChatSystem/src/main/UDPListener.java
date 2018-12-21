@@ -60,7 +60,7 @@ public class UDPListener implements Runnable {
 				/* If the local user is the last user connected, 
 				 * send the list of users
 				 */
-				System.out.println("Send the listUsers to : " + packet.getSrcUser().getPseudo() + " " + address);
+				System.out.println("Send the listUsers to : " + address);
 				if (this.nwk.lastUserConnected()) {
 					this.nwk.sendListUsersUDPPacket(packet.getSrcUser(), address);
 				}

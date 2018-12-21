@@ -12,7 +12,12 @@ public class Controller {
 	private Network nwk = null;
 	
 	public Controller() {
-		this.user = null;
+		try {
+			this.user = new User(UUID.randomUUID(), "", InetAddress.getLocalHost(), 0);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		this.nwk = new Network(this);
 		//this.view = new Window();
 	}
 	
@@ -25,12 +30,6 @@ public class Controller {
 	}
 	
 	public void connect(String pseudo) {
-		try {
-			this.user = new User(UUID.randomUUID(), "", InetAddress.getLocalHost(), System.currentTimeMillis());
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
-		this.nwk = new Network(this);
 		changePseudo(0, pseudo);
 	}
 	
@@ -45,6 +44,7 @@ public class Controller {
 			System.out.println("Your pseudo is unique");
 			user.setPseudo(pseudo);
 			if (option == 0) {
+				this.user.setTimeConnection();
 				this.nwk.sendUDPPacketUserConnected(this.user);
 			} 
 			else {

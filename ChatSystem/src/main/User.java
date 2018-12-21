@@ -42,4 +42,8 @@ public class User implements Serializable{
 		return timeConnection;
 	}
 	
+	public void setTimeConnection() {
+		this.timeConnection = System.currentTimeMillis();
+	}
+	
 }
