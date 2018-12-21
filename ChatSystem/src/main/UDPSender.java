@@ -33,7 +33,7 @@ public class UDPSender implements Runnable {
 	        DatagramPacket outPacket = new DatagramPacket(data, data.length, this.address, this.port) ;
 	        socket.send(outPacket);
 	        
-	        System.out.println("Datagram send to " + this.address);
+	        System.out.println("UDP packet sent to " + this.address);
     	} catch (IOException e) {
 			e.printStackTrace();
 		}
