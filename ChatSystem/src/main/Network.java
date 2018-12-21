@@ -15,7 +15,6 @@ public class Network {
 	private UDPListener UDPListener;
 	private DatagramSocket UDPsocket;
 	private HashMap<String,User> hmap;
-	//private boolean unicityPseudo;
 
     protected static int portUDP = 1233;
     protected static int portTCP = 1234;
@@ -64,22 +63,7 @@ public class Network {
 			e.printStackTrace();
 		}
 	}
-	
-	/* Return true if the pseudo is not used by another user yet */
-	/*public boolean checkUnicityPseudo(String pseudo) {
-		this.unicityPseudo = true;
-		// send a message with the pseudo, in broadcast
-		User localUser = this.contr.getUser();
-		User userTemp = new User(localUser.getId(),pseudo, localUser.getAddress(), localUser.getTimeConnection());
-		this.sendUDPPacketBroadcast(new UDPPacket(userTemp,null,"NewPseudo"));
-		try {
-			TimeUnit.SECONDS.sleep(1);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return this.unicityPseudo;
-	}*/
-	
+		
 	/* Return true if the pseudo is not used by another user yet */
 	public boolean checkUnicityPseudo(String pseudo) {
 		//this.unicityPseudo = true;
@@ -174,11 +158,7 @@ public class Network {
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserDisconnected"));
 		this.UDPsocket.close();
 	}
-	
-	/*public void setUnicityPseudo(boolean b) {
-		this.unicityPseudo = b;
-	}*/
-	
+		
 	public Controller getController() {
 		return this.contr;
 	}

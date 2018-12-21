@@ -24,7 +24,11 @@ import main.Network;
  * @author katran
  */
 public class ChatWindow extends javax.swing.JFrame {
-    private ManagerServer server;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private ManagerServer server;
     //private ClientHandler server;
     private User user;
     private int port;
@@ -45,6 +49,7 @@ public class ChatWindow extends javax.swing.JFrame {
         this.Port.setText("Port : "+ Integer.toString(this.port));
         this.network = network;
         this.listContacts = network.getListUsers();
+        this.printContacts();
 
     }
     public void displayWindow() throws IOException{
@@ -259,8 +264,8 @@ public class ChatWindow extends javax.swing.JFrame {
                 this.setVisible(false);
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 this.dispose();
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.displayWindow();
+                //LoginWindow loginWindow = new LoginWindow();
+                //loginWindow.displayWindow();
                 
             }
         } catch (IOException ex) {

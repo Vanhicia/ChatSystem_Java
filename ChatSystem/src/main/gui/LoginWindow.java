@@ -21,12 +21,14 @@ public class LoginWindow extends javax.swing.JFrame {
     private int port;
     private static Thread manager=null;
     private static ManagerServer server=null;
+    private Controller contr;
 
     /**
      * Creates new form LoginWindow
      */
-    public LoginWindow() {
+    public LoginWindow(Controller c) {
         initComponents();
+        this.contr = c;
     }
 
     
@@ -128,31 +130,12 @@ public class LoginWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
-        
-        this.port=Integer.parseInt(Port.getText());
-        try {
-    		Controller contr = new Controller();
-    		contr.connect(Pseudo.getText());
+
     		
-            server = new ManagerServer(this.port,contr.getNetwork());
-          
-            
-            
-            ChatWindow chat = new ChatWindow(LoginWindow.server, this.port, contr.getUser(), contr.getNetwork()); 
-            chat.displayWindow();
+    		contr.connect(Pseudo.getText());
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
-            manager =new Thread(server);
-            manager.start();
-        
-        } catch(IOException e){
-            System.out.println("Error with manager server, port already use");
-        }
-      
-       
-
-       
     }//GEN-LAST:event_LogInButtonActionPerformed
 
     private void PortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PortActionPerformed
@@ -193,7 +176,7 @@ public class LoginWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginWindow().setVisible(true);
+               // new LoginWindow().setVisible(true);
             }
         });
     }
