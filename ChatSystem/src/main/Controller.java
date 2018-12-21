@@ -15,6 +15,7 @@ public class Controller implements Observer{
 	private ChatWindow chat;
 	private Network nwk = null;
     private static ManagerServer server=null;
+    private Thread manager;
 	public Controller() {
 		try {
 			this.user = new User(UUID.randomUUID(), "", InetAddress.getLocalHost(), 0);
@@ -54,6 +55,8 @@ public class Controller implements Observer{
 					this.server = new ManagerServer(this.nwk.portTCP,this.nwk);
 					this.chat = new ChatWindow(this.server,this.nwk.portTCP, this.user,this.nwk);
 					chat.displayWindow();
+					manager = new Thread(server);
+					manager.start();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
