@@ -79,8 +79,10 @@ public class UDPListener implements Runnable {
 				if (this.nwk.lastUserConnected()) {
 					this.nwk.sendListUsersUDPPacket(packet.getSrcUser(), address);
 				}
+				/* Wait few milliseconds 
+				 * in order to send the listUsers without the destination User */
 				try {
-					TimeUnit.SECONDS.sleep(1);
+					Thread.sleep((long)10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
