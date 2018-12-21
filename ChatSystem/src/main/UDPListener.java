@@ -85,6 +85,7 @@ public class UDPListener implements Runnable {
 				/* Add the new user to the list of users */
 				this.nwk.addUser(packet.getSrcUser());
 				this.nwk.getController().displayAllUsers();
+				this.nwk.getController().refreshWindows();
 				break;
 			/* If a user has changed his/her pseudo */
 			case "UserUpdated":
@@ -92,12 +93,14 @@ public class UDPListener implements Runnable {
 				nwk.updateUser(packet.getSrcUser());
 				System.out.println("The list of users is updated");
 				this.nwk.getController().displayAllUsers();
+				this.nwk.getController().refreshWindows();
 				break;
 			/* If a user is disconnected */
 			case "UserDisconnected":
 				System.out.println("A user is disconnected");
 				this.nwk.deleteUser(packet.getSrcUser());
 				this.nwk.getController().displayAllUsers();
+				this.nwk.getController().refreshWindows();
 				break;
 			/* If the list of Users is received */
 			case "ReplyListUsers":
@@ -107,6 +110,7 @@ public class UDPListener implements Runnable {
 				/* Add the user, who sent the packet, to the list of Users */
 				this.nwk.addUser(packet.getSrcUser());
 				this.nwk.getController().displayAllUsers();
+				this.nwk.getController().refreshWindows();
 				break;
 			default :
 				System.out.println("The UDP packet motive is not recognized !");

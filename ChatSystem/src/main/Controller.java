@@ -3,14 +3,18 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.UUID;
 
+import main.gui.ChatWindow;
 
-public class Controller {
+
+public class Controller implements Observer{
 	private User user;
-	//private Window view;
+	private ChatWindow chat;
 	private Network nwk = null;
-	
+    private static ManagerServer server=null;
 	public Controller() {
 		try {
 			this.user = new User(UUID.randomUUID(), "", InetAddress.getLocalHost(), 0);
@@ -46,6 +50,15 @@ public class Controller {
 			if (option == 0) {
 				this.user.setTimeConnection();
 				this.nwk.sendUDPPacketUserConnected(this.user);
+				try {
+					this.server = new ManagerServer(this.nwk.portTCP,this.nwk);
+					this.chat = new ChatWindow(this.server,this.nwk.portTCP, this.user,this.nwk);
+					chat.displayWindow();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			} 
 			else {
 				this.nwk.sendUDPPacketUserUpdated(this.user);
@@ -85,7 +98,16 @@ public class Controller {
 	}
 	*/
 	
+
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void refreshWindows() {
+		chat.refreshContacts();
 		
 	}
 

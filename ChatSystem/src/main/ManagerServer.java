@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
-public class ManagerServer  implements Runnable, Observer{
+public class ManagerServer  implements Runnable{
 	//
 	private static Thread threadlistener;
 	private ServerSocket serverSocket;
@@ -62,17 +62,7 @@ public class ManagerServer  implements Runnable, Observer{
 		listener.setRunning(false);
 	}
 
-	/*public HashMap<InetAddress, ClientHandler> getHmap() {
-		return hmap;
-	}
-*/
-	@Override
-	public void update(Observable o, Object arg) {
-		//arg contains the message that we have just received with src and dest
-		System.out.println(arg.toString());
-		
-		
-	}
+
 
 	
 }
