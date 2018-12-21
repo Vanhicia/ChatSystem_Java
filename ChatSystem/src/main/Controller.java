@@ -49,6 +49,7 @@ public class Controller implements Observer{
 			System.out.println("Your pseudo is unique");
 			user.setPseudo(pseudo);
 			if (option == 0) {
+				System.out.println("You are connected");
 				this.user.setTimeConnection();
 				this.nwk.sendUDPPacketUserConnected();
 				try {
@@ -58,11 +59,11 @@ public class Controller implements Observer{
 					manager = new Thread(server);
 					manager.start();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} 
 			else {
+				System.out.println("Your pseudo is updated");
 				this.nwk.sendUDPPacketUserUpdated();
 			}
 		} 
