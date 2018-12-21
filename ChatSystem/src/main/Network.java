@@ -2,6 +2,7 @@ package main;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +14,7 @@ public class Network {
 	private ArrayList<User> listUsers;
 	private UDPListener UDPListener;
 	private DatagramSocket UDPsocket;
-	
+	private HashMap<String,User> hmap;
 	//private boolean unicityPseudo;
 
     protected static int portUDP = 1233;
@@ -22,7 +23,7 @@ public class Network {
 	public Network(Controller contr) {
 		this.contr = contr;
 		this.listUsers = new ArrayList<User>();
-		
+		this.hmap = new HashMap<String, User>();
 		// create a thread UDPListener
 		try {
 			this.UDPsocket = new DatagramSocket(portUDP);
@@ -176,6 +177,13 @@ public class Network {
 		return this.contr;
 	}
 	
+    public HashMap<String,User> getHmap(){
+        return this.hmap;
+    }
+    
+    public User findUserWithPseudo(String dest){
+        return this.hmap.get(dest);
+    }
 	/*public int getPortUDP() {
 		return portUDP;
 	}
