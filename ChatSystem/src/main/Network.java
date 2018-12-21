@@ -170,7 +170,14 @@ public class Network {
     }
     
     public User findUserWithPseudo(String dest){
-        return this.hmap.get(dest);
+    	for (User tmp : listUsers) {
+    		if (tmp.getPseudo()==dest) {
+    			return tmp;
+    		}
+    		
+    	}
+    	return null;
+        
     }
 	/*public int getPortUDP() {
 		return portUDP;
