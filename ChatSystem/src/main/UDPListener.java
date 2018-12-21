@@ -95,7 +95,9 @@ public class UDPListener implements Runnable {
 				/* Get the list of Users */
 				this.nwk.setListUsers(((ListUsersUDPPacket) packet).getListUsers());
 				/* Add the user, who sent the packet, to the list of Users */
-				this.nwk.addUser(packet.getSrcUser());
+				User srcUser = packet.getSrcUser();
+				srcUser.setAddress(address);
+				this.nwk.addUser(srcUser);
 				this.nwk.getController().displayAllUsers();
 				this.nwk.getController().refreshWindows();
 				break;

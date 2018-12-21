@@ -80,6 +80,7 @@ public class Network {
 	
 	/* Send a request to have the list of users, in broadcast */
 	public void sendUDPPacketRequestListUsers() {
+		System.out.println("Send a resquest of user list");
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"RequestListUsers"));
 	}
 	/* Send the identity of the new user in broadcast */
