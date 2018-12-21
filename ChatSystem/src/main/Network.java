@@ -70,7 +70,7 @@ public class Network {
 		User userTemp = new User(localUser.getId(),pseudo, localUser.getAddress(), localUser.getTimeConnection());
 		this.sendUDPPacketBroadcast(new UDPPacket(userTemp,null,"NewPseudo"));
 		try {
-			TimeUnit.SECONDS.sleep(3);
+			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -88,9 +88,7 @@ public class Network {
 	
 	/* Send the list of users */
 	public void sendListUsersUDPPacket(User userDest, InetAddress address) {
-		//ArrayList<User> listUsersTemp = (ArrayList<User>) this.listUsers.clone();
-		//listUsersTemp.add(this.contr.getUser()); // the local user is added to the list of users
-		this.sendUDPPacketUnicast(new ListUsersUDPPacket(this.contr.getUser(),userDest,listUsers),userDest.getAddress());
+		this.sendUDPPacketUnicast(new ListUsersUDPPacket(this.contr.getUser(),userDest,this.listUsers),userDest.getAddress());
 	}
 	
 	/* Return true if the local user is the last user connected */

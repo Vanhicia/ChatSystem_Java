@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.concurrent.TimeUnit;
 
 /* Listen and notify when a packet is received */
 
@@ -78,6 +79,11 @@ public class UDPListener implements Runnable {
 				if (this.nwk.lastUserConnected()) {
 					this.nwk.sendListUsersUDPPacket(packet.getSrcUser(), address);
 				}
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				/* Add the new user to the list of users */
 				this.nwk.addUser(packet.getSrcUser());
 				this.nwk.getController().displayAllUsers();
@@ -98,6 +104,7 @@ public class UDPListener implements Runnable {
 				System.out.println("The list of users received");
 				/* Get the list of Users */
 				this.nwk.setListUsers(((ListUsersUDPPacket) packet).getListUsers());
+				this.nwk.getController().displayAllUsers();
 				/* Add the user, who sent the packet, to the list of Users */
 				this.nwk.addUser(packet.getSrcUser());
 				this.nwk.getController().displayAllUsers();
