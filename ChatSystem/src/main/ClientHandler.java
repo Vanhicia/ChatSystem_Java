@@ -60,7 +60,7 @@ public class ClientHandler  extends Observable implements Runnable{
 	    		    }
 	    		    
 		    		this.history.addEntry(data);
-
+		    		System.out.println(data.msg);
 		    		
 	    		}
 
