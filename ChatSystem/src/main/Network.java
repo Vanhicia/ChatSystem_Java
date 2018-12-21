@@ -30,6 +30,7 @@ public class Network {
 			this.UDPListener = new UDPListener(this, this.UDPsocket);
 			Thread threadListener = new Thread(this.UDPListener);
 			threadListener.start();	
+			/* Send a request of listUsers */
 			this.sendUDPPacketRequestListUsers();
 		} catch (SocketException e) {
 			e.printStackTrace();
@@ -80,7 +81,7 @@ public class Network {
 	
 	/* Send a request to have the list of users, in broadcast */
 	public void sendUDPPacketRequestListUsers() {
-		System.out.println("Send a resquest of user list");
+		System.out.println("Send a request of user list");
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"RequestListUsers"));
 	}
 	/* Send the identity of the new user in broadcast */
