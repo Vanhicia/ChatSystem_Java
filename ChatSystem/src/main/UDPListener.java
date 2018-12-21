@@ -60,6 +60,7 @@ public class UDPListener implements Runnable {
 				/* If the local user is the last user connected, 
 				 * send the list of users
 				 */
+				System.out.println("Send the listUsers to : " + packet.getSrcUser().getPseudo() + " " + address);
 				if (this.nwk.lastUserConnected()) {
 					this.nwk.sendListUsersUDPPacket(packet.getSrcUser(), address);
 				}
@@ -80,16 +81,7 @@ public class UDPListener implements Runnable {
 				break;*/
 			/* If a new user is connected */
 			case "UserConnected":
-				System.out.println("A new user is connected : " + packet.getSrcUser().getPseudo());
-				
-				/* Wait few milliseconds 
-				 * in order to send the listUsers without the new user
-				 */
-				try {
-					Thread.sleep((long)10);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				System.out.println("A new user is connected : " + packet.getSrcUser().getPseudo() + " " + address);
 				/* Add the new user to the list of users */
 				this.nwk.addUser(packet.getSrcUser());
 				this.nwk.getController().displayAllUsers();
