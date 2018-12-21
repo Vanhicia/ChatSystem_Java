@@ -95,6 +95,7 @@ public class UDPListener implements Runnable {
 			case "UserUpdated":
 				System.out.println("A user has changed his/her pseudo");
 				nwk.updateUser(packet.getSrcUser());
+				System.out.println("The list of users is updated");
 				this.nwk.getController().displayAllUsers();
 				break;
 			/* If a user is disconnected */
