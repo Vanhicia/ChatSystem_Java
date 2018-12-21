@@ -7,12 +7,12 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
 
-import main.gui.ChatWindow;
+import main.gui.Contact;
 
 
 public class Controller implements Observer{
 	private User user;
-	private ChatWindow chat;
+	private Contact contacts;
 	private Network nwk = null;
     private static ManagerServer server=null;
     private Thread manager;
@@ -53,8 +53,8 @@ public class Controller implements Observer{
 				this.nwk.sendUDPPacketUserConnected();
 				try {
 					this.server = new ManagerServer(this.nwk.portTCP,this.nwk);
-					this.chat = new ChatWindow(this.server,this.nwk.portTCP, this.user,this.nwk);
-					chat.displayWindow();
+					this.contacts = new Contact(this.server,this.nwk.portTCP, this.user,this.nwk);
+					contacts.displayWindow();
 					manager = new Thread(server);
 					manager.start();
 				} catch (IOException e) {
@@ -109,7 +109,7 @@ public class Controller implements Observer{
 	}
 
 	public void refreshWindows() {
-		chat.refreshContacts();
+		contacts.refreshContacts();
 		
 	}
 
