@@ -24,12 +24,14 @@ public class Network {
 		this.contr = contr;
 		this.listUsers = new ArrayList<User>();
 		this.hmap = new HashMap<String, User>();
-		// create a thread UDPListener
 		try {
+			/* Create a socket to communicate with UDP */
 			this.UDPsocket = new DatagramSocket(portUDP);
+			/* Create a thread UDPListener */
 			this.UDPListener = new UDPListener(this, this.UDPsocket);
 			Thread threadListener = new Thread(this.UDPListener);
-			threadListener.start();
+			threadListener.start();	
+			this.sendUDPPacketRequestListUsers();
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
@@ -92,12 +94,16 @@ public class Network {
 		return unicity;
 	}
 	
+	/* Send a request to have the list of users, in broadcast */
+	public void sendUDPPacketRequestListUsers() {
+		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"RequestListUsers"));
+	}
 	/* Send the identity of the new user in broadcast */
-	public void sendUDPPacketUserConnected(User user) {
+	public void sendUDPPacketUserConnected() {
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserConnected"));
 	}
 	/* Send the identity of the updated user in broadcast */
-	public void sendUDPPacketUserUpdated(User user) {
+	public void sendUDPPacketUserUpdated() {
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserUpdated"));
 	}
 	

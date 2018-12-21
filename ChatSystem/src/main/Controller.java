@@ -45,10 +45,10 @@ public class Controller {
 			user.setPseudo(pseudo);
 			if (option == 0) {
 				this.user.setTimeConnection();
-				this.nwk.sendUDPPacketUserConnected(this.user);
+				this.nwk.sendUDPPacketUserConnected();
 			} 
 			else {
-				this.nwk.sendUDPPacketUserUpdated(this.user);
+				this.nwk.sendUDPPacketUserUpdated();
 			}
 		} 
 		else {

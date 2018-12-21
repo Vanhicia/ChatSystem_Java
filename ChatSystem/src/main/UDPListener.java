@@ -101,7 +101,7 @@ public class UDPListener implements Runnable {
 				break;
 			/* If the list of Users is received */
 			case "ReplyListUsers":
-				System.out.println("The list of users received");
+				System.out.println("The list of users is received");
 				/* Get the list of Users */
 				this.nwk.setListUsers(((ListUsersUDPPacket) packet).getListUsers());
 				/* Add the user, who sent the packet, to the list of Users */
