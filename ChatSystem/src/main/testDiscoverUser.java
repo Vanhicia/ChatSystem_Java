@@ -7,9 +7,10 @@ import java.util.concurrent.TimeUnit;
 public class testDiscoverUser {
 	public static void main (String arg[]) throws InterruptedException { 
 		Controller contr = new Controller();
-		contr.connect("Sisi");
-		TimeUnit.SECONDS.sleep(3);
-		contr.disconnect();
+		contr.connect("Titi");
+		//TimeUnit.SECONDS.sleep(3);
+		//contr.changePseudo(1, "Toto");
+		//contr.disconnect();
 		
 	}
 }

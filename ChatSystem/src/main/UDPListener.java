@@ -56,29 +56,32 @@ public class UDPListener implements Runnable {
 	public void handlePacket(UDPPacket packet, InetAddress address) {
 		String motive = packet.getMotive();
 		switch(motive) {
-			/* If the packet asked the uniqueness of a pseudo */
-			case "NewPseudo":				
-				/* If the local user uses this pseudo, he/she answered with a unicast UDP packet */
-				if (packet.getSrcUser().getPseudo().equals(nwk.getController().getUser().getPseudo())) {
-					System.out.println("Someone would like to use your pseudo !");
-					/* Send a packet in unicast to warn the pseudo is already used */
-					this.nwk.sendUDPPacketUnicast(new UDPPacket(this.nwk.getController().getUser(),packet.getSrcUser(),"PseudoAlreadyUsed"),address);
-				}
-				break;
-			/* If the pseudo chosen by the local user is already used */
-			case "PseudoAlreadyUsed":
-				System.out.println("Someone has already this pseudo, choose another one !");
-				this.nwk.setUnicityPseudo(false);
-				break;
-			/* If a new user is connected */
-			case "UserConnected":
-				System.out.println("A new user is connected : " + packet.getSrcUser().getPseudo());
-				/* If the local user is the previous last user connected, 
-				 * send the list of users to the new user connected
+			case "RequestListUsers":
+				/* If the local user is the last user connected, 
+				 * send the list of users
 				 */
 				if (this.nwk.lastUserConnected()) {
 					this.nwk.sendListUsersUDPPacket(packet.getSrcUser(), address);
 				}
+			break;
+			/* If the packet asked the uniqueness of a pseudo */
+			//case "NewPseudo":				
+				/* If the local user uses this pseudo, he/she answered with a unicast UDP packet */
+				/*if (packet.getSrcUser().getPseudo().equals(nwk.getController().getUser().getPseudo())) {
+					System.out.println("Someone would like to use your pseudo !");*/
+					/* Send a packet in unicast to warn the pseudo is already used */
+					/*this.nwk.sendUDPPacketUnicast(new UDPPacket(this.nwk.getController().getUser(),packet.getSrcUser(),"PseudoAlreadyUsed"),address);
+				}
+				break;*/
+			/* If the pseudo chosen by the local user is already used */
+			/*case "PseudoAlreadyUsed":
+				System.out.println("Someone has already this pseudo, choose another one !");
+				this.nwk.setUnicityPseudo(false);
+				break;*/
+			/* If a new user is connected */
+			case "UserConnected":
+				System.out.println("A new user is connected : " + packet.getSrcUser().getPseudo());
+				
 				/* Wait few milliseconds 
 				 * in order to send the listUsers without the new user
 				 */
@@ -105,7 +108,7 @@ public class UDPListener implements Runnable {
 				this.nwk.getController().displayAllUsers();
 				break;
 			/* If the list of Users is received */
-			case "ListUsers":
+			case "ReplyListUsers":
 				System.out.println("The list of users received");
 				/* Get the list of Users */
 				this.nwk.setListUsers(((ListUsersUDPPacket) packet).getListUsers());

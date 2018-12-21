@@ -14,7 +14,7 @@ public class Network {
 	private UDPListener UDPListener;
 	private DatagramSocket UDPsocket;
 	
-	private boolean unicityPseudo;
+	//private boolean unicityPseudo;
 
     protected static int portUDP = 1233;
     protected static int portTCP = 1234;
@@ -63,7 +63,7 @@ public class Network {
 	}
 	
 	/* Return true if the pseudo is not used by another user yet */
-	public boolean checkUnicityPseudo(String pseudo) {
+	/*public boolean checkUnicityPseudo(String pseudo) {
 		this.unicityPseudo = true;
 		// send a message with the pseudo, in broadcast
 		User localUser = this.contr.getUser();
@@ -75,6 +75,20 @@ public class Network {
 			e.printStackTrace();
 		}
 		return this.unicityPseudo;
+	}*/
+	
+	/* Return true if the pseudo is not used by another user yet */
+	public boolean checkUnicityPseudo(String pseudo) {
+		//this.unicityPseudo = true;
+		boolean unicity = true;
+		Iterator<User> usersIter = this.listUsers.iterator();
+		while (unicity && usersIter.hasNext()) {
+			User nextUser = usersIter.next();
+			if (nextUser.getPseudo() == pseudo) {
+				unicity = false;
+			}
+		}
+		return unicity;
 	}
 	
 	/* Send the identity of the new user in broadcast */
@@ -112,10 +126,20 @@ public class Network {
 	
 	/* Remove a User from the listUsers */
 	public void deleteUser(User user) {
-		this.listUsers.remove(user);
+		boolean delete = false;
+		Iterator<User> usersIter = this.listUsers.iterator();
+		while (!delete && usersIter.hasNext()) {
+			User nextUser = usersIter.next();
+			if (nextUser.getId() == user.getId()) {
+				this.listUsers.remove(nextUser);
+			}
+		}
+		if (!delete) {
+			System.out.println("Problem to delete the user : he/she can't be find in the list");
+		}
 	}
 	
-	/* Upadate a User, ie change his/her pseudo */
+	/* Update a User, ie change his/her pseudo */
 	public void updateUser(User user) {
 		boolean update = false;
 		Iterator<User> usersIter = this.listUsers.iterator();
@@ -125,6 +149,9 @@ public class Network {
 				update = true;
 				nextUser.setPseudo(user.getPseudo());
 			}
+		}
+		if (!update) {
+			System.out.println("Problem to update the user : he/she can't be find in the list");
 		}
 	}
 	
@@ -138,17 +165,12 @@ public class Network {
 	
 	public void closeNetwork() {
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserDisconnected"));
-		try {
-			TimeUnit.SECONDS.sleep(3);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		this.UDPsocket.close();
 	}
 	
-	public void setUnicityPseudo(boolean b) {
+	/*public void setUnicityPseudo(boolean b) {
 		this.unicityPseudo = b;
-	}
+	}*/
 	
 	public Controller getController() {
 		return this.contr;

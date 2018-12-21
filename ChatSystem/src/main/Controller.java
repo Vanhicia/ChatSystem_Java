@@ -41,14 +41,14 @@ public class Controller {
 	/* Option = 0 : pseudo of a new user */
 	/* Option =/= 0 : pseudo updated */
 	public void changePseudo(int option, String pseudo) {
-		if (nwk.checkUnicityPseudo(pseudo)==true) {
+		if (this.nwk.checkUnicityPseudo(pseudo)==true) {
 			System.out.println("Your pseudo is unique");
 			user.setPseudo(pseudo);
 			if (option == 0) {
-				nwk.sendUDPPacketUserConnected(this.user);
+				this.nwk.sendUDPPacketUserConnected(this.user);
 			} 
 			else {
-				nwk.sendUDPPacketUserUpdated(this.user);
+				this.nwk.sendUDPPacketUserUpdated(this.user);
 			}
 		} 
 		else {

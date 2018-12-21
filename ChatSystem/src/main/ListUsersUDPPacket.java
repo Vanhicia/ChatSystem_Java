@@ -6,7 +6,7 @@ public class ListUsersUDPPacket extends UDPPacket {
 	private ArrayList<User> listUsers;
 	
 	public ListUsersUDPPacket(User srcUser, User destUser, ArrayList<User> listUsers) {
-		super(srcUser, destUser, "ListUsers");
+		super(srcUser, destUser, "ReplyListUsers");
 		this.listUsers = listUsers;
 	}
 	
