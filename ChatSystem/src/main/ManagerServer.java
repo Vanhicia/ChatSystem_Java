@@ -17,7 +17,6 @@ public class ManagerServer  implements Runnable, Observer{
 	//
 	private static Thread threadlistener;
 	private ServerSocket serverSocket;
-	private volatile boolean running = true ;
 	private Network network;
 	//private History history;
 	private TCPListener listener;
@@ -60,8 +59,7 @@ public class ManagerServer  implements Runnable, Observer{
 	
 	public void closeServer() throws IOException {
 		System.out.println("Close Server");
-                this.running=false;
-	        serverSocket.close();
+		listener.setRunning(false);
 	}
 
 	/*public HashMap<InetAddress, ClientHandler> getHmap() {

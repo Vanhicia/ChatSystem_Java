@@ -10,29 +10,48 @@ import java.util.UUID;
 
 public class TCPListener implements Runnable, Observer{
 	private static ClientHandler clientHandler;
+	private ServerSocket serverSocket;
+	private Network network;
 	private static Thread thread;
-	//private HashMap<User, ClientHandler> hmap;
 	private HashMap<UUID, ClientHandler> hmap;
 	private ClientHandler userdestupdate=null;
+	private volatile boolean running;
+	
 	public TCPListener(ServerSocket serverSocket, Network network) throws IOException {
-		//this.hmap = new HashMap<User, ClientHandler>();
-		this.hmap = new HashMap<UUID, ClientHandler>();
-		System.out.println("Waiting for a client ..."); 
-    	Socket clientsocket = serverSocket.accept();
-        clientHandler = new ClientHandler(clientsocket, network);
-
-        thread = new Thread(clientHandler);
-        thread.start();
-        System.out.println("Client accepted: " + clientsocket);
-        System.out.println("Connexion with "+clientsocket.getInetAddress().toString());
-
-        clientHandler.addObserver(this);
+		this.running =true;
+		this.serverSocket = serverSocket;
+		this.network =network;
 	}
 
 	@Override
 	public void run() {
-		
-		
+		while(this.running) {
+			try {
+			this.hmap = new HashMap<UUID, ClientHandler>();
+			System.out.println("Waiting for a client ..."); 
+	    	Socket clientsocket;
+
+			clientsocket = serverSocket.accept();
+
+	        clientHandler = new ClientHandler(clientsocket, network);
+
+	        thread = new Thread(clientHandler);
+	        thread.start();
+	        System.out.println("Client accepted: " + clientsocket);
+	        System.out.println("Connexion with "+clientsocket.getInetAddress().toString());
+
+	        clientHandler.addObserver(this);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		try {
+			this.serverSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public HashMap<UUID, ClientHandler> getHmap() {
@@ -49,6 +68,11 @@ public class TCPListener implements Runnable, Observer{
         }
 
 	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+	
 	
 	
 }
