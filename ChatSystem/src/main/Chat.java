@@ -14,6 +14,5 @@ public class Chat {
     public static void main(String[] args) throws IOException{
          LoginWindow loginWindow = new LoginWindow();
          loginWindow.displayWindow();
-        
     }
 }
