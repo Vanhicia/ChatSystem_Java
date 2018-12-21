@@ -95,7 +95,7 @@ public class Network {
 	
 	/* Send the list of users */
 	public void sendListUsersUDPPacket(User userDest, InetAddress address) {
-		this.sendUDPPacketUnicast(new ListUsersUDPPacket(this.contr.getUser(),userDest,this.listUsers),userDest.getAddress());
+		this.sendUDPPacketUnicast(new ListUsersUDPPacket(this.contr.getUser(),userDest,this.listUsers),address);
 	}
 	
 	/* Return true if the local user is the last user connected */
