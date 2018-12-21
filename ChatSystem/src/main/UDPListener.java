@@ -76,7 +76,7 @@ public class UDPListener implements Runnable {
 				 * send the list of users to the new user connected
 				 */
 				if (this.nwk.lastUserConnected()) {
-					this.nwk.sendListUsersUDPPacket(packet.getSrcUser());
+					this.nwk.sendListUsersUDPPacket(packet.getSrcUser(), address);
 				}
 				/* Add the new user to the list of users */
 				this.nwk.addUser(packet.getSrcUser());
@@ -96,7 +96,10 @@ public class UDPListener implements Runnable {
 			/* If the list of Users is received */
 			case "ListUsers":
 				System.out.println("The list of users received");
+				/* Get the list of Users */
 				this.nwk.setListUsers(((ListUsersUDPPacket) packet).getListUsers());
+				/* Add the user, who sent the packet, to the list of Users */
+				this.nwk.addUser(packet.getSrcUser());
 				this.nwk.getController().displayAllUsers();
 				break;
 			default :

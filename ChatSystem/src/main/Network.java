@@ -87,13 +87,13 @@ public class Network {
 	}
 	
 	/* Send the list of users */
-	public void sendListUsersUDPPacket(User userDest) {
-		ArrayList<User> listUsersTemp = this.listUsers;
-		listUsersTemp.add(this.contr.getUser()); // the local user is added to the list of users
-		this.sendUDPPacketUnicast(new ListUsersUDPPacket(this.contr.getUser(),userDest, listUsers),userDest.getAddress());
+	public void sendListUsersUDPPacket(User userDest, InetAddress address) {
+		//ArrayList<User> listUsersTemp = (ArrayList<User>) this.listUsers.clone();
+		//listUsersTemp.add(this.contr.getUser()); // the local user is added to the list of users
+		this.sendUDPPacketUnicast(new ListUsersUDPPacket(this.contr.getUser(),userDest,listUsers),userDest.getAddress());
 	}
 	
-	/* Return true is the local user is the last user connected */
+	/* Return true if the local user is the last user connected */
 	public boolean lastUserConnected() {
 		boolean last = true;
 		User localUser = this.contr.getUser();
