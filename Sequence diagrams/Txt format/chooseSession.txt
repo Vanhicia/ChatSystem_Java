@@ -1,0 +1,7 @@
+title chooseSession
+
+
+User->ChatSystem: OnClickChooseSession()
+ChatSystem->CommunicationSystem: getSession(id,date)
+ChatSystem->User:displayWindow() 
+

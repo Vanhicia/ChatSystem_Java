@@ -1,0 +1,13 @@
+title ChatSystem - Send message
+
+loop running=true
+
+User->GUI : writeMessage()
+GUI->ManagerServer:getMessageTextField()
+alt hmap.get(UUIDUserDest) != null
+ManagerServer->ClientHandler:sendMessage(message)
+ClientHandler->CommunicationSystem:writeObject(message)
+
+
+end
+end

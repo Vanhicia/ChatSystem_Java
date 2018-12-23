@@ -1,0 +1,28 @@
+title ChatSystem - Login
+
+loop  pseudoOK=false
+User->GUI:enterPseudo()
+User->GUI:OnClickConnectButton()
+note over Controller: pseudoOK = false
+
+GUI->Controller: getPseudoTextField()
+Controller->ModelUser:createUser(pseudo)
+Controller->Network:createNetwork(user)
+Network->ThreadUDPListening:createThreadUDPListening(network, socket)
+ThreadUDPListening->CommunicationSystem:sendUDPPacketBroadcast(packet)
+
+
+Controller<-Network:checkUnicity(pseudo)
+GUI->ManagerServer:createManagerServer(port,network)
+alt pseudoOK=true
+Network->ManagerServer:createManagerServer(network)
+ManagerServer->TCPListenner : createTCPListener(serverSocket,network)
+TCPListenner->ClientHandler:createClientHandler(serverSocket.accept, network)
+Controller->GUI: closeLoginWindow()
+Controller->GUI: createChatWindow()
+note over Controller: running=true
+GUI->User : displayChatWindow()
+
+
+end
+end

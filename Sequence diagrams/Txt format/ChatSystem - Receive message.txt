@@ -1,0 +1,7 @@
+title ChatSystem - Receive message
+
+loop running=true
+ClientHandler<-CommunicationSystem:receiveData(message)
+ClientHandler->GUI:setTextfield(message)
+User<-GUI : printMessage()
+end

@@ -1,0 +1,4 @@
+title startSession
+
+User->ChatSystem:lauchSession(pseudo)
+ChatSystem->CommunicationSystem: launchClientTCP(@IP, port)

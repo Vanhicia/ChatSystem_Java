@@ -1,0 +1,14 @@
+title sendMessage
+
+alt 
+User->ChatSystem: addText()
+else 
+User->ChatSystem: addFile()
+else 
+User->ChatSystem: addText()
+User->ChatSystem: addFile()
+end
+User->ChatSystem: OnClickSendButton()
+ChatSystem->ClockSystem : horodateMessage()
+ChatSystem->CommunicationSystem: send(Message, @IP, port)
+
