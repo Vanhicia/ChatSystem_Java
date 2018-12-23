@@ -1,0 +1,804 @@
+Entities_Definitions DEFINITIONS ::= BEGIN
+file_ref ::= SEQUENCE OF {
+	SEQUENCE {
+		identity oid,
+		folder oid,
+		persist_as string
+	}
+}
+project ::= SEQUENCE OF {
+	SEQUENCE {
+		identity oid,
+		default_configuration oid
+	}
+}
+folder ::= SEQUENCE OF {
+	SEQUENCE {
+		identity oid,
+		folder oid,
+		extensions string,
+		name string
+	}
+}
+configuration ::= SEQUENCE OF {
+	SEQUENCE {
+		identity oid,
+		name string,
+		project oid
+	}
+}
+prop ::= SEQUENCE OF {
+	SEQUENCE {
+		identity oid,
+		name string,
+		entity oid,
+		configuration oid,
+		values SEQUENCE OF string
+	}
+}
+base ::= SEQUENCE OF {
+	SEQUENCE {
+		oid_count integer,
+		version string
+	}
+}
+base ::= {
+{13, ""}
+}
+prop ::= {
+{"3", "@STUDIO:PRODUCT", "1", NULL, {"u2", "elvis"}},
+{"4", "@STUDIO:ACTIVETOOL", "1", NULL, {"U2ApplicationBuilder3"}},
+{"5", "@ADDINEclipseIntegration:STATE", "1", NULL, {"ACTIVE"}},
+{"12", "@U2:Session", "1", NULL, {"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<u2 OMVersion=\"3.7\" StorageVersion=\"4\">
+<Session Guid=\"jR9S8VITrrILLWoa-Iq9DQJI\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"cv32tEJkrUlLh1X7pIkIPX5V\">
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Integer@=@Integer@Integer@Integer\"/>
+<cRightOperand>
+<Ident Name=\"JAVA_5\">
+<rDefinition R=\"uid:HHEtEIZNL-VLvsIhoIKQpMcE\"/>
+</Ident>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"languageVersion\">
+<rDefinition R=\"uid:71L7nEkeKtvLsOT71LWBkqoL\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@JavaView@javaSettings\"/>
+</InstanceExpr>
+<InstanceExpr Guid=\"DGSSrVY09xALfVHXzVlaclsE\">
+<cExpression>
+<BinaryExpr>
+<rOperation>
+<Ident Name=\"=\">
+<rDefinition R=\"uid:@Predefined@Any@=@Any@Any@Any\"/>
+</Ident>
+</rOperation>
+<cRightOperand>
+<TemplateInstantiation Name=\"Vector\">
+<rDefinition R=\"uid:10MfmEGJQ7FLhIc9WIGWEhWL\"/>
+<cScopeQualifier>
+<Ident Name=\"util\">
+<rDefinition R=\"uid:xhPvqEyykcALFmhagEYsIQlE\"/>
+<cScopeQualifier>
+<Ident Name=\"java\">
+<rDefinition R=\"uid:YwbXGIQ9KJFLZSxY-I411BMI\"/>
+</Ident>
+</cScopeQualifier>
+</Ident>
+</cScopeQualifier>
+<cActualTemplateParameter>
+<Ident Name=\"Any\">
+<rDefinition R=\"uid:@Predefined@Any\"/>
+</Ident>
+</cActualTemplateParameter>
+</TemplateInstantiation>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"Type\">
+<rDefinition R=\"uid:@Predefined@containerType@Type\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@containerType\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<cHiddenStereotypeInstance>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\DiagramAgents.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\DiagramView.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\ExtensionManagement.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\LineStyle.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\TTDAPI.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\TTDAgent.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\TTDExport.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\TTDFileModel.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\TTDLinks.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\TTDMetamodel.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\TTDPredefinedStereotypes.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\TTDQuery.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\TTDStereotypeDetails.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\U2ParserProfile.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\ttdab.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\JavaView.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc/JavaParser.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Boolean@=@Boolean@Boolean@Boolean\"/>
+<cRightOperand>
+<Ident Name=\"true\">
+<rDefinition R=\"uid:@Predefined@Boolean@true\"/>
+</Ident>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"isLibrary\">
+<rDefinition R=\"uid:@Predefined@modelDependency@isLibrary\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\TTDImporters.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Boolean@=@Boolean@Boolean@Boolean\"/>
+<cRightOperand>
+<Ident Name=\"true\">
+<rDefinition R=\"uid:@Predefined@Boolean@true\"/>
+</Ident>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"isLibrary\">
+<rDefinition R=\"uid:@Predefined@modelDependency@isLibrary\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\TTDXMLFramework.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Boolean@=@Boolean@Boolean@Boolean\"/>
+<cRightOperand>
+<Ident Name=\"true\">
+<rDefinition R=\"uid:@Predefined@Boolean@true\"/>
+</Ident>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"isLibrary\">
+<rDefinition R=\"uid:@Predefined@modelDependency@isLibrary\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc\\UML2Appearance.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Boolean@=@Boolean@Boolean@Boolean\"/>
+<cRightOperand>
+<Ident Name=\"true\">
+<rDefinition R=\"uid:@Predefined@Boolean@true\"/>
+</Ident>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"isLibrary\">
+<rDefinition R=\"uid:@Predefined@modelDependency@isLibrary\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc/TTDModelCodeSync.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Boolean@=@Boolean@Boolean@Boolean\"/>
+<cRightOperand>
+<Ident Name=\"true\">
+<rDefinition R=\"uid:@Predefined@Boolean@true\"/>
+</Ident>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"isLibrary\">
+<rDefinition R=\"uid:@Predefined@modelDependency@isLibrary\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc/JavaModelCodeSync.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Boolean@=@Boolean@Boolean@Boolean\"/>
+<cRightOperand>
+<Ident Name=\"true\">
+<rDefinition R=\"uid:@Predefined@Boolean@true\"/>
+</Ident>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"isLibrary\">
+<rDefinition R=\"uid:@Predefined@modelDependency@isLibrary\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+<InstanceExpr>
+<cExpression>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Collection@=@Collection@Collection@Collection\"/>
+<cRightOperand>
+<CharstringValue ValueString=\"urn:u2:etc/Java5Profile.u2\">
+</CharstringValue>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"strUri\">
+<rDefinition R=\"uid:@Predefined@modelDependency@strUri\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+<BinaryExpr>
+<rOperation R=\"uid:@Predefined@Boolean@=@Boolean@Boolean@Boolean\"/>
+<cRightOperand>
+<Ident Name=\"true\">
+<rDefinition R=\"uid:@Predefined@Boolean@true\"/>
+</Ident>
+</cRightOperand>
+<cLeftOperand>
+<Ident Name=\"isLibrary\">
+<rDefinition R=\"uid:@Predefined@modelDependency@isLibrary\"/>
+</Ident>
+</cLeftOperand>
+</BinaryExpr>
+</cExpression>
+<rInstanceOf R=\"uid:@Predefined@modelDependency\"/>
+</InstanceExpr>
+</cHiddenStereotypeInstance>
+<cClientDependency>
+<Dependency Guid=\"yuH4QV1jqPVLLg7ZzVMwbTAE\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"F6wDzExzUSVLvaBcILlvrNaI\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:oCLzdV71PC0LDRRgmLF5Q-rE\"/>
+</Dependency>
+<Dependency Guid=\"le-YjEjCSHDLKBvh4E3BgQzI\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"yalQ2IVaFjLLnHS71VSdX7mI\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDMetamodel\"/>
+</Dependency>
+<Dependency Guid=\"GFBiKVXBzqFLUVb61I2KTdvL\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"-RKxbIgrlcCLhSC7fEwfEiyV\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDPredefinedStereotypes\"/>
+</Dependency>
+<Dependency Guid=\"6l7TcEWSat5LRDPh*I4lcQjV\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"TW7ouLdRdr0LmsTkFL1k4TQE\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDLineStyles\"/>
+</Dependency>
+<Dependency Guid=\"l7UO-VwpmrALX55f9LCVQVOL\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"aqa8OEpblmVLw1UgzVBR*ZYI\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDExtensionManagement\"/>
+</Dependency>
+<Dependency Guid=\"*udmzLjttAiL5H9ZfEyXvnoL\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"m-a4AL-iN1VL8*1dyV1lHpVL\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDApplicationBuilder\"/>
+</Dependency>
+<Dependency Guid=\"ZOmjGEqwVAFLZ3EgRLaRt3WV\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"HsZ0PVmqv6LLnXWZVEWVgPFE\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:UQpkkI8hEdALIBZ92EnYVMRI\"/>
+</Dependency>
+<Dependency Guid=\"bmBcwEVzKEVLNBWkGES2bUwE\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"R9GMCEngoYFLIV278LuDaRHL\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDExport\"/>
+</Dependency>
+<Dependency Guid=\"IDgwpIBTu9iL30ChzLJxIeII\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"Sew6FEf1z*eLIW2g*ELLjI9L\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDStereotypeDetails\"/>
+</Dependency>
+<Dependency Guid=\"ugpPeEXxJbCL-scXzVdYLccL\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"dvmcyVJnNdlL-7ShwI8Pe6YV\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:6gWZ9LDbqBBL2qGhlL-vixnV\"/>
+</Dependency>
+<Dependency Guid=\"cmD7ZEz7WTBLL*h9lLpcgJVV\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"1Jxo-EWGgkSLSCHk9Em*pHBV\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:S8QLhIoKAv0LbSjc9LUqc08E\"/>
+</Dependency>
+<Dependency Guid=\"E2NNyEQ-1hLL4OQZQVFIClpE\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"MhK5EIKSzhLLkU7fxLptWjPV\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDAgent\"/>
+</Dependency>
+<Dependency Guid=\"Bg-bMV2fzbALo4W7JLLuMOZE\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"XbQK2EXq92ALqfxWgIFVVnIL\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDQuery\"/>
+</Dependency>
+<Dependency Guid=\"5829hVrN2ZVLHP3XII4*EC6I\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"Urqm4LG0dDEL1Hnd3E5LLe*L\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@u2\"/>
+</Dependency>
+<Dependency Guid=\"LlWF0EqBN1FLh0ZjtV0cR8iL\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"nVdfZIZxAyDLl30YpIQi3zMI\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@JavaView@JavaView\"/>
+</Dependency>
+<Dependency Guid=\"PKOEALYrEfvLijJWSE8H-tML\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"H7IuUVpv9NLLYgzWKERB*FkE\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDDiagramAgents\"/>
+</Dependency>
+<Dependency Guid=\"4Z2WbIig5MlLUnT6MEuMp3KE\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"vzFPkVZTN5AL6mNWnIIo7T1E\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDImporters\"/>
+</Dependency>
+<Dependency Guid=\"sSCh2VleVWBLYBuZkVES2EOV\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"os6K0Eps8hIL4aK7JIt8dNJL\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@UML2Appearance\"/>
+</Dependency>
+<Dependency Guid=\"2W8mhLaV5nILeYgdMIQIHBPV\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"ekmo*LmTz85L5sDZEIrNvrAI\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDXMLFramework\"/>
+</Dependency>
+<Dependency Guid=\"ILdNZEqN7eCLbyVcpL4GFPHI\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"F3IlCEN1c2SLet07LVhIotYE\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@JavaParser\"/>
+</Dependency>
+<Dependency Guid=\"t1NhLEBAS90LnCXZGVoIxhOE\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"upjBZLse2ulLSpE9bEFlj5cV\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDModelCodeSync\"/>
+</Dependency>
+<Dependency Guid=\"m*KFjImEo3FLTvT9WEmyaw8E\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"OtKFILr3nCLLtIsbxEW6ozkV\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@TTDJavaModelCodeSync\"/>
+</Dependency>
+<Dependency Guid=\"s5oeYEb--B5LgWQWOVn1i42E\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"U9KaNIIOCOFLjcJW*L9DmEZV\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:@JavaPredefined\"/>
+</Dependency>
+<Dependency Guid=\"Yv-ZqEPhcpILDKgclVv2WroL\">
+<cStereotypeInstance>
+<InstanceExpr Guid=\"8maYYEDeW2vLOLTdyEoh5KAE\">
+<rInstanceOf R=\"uid:@Predefined@access\"/>
+</InstanceExpr>
+</cStereotypeInstance>
+<rSupplier R=\"uid:gPJ5cLcTfuiLDXGfpLvG*-GE\"/>
+</Dependency>
+</cClientDependency>
+</Session>
+</u2>
+"}},
+{"13", "@U2:Session:Packages", "1", NULL, {"KMW-iEsjPo5L38vkREtiWgAL", "04-uRIkJ4WlLzODfQEfvNAeI"}}
+}
+configuration ::= {
+{"2", "Default", "1"}
+}
+project ::= {
+{"1", "2"}
+}
+file_ref ::= {
+{"7", NULL, "POO_project.u2"}
+}
+END
