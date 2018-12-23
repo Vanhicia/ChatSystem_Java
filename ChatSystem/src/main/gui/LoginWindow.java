@@ -17,10 +17,6 @@ import javax.swing.WindowConstants;
  */
 public class LoginWindow extends javax.swing.JFrame {
     
-  
-    private int port;
-    private static Thread manager=null;
-    private static ManagerServer server=null;
     private Controller contr;
 
     /**
@@ -130,8 +126,6 @@ public class LoginWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
-
-    		
     		contr.connect(Pseudo.getText());
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
