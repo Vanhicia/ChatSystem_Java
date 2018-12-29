@@ -77,9 +77,7 @@ public class ClientTCP implements Runnable {
 				
 	    		if (data!=null) {
 	    			System.out.println("c :" +data.msg);
-	   
 		    		this.history.addEntry(data);
-		    		this.history.printHistory();
 	    		}
 	    		
 			} catch (ClassNotFoundException e) {}
