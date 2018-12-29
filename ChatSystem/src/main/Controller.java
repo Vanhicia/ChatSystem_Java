@@ -90,4 +90,8 @@ public class Controller {
 		
 	}
 
+	public ManagerServer getServer() {
+		return server;
+	}
+
 }

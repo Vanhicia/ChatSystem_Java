@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import main.ClientTCP;
+import main.ManagerServer;
 import main.Message;
 import main.User;
 
@@ -20,6 +21,7 @@ public class ChatWindow extends javax.swing.JFrame {
     private User src;
     private User dest;
     private ClientTCP c=null;
+    private ManagerServer m=null;
     /**
      * Creates new form ChatWindow
      */
@@ -28,6 +30,13 @@ public class ChatWindow extends javax.swing.JFrame {
         this.src = src;
         this.dest = dest;
         this.c = c;
+    }
+    
+    public ChatWindow(ManagerServer m, User src, User dest) {
+        initComponents();
+        this.src = src;
+        this.dest = dest;
+        this.m = m;
     }
     
     public void displayWindow() throws IOException{
@@ -125,6 +134,12 @@ public class ChatWindow extends javax.swing.JFrame {
         if (this.c !=null){
             try {
                 this.c.sendData(new Message(messagetosend.getText(),this.src,this.dest));
+            } catch (IOException ex) {
+                Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }  
+        } else if (this.m!=null) {
+        	try {
+                this.m.sendMessage(new Message(messagetosend.getText(),this.src,this.dest));
             } catch (IOException ex) {
                 Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
             }  

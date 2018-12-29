@@ -54,6 +54,7 @@ public class ManagerServer  implements Runnable{
 		while(listener.getHmap()==null) {} 
 		this.hmap=listener.getHmap();
 		System.out.println("manager send " +this.hmap.get(message.getDestUser().getId()));
+		System.out.println("manager send to user" +message.getDestUser().getPseudo());
 		this.hmap.get(message.getDestUser().getId()).sendData(message);
 	}
 	

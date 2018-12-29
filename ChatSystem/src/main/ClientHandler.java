@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.Observable;
 import java.io.*;
 import main.Message;
+import main.gui.ChatWindow;
 
 public class ClientHandler  extends Observable implements Runnable{
 	private Socket clientSocket;
@@ -14,10 +15,11 @@ public class ClientHandler  extends Observable implements Runnable{
 	private Network network;
 	private User userdest=null;
 	private History history;
+	private ChatWindow chat;
 	
 	public ClientHandler(Socket clientSocket,Network network) {
 	    this.clientSocket = clientSocket;
-
+	    
 	    // Create input buffer and output buffer
 		try {
 			this.out = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -35,9 +37,8 @@ public class ClientHandler  extends Observable implements Runnable{
 		return input;
 	}
 	public void sendData(Message message) throws IOException {
-		//System.out.println("Paquet envoyé : "+message.msg);
+		System.out.println("Paquet envoyé : "+message.msg);
 		this.history.addEntry(message);
-		this.history.printHistory();
 		out.writeObject(message);
 		out.flush();
 	}
@@ -49,14 +50,14 @@ public class ClientHandler  extends Observable implements Runnable{
          while(running){
             // Wait for input from client and send response back to client
 			try {
-				Message data;
-				
-				data = receiveData();
+				Message data= receiveData();
 		
 	    		if (data!=null) { 
 	    		    if (userdest==null && data.getSrcUser()!=null){
 	    		    	setUserdest(data.getSrcUser());
 	    			    this.history = new History(userdest);
+	    			    this.chat=new ChatWindow(this.network.getController().getServer(), this.network.getController().getUser(), userdest);
+	    			    chat.displayWindow();
 	    		    }
 	    		    
 		    		this.history.addEntry(data);
