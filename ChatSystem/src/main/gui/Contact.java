@@ -194,9 +194,9 @@ public class Contact extends javax.swing.JFrame {
            chat.displayWindow();
            Thread t = new Thread (c);
            t.start();
-           this.setVisible(false);
+           /*this.setVisible(false);
            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-           this.dispose();
+           this.dispose();*/
         } catch (UnknownHostException ex) {
            Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException e) {
