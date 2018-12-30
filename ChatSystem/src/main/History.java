@@ -19,11 +19,13 @@ public class History {
 		this.history.remove(0);
 	}
 
-	public void printHistory() {
-		System.out.println("history");
+	public String printHistory() {
+		//System.out.println("history");
+                String hist="";
 		for (Message tmp : this.history) {
-			System.out.println(tmp.msg);
+			hist+=(tmp.msg);
 		}
+                return hist;
 	}
 	
 	public List<Message> getHistory() {

@@ -193,6 +193,8 @@ public class Contact extends javax.swing.JFrame {
            ChatWindow chat =new ChatWindow(c,this.user,destUser);
            chat.displayWindow();
            c.setChat(chat);
+           /*TODO print history when close and open connection with the same person again*/
+           //chat.getWindowChatText().append(c.getHistory().printHistory());
            Thread t = new Thread (c);
            t.start();
            /*this.setVisible(false);

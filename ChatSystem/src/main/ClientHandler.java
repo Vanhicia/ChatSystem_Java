@@ -46,7 +46,6 @@ public class ClientHandler  extends Observable implements Runnable{
 
         public void run() {
 
-//TODO : maybe an observer/observable for read several packets (to optimize CPU resource use)
          while(running){
             // Wait for input from client and send response back to client
 			try {
@@ -58,11 +57,13 @@ public class ClientHandler  extends Observable implements Runnable{
 	    			    this.history = new History(userdest);
 	    			    this.chat=new ChatWindow(this.network.getController().getServer(), this.network.getController().getUser(), userdest);
 	    			    chat.displayWindow();
-	    		    }
-	    		    
+                                    
+	    		    } else{
+                                chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
+                            }
 		    		this.history.addEntry(data);
-		    		System.out.println(data.msg);
-		    		chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
+		    		System.out.println("Paquet reçu : "+data.msg);
+		    		
 	    		}
 
 			} catch (ClassNotFoundException e) {} 

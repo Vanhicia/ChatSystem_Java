@@ -8,6 +8,8 @@ package main.gui;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 import main.ClientTCP;
 import main.ManagerServer;
 import main.Message;
@@ -41,12 +43,20 @@ public class ChatWindow extends javax.swing.JFrame {
     
     public void displayWindow() throws IOException{
         this.setVisible(true);
+        this.srcPseudo.setText("Source :"+this.src.getPseudo());
+        this.destPseudo.setText("Dest :"+this.dest.getPseudo());
+        
 
      }
     
     public void refreshWindow(String pseudo, String msg){
         this.windowChatText.append(pseudo+" : "+msg+"\n");
     }
+
+    public JTextArea getWindowChatText() {
+        return windowChatText;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,7 +141,19 @@ public class ChatWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void DisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisconnectActionPerformed
-        // TODO add your handling code here:
+        if (this.c !=null){
+            c.closeConnection();
+        } else if (this.m!=null){
+            try {
+                m.closeServer();
+            } catch (IOException ex) {
+                Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        this.setVisible(false);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.dispose();
+
     }//GEN-LAST:event_DisconnectActionPerformed
 
     private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed

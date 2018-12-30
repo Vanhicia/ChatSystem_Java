@@ -89,6 +89,10 @@ public class ClientTCP implements Runnable {
     public void setChat(ChatWindow chat) {
         this.chat = chat;
     }
+
+    public History getHistory() {
+        return history;
+    }
         
         
 }
