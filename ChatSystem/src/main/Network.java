@@ -172,16 +172,17 @@ public class Network {
     public HashMap<String,User> getHmap(){
         return this.hmap;
     }
-    
+    /*
     public User findUserWithPseudo(String dest){
     	for (User tmp : listUsers) {
-    		if (tmp.getPseudo().equals(dest)) {
+    		if (tmp.getPseudo()==dest) {
     			return tmp;
     		}
     		
     	}
     	return null;
-    }
+        
+    }*/
 	/*public int getPortUDP() {
 		return portUDP;
 	}
