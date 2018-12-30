@@ -7,13 +7,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-
+import main.gui.ChatWindow;
 public class ClientTCP implements Runnable {
 	private Socket link;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private History history;
 	private User userdistant;
+        private ChatWindow chat;
 /*	public ClientTCP (InetAddress address, int port) {
 		try {
 			System.out.println("Establishing connection. Please wait ...");
@@ -76,11 +77,18 @@ public class ClientTCP implements Runnable {
 				data = receiveData();
 				
 	    		if (data!=null) {
-	    			System.out.println("c :" +data.msg);
+	    			System.out.println("Paquet reçu :" +data.msg);
 		    		this.history.addEntry(data);
+                                chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
 	    		}
 	    		
 			} catch (ClassNotFoundException e) {}
 		}
 	}
+
+    public void setChat(ChatWindow chat) {
+        this.chat = chat;
+    }
+        
+        
 }

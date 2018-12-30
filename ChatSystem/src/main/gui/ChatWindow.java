@@ -43,7 +43,10 @@ public class ChatWindow extends javax.swing.JFrame {
         this.setVisible(true);
 
      }
-
+    
+    public void refreshWindow(String pseudo, String msg){
+        this.windowChatText.append(pseudo+" : "+msg+"\n");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,7 +60,7 @@ public class ChatWindow extends javax.swing.JFrame {
         destPseudo = new javax.swing.JLabel();
         Disconnect = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        windowChatText = new javax.swing.JTextArea();
         messagetosend = new javax.swing.JTextField();
         send = new javax.swing.JButton();
 
@@ -75,9 +78,10 @@ public class ChatWindow extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        windowChatText.setEditable(false);
+        windowChatText.setColumns(20);
+        windowChatText.setRows(5);
+        jScrollPane1.setViewportView(windowChatText);
 
         send.setText("Send");
         send.addActionListener(new java.awt.event.ActionListener() {
@@ -144,6 +148,9 @@ public class ChatWindow extends javax.swing.JFrame {
                 Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
             }  
         }
+        refreshWindow(this.src.getPseudo(),messagetosend.getText());
+        this.messagetosend.setText("");
+
     }//GEN-LAST:event_sendActionPerformed
 
     /**
@@ -185,9 +192,9 @@ public class ChatWindow extends javax.swing.JFrame {
     private javax.swing.JButton Disconnect;
     private javax.swing.JLabel destPseudo;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField messagetosend;
     private javax.swing.JButton send;
     private javax.swing.JLabel srcPseudo;
+    private javax.swing.JTextArea windowChatText;
     // End of variables declaration//GEN-END:variables
 }

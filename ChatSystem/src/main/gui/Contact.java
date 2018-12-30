@@ -192,6 +192,7 @@ public class Contact extends javax.swing.JFrame {
            c.sendData(new Message("Connect with "+ this.user.getPseudo(), this.user, destUser));
            ChatWindow chat =new ChatWindow(c,this.user,destUser);
            chat.displayWindow();
+           c.setChat(chat);
            Thread t = new Thread (c);
            t.start();
            /*this.setVisible(false);
