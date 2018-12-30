@@ -175,13 +175,12 @@ public class Network {
     
     public User findUserWithPseudo(String dest){
     	for (User tmp : listUsers) {
-    		if (tmp.getPseudo()==dest) {
+    		if (tmp.getPseudo().equals(dest)) {
     			return tmp;
     		}
     		
     	}
     	return null;
-        
     }
 	/*public int getPortUDP() {
 		return portUDP;
