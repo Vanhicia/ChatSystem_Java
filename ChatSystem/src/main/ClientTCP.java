@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import javax.swing.WindowConstants;
 import main.gui.ChatWindow;
 public class ClientTCP implements Runnable {
 	private Socket link;
@@ -61,9 +62,12 @@ public class ClientTCP implements Runnable {
 	}
 	
 	public void closeConnection() {
-		try {
-			System.out.println("Client close");
-			link.close();
+		try {   
+                    System.out.println("Client close");
+                    in.close();
+                    out.close();
+                    link.close();
+                    chat.closeWindow();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -72,10 +76,8 @@ public class ClientTCP implements Runnable {
 	public void run() {
 		while(true) {
 			try {
-			
-				Message data;
-				data = receiveData();
-				
+                            Message data;
+                            data = receiveData();
 	    		if (data!=null) {
 	    			System.out.println("Paquet reçu :" +data.msg);
 		    		this.history.addEntry(data);
@@ -90,6 +92,10 @@ public class ClientTCP implements Runnable {
         this.chat = chat;
     }
 
+    public ChatWindow getChat(ChatWindow chat){
+        return chat;
+    }
+    
     public History getHistory() {
         return history;
     }

@@ -4,6 +4,8 @@ import java.lang.Runnable;
 import java.net.Socket;
 import java.util.Observable;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import main.Message;
 import main.gui.ChatWindow;
 
@@ -36,11 +38,16 @@ public class ClientHandler  extends Observable implements Runnable{
         input = (Message) in.readObject();
 		return input;
 	}
-	public void sendData(Message message) throws IOException {
+	public void sendData(Message message){
 		System.out.println("Paquet envoyé : "+message.msg);
 		this.history.addEntry(message);
-		out.writeObject(message);
-		out.flush();
+            try {
+                out.writeObject(message);
+                out.flush();
+            } catch (IOException ex) {
+                chat.refreshWindow("SYSTEM", "Dest unreachable, you should close this window. \n "
+                        + "Click on disconnect button");
+            }
 	}
 		
 
@@ -49,21 +56,18 @@ public class ClientHandler  extends Observable implements Runnable{
          while(running){
             // Wait for input from client and send response back to client
 			try {
-				Message data= receiveData();
-		
+                            Message data= receiveData();
 	    		if (data!=null) { 
 	    		    if (userdest==null && data.getSrcUser()!=null){
 	    		    	setUserdest(data.getSrcUser());
-	    			    this.history = new History(userdest);
-	    			    this.chat=new ChatWindow(this.network.getController().getServer(), this.network.getController().getUser(), userdest);
-	    			    chat.displayWindow();
-                                    
+                                this.history = new History(userdest);
+                                this.chat=new ChatWindow(this.network.getServer(), this.network.getController().getUser(), userdest);
+                                chat.displayWindow();
 	    		    } else{
                                 chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
                             }
 		    		this.history.addEntry(data);
 		    		System.out.println("Paquet reçu : "+data.msg);
-		    		
 	    		}
 
 			} catch (ClassNotFoundException e) {} 
@@ -78,6 +82,7 @@ public class ClientHandler  extends Observable implements Runnable{
 	          out.close();
 	          in.close();
 	          clientSocket.close();
+                  chat.closeWindow();
 	      } catch (IOException e) {
 	          e.printStackTrace();
 	      }

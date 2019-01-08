@@ -186,7 +186,7 @@ public class Contact extends javax.swing.JFrame {
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
     	try {
            String pseudo = pseudoConnected.getText();
-           destUser = network.getListUsers().get(0);//network.findUserWithPseudo(pseudo); 
+           destUser = network.findUserWithPseudo(pseudo); //network.getListUsers().get(0);
            System.out.println(destUser.getPseudo());
            ClientTCP c = new ClientTCP(this.destUser.getAddress(),1234,destUser);
            c.sendData(new Message("Connect with "+ this.user.getPseudo(), this.user, destUser));

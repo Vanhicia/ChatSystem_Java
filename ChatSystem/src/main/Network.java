@@ -1,4 +1,5 @@
 package main;
+import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -6,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import main.gui.Contact;
 
 
 
@@ -15,7 +17,9 @@ public class Network {
 	private UDPListener UDPListener;
 	private DatagramSocket UDPsocket;
 	private HashMap<String,User> hmap;
-
+        private static ManagerServer server=null;
+        private Thread manager;
+        
     protected static int portUDP = 1233;
     protected static int portTCP = 1234;
 		
@@ -35,18 +39,17 @@ public class Network {
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
+                
+                try {
+                    this.server=new ManagerServer(this.portTCP,this) ;
+
+                    manager = new Thread(server);
+                    manager.start();
+                 } catch (IOException e) {
+                    e.printStackTrace();
+		}
 	}
-		
-	public void startSession(User userDist) {
-		//create a thread ClientTCP
-		//ClientTCP client = new ClientTCP(userDist.getAddress(), portTCP);
-		//new Thread(client).start();
-	}
-	
-	public void closeSession(User userDist) {
-		
-	}
-	
+
 	/* Send the UDP packet to the address indicated */
 	public void sendUDPPacketUnicast(UDPPacket packet, InetAddress address) {
 		UDPSender sender = new UDPSender(this.UDPsocket, packet, address, Network.portUDP);
@@ -172,22 +175,32 @@ public class Network {
     public HashMap<String,User> getHmap(){
         return this.hmap;
     }
-    /*
+    
     public User findUserWithPseudo(String dest){
     	for (User tmp : listUsers) {
-    		if (tmp.getPseudo()==dest) {
+    		if (tmp.getPseudo().equals(dest)) {
     			return tmp;
     		}
     		
     	}
     	return null;
         
-    }*/
-	/*public int getPortUDP() {
-		return portUDP;
-	}
-	
-	public int getPortTCP() {
-		return portTCP;
-	}*/
+    }
+
+    public static ManagerServer getServer() {
+        return server;
+    }
+
+    public Thread getManager() {
+        return manager;
+    }
+
+    public static void setServer(ManagerServer server) {
+        Network.server = server;
+    }
+
+    public void setManager(Thread manager) {
+        this.manager = manager;
+    }
+
 }

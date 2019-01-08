@@ -45,9 +45,13 @@ public class ChatWindow extends javax.swing.JFrame {
         this.setVisible(true);
         this.srcPseudo.setText("Source :"+this.src.getPseudo());
         this.destPseudo.setText("Dest :"+this.dest.getPseudo());
-        
-
      }
+    
+    public void closeWindow(){
+        this.setVisible(false);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.dispose();
+    }
     
     public void refreshWindow(String pseudo, String msg){
         this.windowChatText.append(pseudo+" : "+msg+"\n");
@@ -92,6 +96,12 @@ public class ChatWindow extends javax.swing.JFrame {
         windowChatText.setColumns(20);
         windowChatText.setRows(5);
         jScrollPane1.setViewportView(windowChatText);
+
+        messagetosend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                messagetosendActionPerformed(evt);
+            }
+        });
 
         send.setText("Send");
         send.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +184,10 @@ public class ChatWindow extends javax.swing.JFrame {
         this.messagetosend.setText("");
 
     }//GEN-LAST:event_sendActionPerformed
+
+    private void messagetosendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messagetosendActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_messagetosendActionPerformed
 
     /**
      * @param args the command line arguments
