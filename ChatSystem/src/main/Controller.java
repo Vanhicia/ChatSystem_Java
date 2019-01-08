@@ -54,7 +54,7 @@ public class Controller {
                             System.out.println("You are connected");
                             this.user.setTimeConnection();
                             this.nwk.sendUDPPacketUserConnected();
-                            this.contacts = new Contact(this.nwk.getServer(),this.nwk.portTCP, this.user,this.nwk);
+                            this.contacts = new Contact(this.nwk.getServer(),this.nwk.portTCP, this.user,this);
                             try {
                                 contacts.displayWindow();
                             } catch (IOException ex) {

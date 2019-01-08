@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import main.ClientTCP;
+import main.Controller;
 import main.ManagerServer;
 import main.Message;
 import main.Network;
@@ -31,6 +32,7 @@ public class Contact extends javax.swing.JFrame {
     private ManagerServer server;
     private User user;
     private int port;
+    private Controller contr;
     private Network network;
     private User destUser;
     private ArrayList<User> listContacts;
@@ -38,13 +40,14 @@ public class Contact extends javax.swing.JFrame {
     /**
      * Creates new form Contact
      */
-    public Contact(ManagerServer server, int port, User user, Network network) {
+    public Contact(ManagerServer server, int port, User user, Controller contr) {
         initComponents();
         this.server=server;
         this.port=port;
         this.user=user;
         this.YourPseudo.setText("Pseudo : "+this.user.getPseudo());
-        this.network = network;
+        this.contr = contr;
+        this.network = contr.getNetwork();
         this.listContacts = network.getListUsers();
         this.printContacts();
     }
@@ -184,7 +187,6 @@ public class Contact extends javax.swing.JFrame {
                  Thread t = new Thread (c);
                  t.start();
              }
-
            }
 
         } catch (UnknownHostException ex) {
@@ -199,16 +201,13 @@ public class Contact extends javax.swing.JFrame {
     }//GEN-LAST:event_pseudoConnectedActionPerformed
 
     private void disconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectActionPerformed
-        try {
-            if (server != null ){
-                server.closeServer();
-                this.setVisible(false);
-                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                this.dispose();                
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
+        if (server != null ){
+            this.contr.disconnect();
+            this.setVisible(false);
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            this.dispose();                
         }
+        
     }//GEN-LAST:event_disconnectActionPerformed
 
     /**

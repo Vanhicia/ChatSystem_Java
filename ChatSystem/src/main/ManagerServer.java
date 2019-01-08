@@ -58,7 +58,7 @@ public class ManagerServer  implements Runnable{
 		this.hmap.get(message.getDestUser().getId()).sendData(message);
 	}
 	
-	public void closeServer() throws IOException {
+	public void closeServer() {
 		System.out.println("Close Server");
 		listener.setRunning(false);
 	}

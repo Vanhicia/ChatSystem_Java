@@ -17,7 +17,7 @@ public class Network {
 	private UDPListener UDPListener;
 	private DatagramSocket UDPsocket;
 	private HashMap<String,User> hmap;
-        private static ManagerServer server=null;
+        private ManagerServer server=null;
         private Thread manager;
         
     protected static int portUDP = 1233;
@@ -166,6 +166,7 @@ public class Network {
 	public void closeNetwork() {
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserDisconnected"));
 		this.UDPsocket.close();
+                this.server.closeServer();
 	}
 		
 	public Controller getController() {
@@ -187,7 +188,7 @@ public class Network {
         
     }
 
-    public static ManagerServer getServer() {
+    public ManagerServer getServer() {
         return server;
     }
 
@@ -195,8 +196,8 @@ public class Network {
         return manager;
     }
 
-    public static void setServer(ManagerServer server) {
-        Network.server = server;
+    public void setServer(ManagerServer server) {
+        this.server = server;
     }
 
     public void setManager(Thread manager) {
