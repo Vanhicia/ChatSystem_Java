@@ -8,12 +8,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import main.gui.Contact;
+import main.gui.LoginWindow;
 
 
 public class Controller {
 	private User user;
 	private Contact contacts;
 	private Network nwk = null;
+        private LoginWindow login = null;
 
 	public Controller() {
 		try {
@@ -87,6 +89,15 @@ public class Controller {
 		contacts.refreshContacts();
 		
 	}
+
+    public void setLogin(LoginWindow login) {
+        this.login = login;
+    }
+
+    public LoginWindow getLogin() {
+        return login;
+    }
+        
 
 
 }

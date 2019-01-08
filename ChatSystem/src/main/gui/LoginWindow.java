@@ -46,10 +46,9 @@ public class LoginWindow extends javax.swing.JFrame {
 
         Pseudo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        Port = new javax.swing.JTextField();
         LogInButton = new javax.swing.JButton();
         title = new javax.swing.JLabel();
+        closeApp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,14 +59,6 @@ public class LoginWindow extends javax.swing.JFrame {
         });
 
         jLabel1.setText("Pseudo");
-
-        jLabel2.setText("Port");
-
-        Port.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PortActionPerformed(evt);
-            }
-        });
 
         LogInButton.setText("Log in");
         LogInButton.addActionListener(new java.awt.event.ActionListener() {
@@ -81,6 +72,13 @@ public class LoginWindow extends javax.swing.JFrame {
         title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         title.setText("CHAT SYSTEM");
 
+        closeApp.setText("Close application");
+        closeApp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeAppActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,17 +88,18 @@ public class LoginWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(92, 92, 92)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Port, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
                             .addComponent(jLabel1)
                             .addComponent(Pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)))
+                        .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(closeApp)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(161, 161, 161)
+                .addGap(155, 155, 155)
                 .addComponent(LogInButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -113,13 +112,11 @@ public class LoginWindow extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Port, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(27, 27, 27)
                 .addComponent(LogInButton)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(closeApp)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -127,18 +124,19 @@ public class LoginWindow extends javax.swing.JFrame {
 
     private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
             contr.connect(Pseudo.getText());
+            contr.setLogin(this);
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
     }//GEN-LAST:event_LogInButtonActionPerformed
 
-    private void PortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PortActionPerformed
-       
-    }//GEN-LAST:event_PortActionPerformed
-
     private void PseudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PseudoActionPerformed
      
     }//GEN-LAST:event_PseudoActionPerformed
+
+    private void closeAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAppActionPerformed
+        contr.disconnect();
+    }//GEN-LAST:event_closeAppActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,10 +175,9 @@ public class LoginWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogInButton;
-    private javax.swing.JTextField Port;
     private javax.swing.JTextField Pseudo;
+    private javax.swing.JButton closeApp;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }
