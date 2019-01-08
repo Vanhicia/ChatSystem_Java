@@ -5,11 +5,15 @@
  */
 package main.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import main.ClientTCP;
 import main.ManagerServer;
@@ -40,7 +44,6 @@ public class Contact extends javax.swing.JFrame {
         this.port=port;
         this.user=user;
         this.YourPseudo.setText("Pseudo : "+this.user.getPseudo());
-        this.Port.setText("Port : "+ Integer.toString(this.port));
         this.network = network;
         this.listContacts = network.getListUsers();
         this.printContacts();
@@ -75,13 +78,10 @@ public class Contact extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         ListContacts = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         pseudoConnected = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         connect = new javax.swing.JButton();
         disconnect = new javax.swing.JButton();
         YourPseudo = new javax.swing.JLabel();
-        Port = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,16 +98,11 @@ public class Contact extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel2.setText("Connect with :");
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel3.setText("Disconnect with :");
-
         pseudoConnected.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pseudoConnectedActionPerformed(evt);
             }
         });
-
-        jTextField2.setToolTipText("");
 
         connect.setText("Connect");
         connect.addActionListener(new java.awt.event.ActionListener() {
@@ -127,10 +122,6 @@ public class Contact extends javax.swing.JFrame {
         YourPseudo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         YourPseudo.setText("Pseudo");
 
-        Port.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        Port.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Port.setText("Port");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -138,20 +129,16 @@ public class Contact extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Port, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(disconnect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(YourPseudo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pseudoConnected, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pseudoConnected, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(connect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(disconnect, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))))
+                        .addComponent(connect, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -160,24 +147,18 @@ public class Contact extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(YourPseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Port, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(connect, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
                     .addComponent(pseudoConnected))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(disconnect, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                    .addComponent(jTextField2))
-                .addContainerGap())
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -186,24 +167,30 @@ public class Contact extends javax.swing.JFrame {
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
     	try {
            String pseudo = pseudoConnected.getText();
-           destUser = network.findUserWithPseudo(pseudo); //network.getListUsers().get(0);
-           System.out.println(destUser.getPseudo());
-           ClientTCP c = new ClientTCP(this.destUser.getAddress(),1234,destUser);
-           c.sendData(new Message("Connect with "+ this.user.getPseudo(), this.user, destUser));
-           ChatWindow chat =new ChatWindow(c,this.user,destUser);
-           chat.displayWindow();
-           c.setChat(chat);
-           /*TODO print history when close and open connection with the same person again*/
-           //chat.getWindowChatText().append(c.getHistory().printHistory());
-           Thread t = new Thread (c);
-           t.start();
-           /*this.setVisible(false);
-           setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-           this.dispose();*/
+           if (pseudo.length()==0){
+                 JOptionPane.showMessageDialog(new JFrame("Contact"), "Write a pseudo please");
+           } else{
+             if((destUser = network.findUserWithPseudo(pseudo))==null){
+                 JOptionPane.showMessageDialog(new JFrame("Contact"), "Unknown pseudo");;
+             } else {
+                 System.out.println(destUser.getPseudo());
+                 ClientTCP c = new ClientTCP(this.destUser.getAddress(),1234,destUser);
+                 c.sendData(new Message("Connect with "+ this.user.getPseudo(), this.user, destUser));
+                 ChatWindow chat =new ChatWindow(c,this.user,destUser);
+                 chat.displayWindow();
+                 c.setChat(chat);
+                 /*TODO print history when close and open connection with the same person again*/
+                 //chat.getWindowChatText().append(c.getHistory().printHistory());
+                 Thread t = new Thread (c);
+                 t.start();
+             }
+
+           }
+
         } catch (UnknownHostException ex) {
-           Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(new JFrame("Contact"), "Invalid pseudo");
         } catch (IOException e) {
-			e.printStackTrace();
+            JOptionPane.showMessageDialog(new JFrame("Contact"), "Invalid pseudo");
 	}      
     }//GEN-LAST:event_connectActionPerformed
 
@@ -217,10 +204,7 @@ public class Contact extends javax.swing.JFrame {
                 server.closeServer();
                 this.setVisible(false);
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                this.dispose();
-                //LoginWindow loginWindow = new LoginWindow();
-                //loginWindow.displayWindow();
-                
+                this.dispose();                
             }
         } catch (IOException ex) {
             Logger.getLogger(Contact.class.getName()).log(Level.SEVERE, null, ex);
@@ -264,15 +248,12 @@ public class Contact extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea ListContacts;
-    private javax.swing.JLabel Port;
     private javax.swing.JLabel YourPseudo;
     private javax.swing.JButton connect;
     private javax.swing.JButton disconnect;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField pseudoConnected;
     // End of variables declaration//GEN-END:variables
 }

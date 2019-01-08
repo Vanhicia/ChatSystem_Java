@@ -35,7 +35,7 @@ public class ClientHandler  extends Observable implements Runnable{
 
 	public Message receiveData () throws ClassNotFoundException, IOException {
 		Message input = null;
-        input = (Message) in.readObject();
+                input = (Message) in.readObject();
 		return input;
 	}
 	public void sendData(Message message){
@@ -73,7 +73,6 @@ public class ClientHandler  extends Observable implements Runnable{
 			} catch (ClassNotFoundException e) {} 
 			catch (IOException e) {}
          }
-         this.close();
         }
         
 	   public void close() {
