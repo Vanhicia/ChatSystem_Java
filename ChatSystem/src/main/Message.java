@@ -1,31 +1,31 @@
 package main;
 import java.io.File;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public class Message extends Packet {
 	private static final long serialVersionUID = 1L;
 	//public int idMessage;
 	public String msg =null;
 	public File file=null;
-	public LocalDateTime dateMessage;
+	public Timestamp dateMessage;
 	
 	public Message(String msg, User srcUser, User destUser) {
 		super(srcUser, destUser);
 		this.msg = msg;
-		this.dateMessage = LocalDateTime.now();  
+		this.dateMessage.setTime(System.currentTimeMillis());  
 	}
 	
 	public Message(File file, User srcUser, User destUser) {
 		super(srcUser, destUser);
 		this.file = file;
-		this.dateMessage= LocalDateTime.now();  
+		this.dateMessage.setTime(System.currentTimeMillis());  
 	}
 
 	public Message(String msg, File file, User srcUser, User destUser) {
 		super(srcUser, destUser);
 		this.msg = msg;
 		this.file = file;
-		this.dateMessage= LocalDateTime.now();  
+		this.dateMessage.setTime(System.currentTimeMillis());  
 	}
 	
 /*	public int getIdMessage() {
@@ -52,11 +52,11 @@ public class Message extends Packet {
 		this.file = file;
 	}
 
-	public LocalDateTime getHorodate() {
+	public Timestamp getHorodate() {
 		return dateMessage ;
 	}
 
-	public void setHorodate(LocalDateTime horodate) {
+	public void setHorodate(Timestamp horodate) {
 		this.dateMessage  = horodate;
 	}
 	
