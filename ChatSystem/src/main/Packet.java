@@ -26,4 +26,5 @@ public class Packet implements Serializable{
 	public void setDestUser(User destUser) {
 		this.destUser=destUser;
 	}
+
 }

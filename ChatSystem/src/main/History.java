@@ -2,17 +2,24 @@ package main;
 
 import java.util.ArrayList;
 import java.util.List;
+import database.Database;
+
 public class History {
 	private	List<Message> history;
 	private User userDistant;
+	private Database db;
 	
-	public History(User dest) {
+	public History(User local, User dest, Database db) {
 		this.userDistant = dest;
-		this.history = new ArrayList<>();
+		this.history = this.db.getHistory(local, dest);
+		this.db = db;
 	}
 	
 	public void addEntry(Message msg) {
+		/* Add the message in the history object */
 		this.history.add(msg);
+		/* Add the message in the database */
+		this.db.insertMessage(this.userDistant, msg);
 	}
 	
 	public void deleteEntry() {

@@ -60,7 +60,7 @@ public class ClientHandler  extends Observable implements Runnable{
 	    		if (data!=null) { 
 	    		    if (userdest==null && data.getSrcUser()!=null){
 	    		    	setUserdest(data.getSrcUser());
-                                this.history = new History(userdest);
+                                this.history = new History(this.network.getController().getUser(), userdest, this.network.getController().getDatabase());
                                 this.chat=new ChatWindow(this.network.getServer(), this.network.getController().getUser(), userdest);
                                 chat.displayWindow();
 	    		    } else{

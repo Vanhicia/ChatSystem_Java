@@ -1,13 +1,19 @@
 package main;
 import java.io.File;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 public class Message extends Packet {
 	private static final long serialVersionUID = 1L;
-	//public int idMessage;
 	public String msg =null;
 	public File file=null;
 	public Timestamp dateMessage;
+	
+	public Message(String msg, User srcUser, User destUser, Timestamp date) {
+		super(srcUser, destUser);
+		this.msg = msg;
+		this.dateMessage = date;  
+	}
 	
 	public Message(String msg, User srcUser, User destUser) {
 		super(srcUser, destUser);
@@ -27,15 +33,7 @@ public class Message extends Packet {
 		this.file = file;
 		this.dateMessage.setTime(System.currentTimeMillis());  
 	}
-	
-/*	public int getIdMessage() {
-		return idMessage;
-	}
 
-	public void setIdMessage(int idMessage) {
-		this.idMessage = idMessage;
-	}
-*/
 	public String getMsg() {
 		return msg;
 	}
@@ -58,7 +56,6 @@ public class Message extends Packet {
 
 	public void setHorodate(Timestamp horodate) {
 		this.dateMessage  = horodate;
-	}
-	
+	}	
 	
 }

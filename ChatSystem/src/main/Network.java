@@ -17,12 +17,12 @@ public class Network {
 	private UDPListener UDPListener;
 	private DatagramSocket UDPsocket;
 	private HashMap<String,User> hmap;
-        private ManagerServer server=null;
-        private Thread manager;
+    private ManagerServer server=null;
+    private Thread manager;
         
     protected static int portUDP = 1233;
     protected static int portTCP = 1234;
-		
+	
 	public Network(Controller contr) {
 		this.contr = contr;
 		this.listUsers = new ArrayList<User>();
@@ -39,14 +39,12 @@ public class Network {
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
-                
-                try {
-                    this.server=new ManagerServer(this.portTCP,this) ;
-
-                    manager = new Thread(server);
-                    manager.start();
-                 } catch (IOException e) {
-                    e.printStackTrace();
+        try {
+            this.server=new ManagerServer(this.portTCP,this) ;
+            manager = new Thread(server);
+            manager.start();
+        } catch (IOException e) {
+        	e.printStackTrace();
 		}
 	}
 
@@ -70,7 +68,6 @@ public class Network {
 		
 	/* Return true if the pseudo is not used by another user yet */
 	public boolean checkUnicityPseudo(String pseudo) {
-		//this.unicityPseudo = true;
 		boolean unicity = true;
 		Iterator<User> usersIter = this.listUsers.iterator();
 		while (unicity && usersIter.hasNext()) {
@@ -166,7 +163,7 @@ public class Network {
 	public void closeNetwork() {
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserDisconnected"));
 		this.UDPsocket.close();
-                this.server.closeServer();
+        this.server.closeServer();
 	}
 		
 	public Controller getController() {
@@ -185,7 +182,6 @@ public class Network {
     		
     	}
     	return null;
-        
     }
 
     public ManagerServer getServer() {

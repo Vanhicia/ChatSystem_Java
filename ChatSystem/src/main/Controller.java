@@ -22,7 +22,7 @@ public class Controller {
 
 	public Controller() {
 		this.db= new Database();
-		System.out.println("DB opened");
+		System.out.println("Database opened");
 		try {
 			/* Get in the database the local user's id */
 			UUID id = this.db.getLocalUserId();
@@ -44,6 +44,10 @@ public class Controller {
 	
 	public Network getNetwork() {
 		return this.nwk;
+	}
+	
+	public Database getDatabase() {
+		return this.db;
 	}
 	
 	public void connect(String pseudo) {

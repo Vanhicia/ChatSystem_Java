@@ -6,4 +6,5 @@
 USE chat_system;
 DROP TABLE User;
 DROP TABLE LocalUser;
-DROP TABLE Conversation;
+DROP TABLE History;
+DROP TABLE Message;
