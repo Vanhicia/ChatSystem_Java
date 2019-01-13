@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>ChatSystemServlet</display-name>
+  
+  <servlet>
+    <servlet-name>CreationUser</servlet-name>
+    <servlet-class>main.presenceServer.Login</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CreationListUser</servlet-name>
+    <servlet-class>main.presenceServer.ListUser</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>CreationUser</servlet-name>
+    <url-pattern>/subscribe</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CreationListUser</servlet-name>
+    <url-pattern>/listUser</url-pattern>
+  </servlet-mapping>
+</web-app>
