@@ -1,3 +1,17 @@
 Disconnect button : when close -> close Connection, can't receive message anymore
 
 Disconnect and connect again -> print history in ChatWindows
+
+
+--------------------------------------------
+Pour ce qui concerne l’évaluation de votre travail, au terme des séances de TPs, nous vous demanderons de nous fournir :
+
+    un dossier de conception intégrant vos différents diagrammes complétés de vos principaux choix de conception
+    Un lien vers un repo Github dans lequel il y a le projet complet (Maven de pref) + un readme nous permettant d’exécuter votre programme aisément
+    Un Manual utilisateur décrivant en détail:
+        L'architecture du système développé
+        Les fonctionnalités supportés du système
+        Les fonctionnalités non-supportés du système avec détail sur leur traitement (e.g. code 501 sur HTTP pour la partie Web, les bonnes exceptions java pour le reste)
+        Les procédures d'utilisation du système avec snaphots et listes des diagbox
+        Les requirements (contraintes/limites d’utilisation) du système 
+        Les tests unitaires qui ont été effectué
