@@ -50,7 +50,7 @@ public class Database {
 	
 	public void insertUser(UUID id) {
 		String sql = "INSERT INTO User(id) "
-				+ "VALUES("+ id +")";
+				+ "VALUES('"+ id +"')";
 		try {
 			this.stat.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -100,7 +100,7 @@ public class Database {
 		ResultSet rs;
 		int i = 0;
 		String sql = "INSERT INTO History(user) "
-				+ "VALUES("+ id +")";
+				+ "VALUES('"+ id +"')";
 		try {
 			this.stat.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
 			rs = stat.getGeneratedKeys();
@@ -208,6 +208,15 @@ public class Database {
 	}
 	
 	public void closeDatabase() {
-		
+		try {
+			if (this.stat != null) {
+				this.stat.close();
+			}
+			if (this.conn != null) {
+				this.conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

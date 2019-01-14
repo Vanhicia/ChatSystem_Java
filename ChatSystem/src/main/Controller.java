@@ -56,6 +56,7 @@ public class Controller {
 	
 	public void disconnect() {
 		this.nwk.closeNetwork();
+		this.db.closeDatabase();
 	}
 	
 	/* Change the pseudo */
