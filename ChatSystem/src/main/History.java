@@ -1,6 +1,5 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.List;
 import database.Database;
 
@@ -33,7 +32,7 @@ public class History {
 		for (Message tmp : this.history) {
 			hist+=(tmp.msg);
 		}
-                return hist;
+        return hist;
 	}
 	
 	public List<Message> getHistory() {
