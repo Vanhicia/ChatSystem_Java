@@ -157,7 +157,9 @@ public class Database {
 				/* Create a new history and get the generated history id*/
 				histId = this.insertHistory(userId);
 			}
-			histId = rs.getInt("id");
+			else {
+				histId = rs.getInt("id");
+			}
 			if (rs != null) {
 				rs.close();
 			}
@@ -168,11 +170,13 @@ public class Database {
 	}
 	
 	public List<Message> getHistory(User local, User dist) {
+		System.out.println("Debut getHistory");
 		List<Message> history = new ArrayList<>();
 		int histId = getHistoryId(dist.getId());
 		String sql = "SELECT * FROM Message WHERE history='"+ histId +"'";
 		ResultSet rs;
 		try {
+			System.out.println("Debut try");
 			rs = this.stat.executeQuery(sql);
 			while(rs.next()) {
 				String srcUserId = rs.getString("sender");

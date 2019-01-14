@@ -10,6 +10,7 @@ public class History {
 	private Database db;
 	
 	public History(User local, User dest, Database db) {
+		this.db = db;
 		this.userDistant = dest;
 		this.history = this.db.getHistory(local, dest);
 		this.db = db;

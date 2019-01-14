@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public class Message extends Packet {
 	private static final long serialVersionUID = 1L;
-	public String msg =null;
-	public File file=null;
+	public String msg = null;
+	public File file = null;
 	public Timestamp dateMessage;
 	
 	public Message(String msg, User srcUser, User destUser, Timestamp date) {
@@ -18,20 +18,20 @@ public class Message extends Packet {
 	public Message(String msg, User srcUser, User destUser) {
 		super(srcUser, destUser);
 		this.msg = msg;
-		this.dateMessage.setTime(System.currentTimeMillis());  
+		this.dateMessage = new Timestamp(System.currentTimeMillis());  
 	}
 	
 	public Message(File file, User srcUser, User destUser) {
 		super(srcUser, destUser);
 		this.file = file;
-		this.dateMessage.setTime(System.currentTimeMillis());  
+		this.dateMessage = new Timestamp(System.currentTimeMillis()); 
 	}
 
 	public Message(String msg, File file, User srcUser, User destUser) {
 		super(srcUser, destUser);
 		this.msg = msg;
 		this.file = file;
-		this.dateMessage.setTime(System.currentTimeMillis());  
+		this.dateMessage = new Timestamp(System.currentTimeMillis());  
 	}
 
 	public String getMsg() {
