@@ -2,29 +2,40 @@ package main;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import database.Database;
 import main.gui.Contact;
 import main.gui.LoginWindow;
 
 
 public class Controller {
+	private Database db;
 	private User user;
 	private Contact contacts;
 	private Network nwk = null;
-        private LoginWindow login = null;
+    private LoginWindow login = null;
 
 	public Controller() {
+		this.db= new Database();
+		System.out.println("Database opened");
 		try {
-			this.user = new User(UUID.randomUUID(), "", InetAddress.getLocalHost(), 0);
+			/* Get in the database the local user's id */
+			UUID id = this.db.getLocalUserId();
+			this.user = new User(id, "", InetAddress.getLocalHost(), 0);
+			System.out.println("Local user exists and its id = " + id);
+		} catch (SQLException e) {
+			/* The application is launched for the first time */
+			System.out.println("The application is launched for the first time");
+			this.launchFirstTime();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 		this.nwk = new Network(this);
-		//this.view = new Window();
 	}
 	
 	public User getUser() {
@@ -35,12 +46,17 @@ public class Controller {
 		return this.nwk;
 	}
 	
+	public Database getDatabase() {
+		return this.db;
+	}
+	
 	public void connect(String pseudo) {
 		changePseudo(0, pseudo);
 	}
 	
 	public void disconnect() {
 		this.nwk.closeNetwork();
+		this.db.closeDatabase();
 	}
 	
 	/* Change the pseudo */
@@ -97,7 +113,17 @@ public class Controller {
     public LoginWindow getLogin() {
         return login;
     }
-        
-
-
+    
+    public void launchFirstTime() {
+    	UUID id = UUID.randomUUID();
+		try {
+			this.user = new User(id, "", InetAddress.getLocalHost(), 0);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		this.db.createTables();
+		this.db.insertLocalUser(id);
+		System.out.println("A local user is created in the database");
+    }
+    
 }

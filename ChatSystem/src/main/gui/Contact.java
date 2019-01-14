@@ -177,7 +177,7 @@ public class Contact extends javax.swing.JFrame {
                  JOptionPane.showMessageDialog(new JFrame("Contact"), "Unknown pseudo");;
              } else {
                  System.out.println(destUser.getPseudo());
-                 ClientTCP c = new ClientTCP(this.destUser.getAddress(),1234,destUser);
+                 ClientTCP c = new ClientTCP(this.destUser.getAddress(),1234,destUser,this.network);
                  c.sendData(new Message("Connect with "+ this.user.getPseudo(), this.user, destUser));
                  ChatWindow chat =new ChatWindow(c,this.user,destUser);
                  chat.displayWindow();

@@ -30,7 +30,7 @@ public class ClientTCP implements Runnable {
 	}
 */
 	
-	public ClientTCP (InetAddress address, int port, User userdistant) {
+	public ClientTCP (InetAddress address, int port, User userdistant, Network nwk) {
 		try {
 			System.out.println("Establishing connection. Please wait ...");
  			this.link = new Socket(address,port);
@@ -38,7 +38,7 @@ public class ClientTCP implements Runnable {
 			this.out = new ObjectOutputStream(new BufferedOutputStream(link.getOutputStream()));
 			this.in = new ObjectInputStream(link.getInputStream());
 			this.userdistant =userdistant;
-			this.history = new History(userdistant);
+			this.history = new History(nwk.getController().getUser(), userdistant, nwk.getController().getDatabase());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
