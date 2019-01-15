@@ -39,13 +39,6 @@ public class Network {
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
-        try {
-            this.server=new ManagerServer(this.portTCP,this) ;
-            manager = new Thread(server);
-            manager.start();
-        } catch (IOException e) {
-        	e.printStackTrace();
-		}
 	}
 
 	/* Send the UDP packet to the address indicated */
@@ -182,6 +175,16 @@ public class Network {
     		
     	}
     	return null;
+    }
+    
+    public void launchManagerServer() {
+        try {
+            this.server=new ManagerServer(Network.portTCP,this) ;
+            manager = new Thread(server);
+            manager.start();
+        } catch (IOException e) {
+        	e.printStackTrace();
+		}
     }
 
     public ManagerServer getServer() {

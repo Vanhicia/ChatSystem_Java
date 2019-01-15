@@ -174,7 +174,7 @@ public class Contact extends javax.swing.JFrame {
                  JOptionPane.showMessageDialog(new JFrame("Contact"), "Write a pseudo please");
            } else{
              if((destUser = network.findUserWithPseudo(pseudo))==null){
-                 JOptionPane.showMessageDialog(new JFrame("Contact"), "Unknown pseudo");;
+                 JOptionPane.showMessageDialog(new JFrame("Contact"), "Unknown pseudo");
              } else {
                  System.out.println(destUser.getPseudo());
                  ClientTCP c = new ClientTCP(this.destUser.getAddress(),1234,destUser,this.network);
@@ -182,8 +182,8 @@ public class Contact extends javax.swing.JFrame {
                  ChatWindow chat =new ChatWindow(c,this.user,destUser);
                  chat.displayWindow();
                  c.setChat(chat);
-                 /*TODO print history when close and open connection with the same person again*/
-                 //chat.getWindowChatText().append(c.getHistory().printHistory());
+                 /* Print history */
+                 chat.getWindowChatText().append(c.getHistory().printHistory());
                  Thread t = new Thread (c);
                  t.start();
              }

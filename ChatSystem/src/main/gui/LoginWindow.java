@@ -10,6 +10,9 @@ import java.util.logging.Logger;
 import main.User;
 import main.Controller;
 import main.ManagerServer;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 /**
  *
@@ -123,11 +126,17 @@ public class LoginWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
-            contr.connect(Pseudo.getText());
-            contr.setLogin(this);
-            this.setVisible(false);
-            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            this.dispose();
+            /* If the connection has succeeded */
+    		if (contr.connect(Pseudo.getText()) == 1 ) {
+            	contr.setLogin(this);
+                this.setVisible(false);
+                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                this.dispose();
+            }
+    		/* Else the connection has failed */
+            else {
+            	JOptionPane.showMessageDialog(new JFrame("LoginWindow"), "Invalid pseudo : it is already used");
+            }
     }//GEN-LAST:event_LogInButtonActionPerformed
 
     private void PseudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PseudoActionPerformed

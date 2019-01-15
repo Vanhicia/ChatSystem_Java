@@ -27,8 +27,7 @@ public class History {
 	}
 
 	public String printHistory() {
-		//System.out.println("history");
-                String hist="";
+        String hist="";
 		for (Message tmp : this.history) {
 			hist+=(tmp.msg);
 		}

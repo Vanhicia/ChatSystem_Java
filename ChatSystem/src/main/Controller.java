@@ -50,8 +50,10 @@ public class Controller {
 		return this.db;
 	}
 	
-	public void connect(String pseudo) {
-		changePseudo(0, pseudo);
+	/* Return 1 if the connection has succeeded */
+	/* Else return 0 */
+	public int connect(String pseudo) {
+		return changePseudo(0, pseudo);
 	}
 	
 	public void disconnect() {
@@ -62,17 +64,20 @@ public class Controller {
 	/* Change the pseudo */
 	/* Option = 0 : pseudo of a new user */
 	/* Option =/= 0 : pseudo updated */
-	public void changePseudo(int option, String pseudo) {
+	/* Return 1 if the pseudo has been changed */
+	/* Else return 0 */
+	public int changePseudo(int option, String pseudo) {
 		/* If the wanted pseudo is unique */
 		if (this.nwk.checkUnicityPseudo(pseudo)==true) {
 			System.out.println("Your pseudo is unique");
 			user.setPseudo(pseudo);
 			/* If a new user choose his/her pseudo */
 			if (option == 0) {
+							this.nwk.launchManagerServer();
                             System.out.println("You are connected");
                             this.user.setTimeConnection();
                             this.nwk.sendUDPPacketUserConnected();
-                            this.contacts = new Contact(this.nwk.getServer(),this.nwk.portTCP, this.user,this);
+                            this.contacts = new Contact(this.nwk.getServer(),Network.portTCP, this.user,this);
                             try {
                                 contacts.displayWindow();
                             } catch (IOException ex) {
@@ -84,11 +89,13 @@ public class Controller {
 				System.out.println("Your pseudo is updated");
 				this.nwk.sendUDPPacketUserUpdated();
 			}
+			return 1;
 		} 
 		else {
 			/* Print an error message */
 			System.out.println("Your pseudo is refused, it is not unique");
 			//TODO : integrate in the graphical interface
+			return 0;
 		}		
 	}
 	
@@ -103,7 +110,6 @@ public class Controller {
 
 	public void refreshWindows() {
 		contacts.refreshContacts();
-		
 	}
 
     public void setLogin(LoginWindow login) {
