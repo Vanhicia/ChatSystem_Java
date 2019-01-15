@@ -43,7 +43,7 @@ public class Network {
 
 	/* Send the UDP packet to the address indicated */
 	public void sendUDPPacketUnicast(UDPPacket packet, InetAddress address) {
-		UDPSender sender = new UDPSender(this.UDPsocket, packet, address, Network.portUDP);
+		UDPSender sender = new UDPSender(packet, address, Network.portUDP);
 		Thread threadSender = new Thread(sender);
 		threadSender.start();
 	}
@@ -51,7 +51,7 @@ public class Network {
 	/* Send the UDP packet in broadcast */
 	public void sendUDPPacketBroadcast(UDPPacket packet) {
 		try {
-			UDPSender sender = new UDPSender(this.UDPsocket, packet, InetAddress.getByName("255.255.255.255"), Network.portUDP);
+			UDPSender sender = new UDPSender(packet, InetAddress.getByName("255.255.255.255"), Network.portUDP);
 			Thread threadSender = new Thread(sender);
 			threadSender.start();
 		} catch (UnknownHostException e) {

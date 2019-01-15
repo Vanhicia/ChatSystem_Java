@@ -13,8 +13,12 @@ public class UDPSender implements Runnable {
 	private InetAddress address;
 	private int port;
 	
-	public UDPSender(DatagramSocket socket, UDPPacket packet, InetAddress address, int port) {
-		this.socket = socket;
+	public UDPSender(UDPPacket packet, InetAddress address, int port) {
+		try {
+			this.socket = new DatagramSocket();
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
 		this.packet = packet;
 		this.address = address;
 		this.port = port;
@@ -32,6 +36,7 @@ public class UDPSender implements Runnable {
 	        //Send the serialized packet
 	        DatagramPacket outPacket = new DatagramPacket(data, data.length, this.address, this.port) ;
 	        socket.send(outPacket);
+	        socket.close();
 	        
 	        System.out.println("UDP packet sent to " + this.address);
     	} catch (IOException e) {
