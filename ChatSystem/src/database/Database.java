@@ -176,7 +176,6 @@ public class Database {
 		String sql = "SELECT * FROM Message WHERE history='"+ histId +"'";
 		ResultSet rs;
 		try {
-			System.out.println("Debut try");
 			rs = this.stat.executeQuery(sql);
 			while(rs.next()) {
 				String srcUserId = rs.getString("sender");

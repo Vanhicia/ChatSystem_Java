@@ -67,7 +67,6 @@ public class ClientTCP implements Runnable {
                     in.close();
                     out.close();
                     link.close();
-                    chat.closeWindow();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

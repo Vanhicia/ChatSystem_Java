@@ -79,7 +79,7 @@ public class Controller {
                             this.nwk.sendUDPPacketUserConnected();
                             this.contacts = new Contact(this.nwk.getServer(),Network.portTCP, this.user,this);
                             try {
-                                contacts.displayWindow();
+                                this.contacts.displayWindow();
                             } catch (IOException ex) {
                                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -94,7 +94,6 @@ public class Controller {
 		else {
 			/* Print an error message */
 			System.out.println("Your pseudo is refused, it is not unique");
-			//TODO : integrate in the graphical interface
 			return 0;
 		}		
 	}
@@ -109,7 +108,9 @@ public class Controller {
 	}
 
 	public void refreshWindows() {
-		contacts.refreshContacts();
+		if (this.contacts != null) {
+			this.contacts.refreshContacts();
+		}
 	}
 
     public void setLogin(LoginWindow login) {
