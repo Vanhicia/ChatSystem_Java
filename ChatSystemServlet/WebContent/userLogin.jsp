@@ -8,7 +8,7 @@
 </head>
     <body>
         <div>
-            <form method="get" action="subscribe">
+            <form method="POST" action="Login">
                 <fieldset>
                     <label for="pseudo">Pseudo</label>
                     <input type="text" id="pseudo" name="pseudo" value="" size="20" maxlength="20" /> <br />

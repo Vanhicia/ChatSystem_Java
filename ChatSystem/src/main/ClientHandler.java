@@ -38,9 +38,11 @@ public class ClientHandler  extends Observable implements Runnable{
                 input = (Message) in.readObject();
 		return input;
 	}
-	public void sendData(Message message){
+	public void sendData(Message message, boolean isSystemMessage){
 		System.out.println("Paquet envoyé : "+message.msg);
-		this.history.addEntry(message);
+		if(!isSystemMessage) {
+			this.history.addEntry(message);
+		}
             try {
                 out.writeObject(message);
                 out.flush();

@@ -2,6 +2,7 @@ Disconnect button : when close -> close Connection, can't receive message anymor
 
 Disconnect and connect again -> print history in ChatWindows
 
+<<<<<<< Updated upstream
 
 --------------------------------------------
 Pour ce qui concerne l’évaluation de votre travail, au terme des séances de TPs, nous vous demanderons de nous fournir :
@@ -15,3 +16,16 @@ Pour ce qui concerne l’évaluation de votre travail, au terme des séances de 
         Les procédures d'utilisation du système avec snaphots et listes des diagbox
         Les requirements (contraintes/limites d’utilisation) du système 
         Les tests unitaires qui ont été effectué
+
+
+Difference entre Presence service et le service login en v1 ?
+la révèlation des utilisateurs qu'est-ce qui est différent ?
+est-ce que cela signifie qu'on implemente la même application mais sous format web ?
+est-ce qu'il faut juste réutiliser les méthodes utilisées de l'appli swing-fx ?
+
+
+
+// comment il sait qu'il doit suscribe à ce serveur -> comment il connait son adresse ? on lui impose une adresse ? 
+// comment envoyer la data au serveur
+// en quoi le serveur sait la data et comment il peut l'envoyer à un user distant
+

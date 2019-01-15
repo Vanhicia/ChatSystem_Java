@@ -50,12 +50,12 @@ public class ManagerServer  implements Runnable{
  
     }
 	
-	public void sendMessage(Message message) throws IOException {
+	public void sendMessage(Message message, boolean isSystemMessage) throws IOException {
 		while(listener.getHmap()==null) {} 
 		this.hmap=listener.getHmap();
 		System.out.println("manager send " +this.hmap.get(message.getDestUser().getId()));
 		System.out.println("manager send to user" +message.getDestUser().getPseudo());
-		this.hmap.get(message.getDestUser().getId()).sendData(message);
+		this.hmap.get(message.getDestUser().getId()).sendData(message, isSystemMessage);
 	}
 	
 	public void closeServer() {

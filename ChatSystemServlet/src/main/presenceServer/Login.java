@@ -1,6 +1,6 @@
 package main.presenceServer;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -18,35 +18,47 @@ import main.User;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
     public Login() {
         super();
-        // TODO Auto-generated constructor stub
+
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String pseudo = request.getParameter( "pseudo" );
-		 Controller contr = new Controller();
-		 contr.connect(pseudo);
-		 String listUsers = printContacts(contr.getNetwork().getListUsers());
-		 request.setAttribute( "pseudo", pseudo );
-		 request.setAttribute( "listUsers", listUsers );
-		 this.getServletContext().getRequestDispatcher( "/WEB-INF/subscribe.jsp" ).forward( request, response );
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+		String user = request.getParameter("pseudo");
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		//writer.append("	Pseudo : " + user + ".\r\n");
+		// create HTML response
+		PrintWriter writer = response.getWriter();
+		writer.append("<!DOCTYPE html>\r\n")
+			  .append("<html>\r\n")
+			  .append("		<head>\r\n")
+			  .append("			<title>Welcome message</title>\r\n")
+			  .append("		</head>\r\n")
+			  .append("		<body>\r\n");
+		if (user != null && !user.trim().isEmpty()) {
+			writer.append("	Pseudo : " + user + ".\r\n");
+		} else {
+			writer.append("	You did not entered a name!\r\n");
+		}
+		writer.append("		</body>\r\n")
+			  .append("</html>\r\n");	
+		}
 
     public String printContacts(ArrayList<User> listContacts){
         String s = "";

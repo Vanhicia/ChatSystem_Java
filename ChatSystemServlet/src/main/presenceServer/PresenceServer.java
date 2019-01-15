@@ -2,6 +2,7 @@ package main.presenceServer;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import main.Network;
 import main.User;
 
+import ro.pippo.core.Application;
+import ro.pippo.core.Pippo;
+import ro.pippo.core.WebServer;
+import ro.pippo.core.route.RouteContext;
+
 /**
  * Servlet implementation class PresenceServer
  */
@@ -19,32 +25,22 @@ import main.User;
 public class PresenceServer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	Network ntw;
+	private HashMap<Integer, User> listUsers;
 	
 	public PresenceServer() {
         super();
+        this.listUsers = new HashMap<>();
 
     }
 	public PresenceServer(Network net) {
         super();
-        this.ntw=net;
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-	    response.setCharacterEncoding( "UTF-8" );
-		String message = "t";
-
-		request.setAttribute( "test", message );
-	    this.getServletContext().getRequestDispatcher( "/WEB-INF/test.jsp" ).forward( request, response );
-	    
-	    //en quoi le PS est une amélioration de l'appli car il refait ce que fait la vue contact + statut mais sous format web
-	    
-	    // je subscribe vers le PS cr je veux savoir qui est co"
-	    //j'envoie un publish pour dire que je suis co'
-	    // PS notify le subscriber de qui est co"
-	    //https://www.avaya.com/blogs/wp-content/uploads/2014/05/presence.jpg
+	    response.setCharacterEncoding( "UTF-8" );	    
 	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

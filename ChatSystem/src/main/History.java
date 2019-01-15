@@ -29,7 +29,7 @@ public class History {
 	public String printHistory() {
         String hist="";
 		for (Message tmp : this.history) {
-			hist+=(tmp.msg);
+			hist+=(tmp.getSrcUser().getPseudo()+" : "+tmp.msg+"\n");
 		}
         return hist;
 	}

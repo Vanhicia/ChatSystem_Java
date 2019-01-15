@@ -178,7 +178,7 @@ public class Contact extends javax.swing.JFrame {
              } else {
                  System.out.println(destUser.getPseudo());
                  ClientTCP c = new ClientTCP(this.destUser.getAddress(),1234,destUser,this.network);
-                 c.sendData(new Message("Connect with "+ this.user.getPseudo(), this.user, destUser));
+                 c.sendData(new Message("Connect with "+ this.user.getPseudo(), this.user, destUser),true);
                  ChatWindow chat =new ChatWindow(c,this.user,destUser);
                  chat.displayWindow();
                  c.setChat(chat);

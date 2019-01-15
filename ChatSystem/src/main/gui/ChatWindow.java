@@ -163,15 +163,17 @@ public class ChatWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_DisconnectActionPerformed
 
     private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed
-        if (this.c !=null){
+    	Message message = new Message(messagetosend.getText(),this.src,this.dest);
+    	if (this.c !=null){
             try {
-                this.c.sendData(new Message(messagetosend.getText(),this.src,this.dest));
+                this.c.sendData(message,false);
+                
             } catch (IOException ex) {
                 Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
             }  
         } else if (this.m!=null) {
         	try {
-                this.m.sendMessage(new Message(messagetosend.getText(),this.src,this.dest));
+                this.m.sendMessage(message,false);
             } catch (IOException ex) {
                 Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
             }  
