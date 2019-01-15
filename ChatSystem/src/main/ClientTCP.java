@@ -70,7 +70,6 @@ public class ClientTCP implements Runnable {
 		    			System.out.println("Paquet reçu :" +data.msg);
 			    		this.history.addEntry(data);
 		                chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
-	    			
 	    		}
 	    		
 			} catch (ClassNotFoundException e) {}

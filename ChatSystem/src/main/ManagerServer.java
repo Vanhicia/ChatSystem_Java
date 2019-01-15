@@ -63,6 +63,11 @@ public class ManagerServer  implements Runnable{
 		listener.setRunning(false);
 	}
 
+	public HashMap<UUID, ClientHandler> getHmap() {
+		return hmap;
+	}
+
+	
 
 
 	

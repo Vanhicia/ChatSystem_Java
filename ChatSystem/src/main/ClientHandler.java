@@ -62,13 +62,20 @@ public class ClientHandler  extends Observable implements Runnable{
 	    		if (data!=null) { 
 	    		    if (userdest==null && data.getSrcUser()!=null){
 	    		    	setUserdest(data.getSrcUser());
-                                this.history = new History(this.network.getController().getUser(), userdest, this.network.getController().getDatabase());
-                                this.chat=new ChatWindow(this.network.getServer(), this.network.getController().getUser(), userdest);
-                                chat.displayWindow();
+                        this.history = new History(this.network.getController().getUser(), userdest, this.network.getController().getDatabase());
+                        this.chat=new ChatWindow(this.network.getServer(), this.network.getController().getUser(), userdest);
+                        chat.displayWindow();
+                        chat.getWindowChatText().append(this.history.printHistory());
 	    		    } else{
-                                chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
-                            }
-		    		this.history.addEntry(data);
+	    		    	if (data.getSrcUser()==null) {
+	    		    		this.close();
+	    		    		chat.closeWindow();
+	    		    	} else {
+	                        chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
+	                        this.history.addEntry(data);	    		    		
+	    		    	}
+
+                    }
 		    		System.out.println("Paquet reçu : "+data.msg);
 	    		}
 
@@ -83,7 +90,7 @@ public class ClientHandler  extends Observable implements Runnable{
 	          out.close();
 	          in.close();
 	          clientSocket.close();
-                  chat.closeWindow();
+              //chat.closeWindow();
 	      } catch (IOException e) {
 	          e.printStackTrace();
 	      }
@@ -99,6 +106,13 @@ public class ClientHandler  extends Observable implements Runnable{
 		this.userdest = userdest;
 		setChanged();
 		notifyObservers();
+	}
+
+
+	public History getHistory() {
+		return history;
 	} 
+	
+	
 }
 

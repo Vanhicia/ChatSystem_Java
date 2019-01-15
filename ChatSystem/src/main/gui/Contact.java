@@ -183,7 +183,7 @@ public class Contact extends javax.swing.JFrame {
                  chat.displayWindow();
                  c.setChat(chat);
                  /* Print history */
-                 chat.getWindowChatText().append(c.getHistory().printHistory());
+                // chat.getWindowChatText().append(c.getHistory().printHistory());
                  Thread t = new Thread (c);
                  t.start();
              }
