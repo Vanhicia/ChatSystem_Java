@@ -170,7 +170,6 @@ public class Database {
 	}
 	
 	public List<Message> getHistory(User local, User dist) {
-		System.out.println("Debut getHistory");
 		List<Message> history = new ArrayList<>();
 		int histId = getHistoryId(dist.getId());
 		String sql = "SELECT * FROM Message WHERE history='"+ histId +"'";
