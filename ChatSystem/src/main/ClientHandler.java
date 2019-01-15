@@ -58,7 +58,7 @@ public class ClientHandler  extends Observable implements Runnable{
          while(running){
             // Wait for input from client and send response back to client
 			try {
-                            Message data= receiveData();
+                Message data= receiveData();
 	    		if (data!=null) { 
 	    		    if (userdest==null && data.getSrcUser()!=null){
 	    		    	setUserdest(data.getSrcUser());

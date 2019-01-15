@@ -160,12 +160,11 @@ public class ChatWindow extends javax.swing.JFrame {
         	try {
 				c.sendData(new Message("Close", null,this.dest), true);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             c.closeConnection();
         } else if (this.m!=null){
-            m.closeServer();
+            m.getHmap().get(this.dest).close();
         }
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
