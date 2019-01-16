@@ -17,6 +17,7 @@ public class User implements Serializable{
 		this.timeConnection = timeConnection;
 	}
 	
+	//Getters
 	public UUID getId() {
 		return id;
 	}
@@ -25,21 +26,21 @@ public class User implements Serializable{
 		return pseudo;
 	}
 	
-	public void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
-	}
-	
 	public InetAddress getAddress() {
 		return address;
-	}
-	public void setAddress(InetAddress address) {
-		this.address = address;
 	}
 	
 	public long getTimeConnection() {
 		return timeConnection;
 	}
 	
+	//Setters
+	public void setPseudo(String pseudo) {
+	this.pseudo = pseudo;
+}
+	public void setAddress(InetAddress address) {
+		this.address = address;
+	}
 	public void setTimeConnection() {
 		this.timeConnection = System.currentTimeMillis();
 	}

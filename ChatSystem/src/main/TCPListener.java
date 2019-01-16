@@ -44,17 +44,12 @@ public class TCPListener implements Runnable, Observer{
 		}
 	}
 
-	public HashMap<UUID, ClientHandler> getHmap() {
-		return hmap;
-	}
-
 	@Override
 	public void update(Observable o, Object arg) {
 		userdestupdate=(ClientHandler) o;
-
-        System.out.println("tlist: "+userdestupdate);
+        System.out.println("Client : "+ userdestupdate);
         if (userdestupdate.getUserdest()!=null && userdestupdate!=null) {
-        	this.hmap.put(userdestupdate.getUserdest().getId(), userdestupdate);
+        	this.hmap.put(userdestupdate.getUserdest().getId(), userdestupdate); //Weadd a new client in hmap
         }
 
 	}
@@ -71,6 +66,10 @@ public class TCPListener implements Runnable, Observer{
 		}
 	}
 	
-	
+	//Getter
+	public HashMap<UUID, ClientHandler> getHmap() {
+		return hmap;
+	}
+
 	
 }
