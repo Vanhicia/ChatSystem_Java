@@ -25,7 +25,7 @@ public class Network {
 		this.listUsers = new ArrayList<User>();
 		this.hmap = new HashMap<String, User>();
 		try {
-			/* Create a socket to communicate with UDP */
+			/* Create a socket to communicate in UDP */
 			this.UDPsocket = new DatagramSocket(portUDP);
 			/* Create a thread UDPListener */
 			this.UDPListener = new UDPListener(this, this.UDPsocket);
@@ -154,9 +154,9 @@ public class Network {
 		this.server.closeManagerServer();
 	}
 	
+	/* Close the network */
 	public void closeNetwork() {
 		this.UDPListener.stop();
-		//this.UDPsocket.close();
 	}
 		
 	public Controller getController() {

@@ -7,8 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import javax.swing.WindowConstants;
 import main.gui.ChatWindow;
+
 public class ClientTCP implements Runnable {
 	private Socket link;
 	private ObjectInputStream in;

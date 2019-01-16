@@ -4,12 +4,7 @@
  * and open the template in the editor.
  */
 package main.gui;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import main.User;
 import main.Controller;
-import main.ManagerServer;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

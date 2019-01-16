@@ -12,10 +12,11 @@ public class History {
 	public History(User local, User dest, Database db) {
 		this.db = db;
 		this.userDistant = dest;
+		/* Get the history from the database */
 		this.history = this.db.getHistory(local, dest);
-		this.db = db;
 	}
 	
+	/* Add a message in the history */
 	public void addEntry(Message msg) {
 		/* Add the message in the history object */
 		this.history.add(msg);

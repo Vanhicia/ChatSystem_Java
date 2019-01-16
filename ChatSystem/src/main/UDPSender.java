@@ -7,6 +7,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
+/* Thread which sends a UDP packet */
 public class UDPSender implements Runnable {
 	private DatagramSocket socket;
 	private UDPPacket packet;
@@ -38,7 +39,7 @@ public class UDPSender implements Runnable {
 	        socket.send(outPacket);
 	        socket.close();
 	        
-	        System.out.println("UDP packet sent to " + this.address);
+	        System.out.println("UDP packet sent");
     	} catch (IOException e) {
 			e.printStackTrace();
 		}

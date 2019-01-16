@@ -3,8 +3,6 @@ import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.UUID;
 
-//import java.sql.Time;
-
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private UUID id;

@@ -29,7 +29,8 @@ public class Controller {
 			this.user = new User(id, "", InetAddress.getLocalHost(), 0);
 			System.out.println("Local user exists and its id = " + id);
 		} catch (SQLException e) {
-			/* The application is launched for the first time */
+			/* The application is launched for the first time 
+			 * so the tables don't exist yet */
 			System.out.println("The application is launched for the first time");
 			this.launchFirstTime();
 		} catch (UnknownHostException e) {
@@ -64,6 +65,7 @@ public class Controller {
 	public void closeApplication() {
 		this.nwk.closeNetwork();
 		this.db.closeDatabase();
+		System.out.println("Database closed");
 	}
 	
 	/* Change the pseudo */
@@ -124,7 +126,9 @@ public class Controller {
         return login;
     }
     
-    public void launchFirstTime() {
+    /* Function called at the first launch of the application
+     * It creates the tables of the databases and a local user */
+    private void launchFirstTime() {
     	UUID id = UUID.randomUUID();
 		try {
 			this.user = new User(id, "", InetAddress.getLocalHost(), 0);
