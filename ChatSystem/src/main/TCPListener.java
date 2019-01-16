@@ -42,7 +42,6 @@ public class TCPListener implements Runnable, Observer{
 				System.out.println("We do not accept client connections anymore.");
 			}
 		}
-		System.out.println("Try to close listenner");
 	}
 
 	public HashMap<UUID, ClientHandler> getHmap() {
