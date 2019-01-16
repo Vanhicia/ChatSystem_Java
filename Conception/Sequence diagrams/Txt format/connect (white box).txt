@@ -1,0 +1,76 @@
+title connect (white box)
+
+participant User
+
+participantgroup **ChatSystem**
+participant GUI
+participant Controller
+participant Network
+participant ModelUser
+participant UDPListener
+participant UDPSender
+participant ManagerServer
+participant TCPListener
+participant ClientHandler
+end
+
+participant ClockSystem
+participant CommunicationSystem
+
+Network->*UDPListener:createUDPListener(network)
+Network->*UDPSender:sendUDPPacketBroadcast("RequestListUsers")
+UDPSender->>CommunicationSystem:send(requestPacket)
+space
+destroy UDPSender
+UDPListener<<-CommunicationSystem:send(listUsersUDPPacket)
+Network<-UDPListener:setListUsers(listUsersUDPPacket)
+activate Network
+space 
+deactivate Network
+
+note over Controller: pseudoOK = false
+
+loop  pseudoOK=false
+User->>GUI:enterPseudo(pseudo)
+User->>GUI:OnClickConnectButton()
+
+
+GUI->Controller: getPseudoTextField()
+
+Controller->Network:checkUniquePseudo(pseudo)
+activate Network
+Controller<--Network:pseudoOK
+deactivate Network
+
+alt pseudoOK=true
+Controller->ModelUser:setPseudo(pseudo)
+activate ModelUser
+space
+deactivate ModelUser
+
+Controller->ModelUser:setConnectionTime()
+activate ModelUser
+ModelUser->ClockSystem:currentTime()
+activate ClockSystem
+ModelUser<--ClockSystem:currentTime
+deactivate ClockSystem
+Controller<--ModelUser:
+deactivate ModelUser
+Network->*ManagerServer:createManagerServer(network)
+ManagerServer->*TCPListener:createTCPListener(serverSocket,network)
+TCPListener->*ClientHandler:createClientHandler(serverSocket.accept, network)
+
+Network->*UDPSender:sendUDPPacketBroadcast("UserConnected")
+UDPSender->>CommunicationSystem:send(packet)
+space
+destroy UDPSender
+
+Controller->GUI: closeLoginWindow()
+Controller->GUI: createContactWindow()
+GUI->>User : displayContactWindow()
+else 
+User<<-GUI:displayErrorMessage("Not unique")
+
+
+end
+end

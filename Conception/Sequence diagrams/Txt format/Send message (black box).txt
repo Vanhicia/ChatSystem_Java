@@ -1,0 +1,21 @@
+title Send message (black box)
+
+alt 
+User->>ChatSystem: addText()
+else 
+User->>ChatSystem: addFile()
+else 
+User->>ChatSystem: addText()
+User->>ChatSystem: addFile()
+end
+User->ChatSystem: OnClickSendButton()
+ChatSystem->ClockSystem:currentTime()
+activate ClockSystem
+ChatSystem<--ClockSystem:currentTime
+deactivate ClockSystem
+
+ChatSystem->>CommunicationSystem: send(packet)
+
+ChatSystem->Database:insertMessage(message)
+
+

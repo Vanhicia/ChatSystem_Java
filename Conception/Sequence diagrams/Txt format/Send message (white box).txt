@@ -1,0 +1,33 @@
+title Send message (white box)
+
+participant User
+
+participantgroup **ChatSystem**
+participant GUI
+participant Database
+participant History
+participant ManagerServer
+participant ClientHandler
+end 
+participant CommunicationSystem
+
+loop running=true
+
+User->GUI : writeMessage()
+GUI->ManagerServer:getMessageTextField()
+alt hmap.get(UUIDUserDest) != null
+ManagerServer->ClientHandler:sendMessage(message)
+ClientHandler->CommunicationSystem:sendData(message)
+
+ClientHandler->History:addEntry(message)
+activate History
+History->Database:insertMessage(message)
+activate Database
+Database-->History:
+deactivate Database
+
+History-->ClientHandler:
+deactivate History
+
+end
+end

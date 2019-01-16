@@ -1,0 +1,26 @@
+title Receive message
+participant User
+
+participantgroup **ChatSystem**
+participant GUI
+participant Database
+participant History
+participant ClientHandler
+end
+
+participant CommunicationSystem
+
+loop running=true
+ClientHandler<<-CommunicationSystem:receiveData(message)
+ClientHandler->History:addEntry(message)
+activate History
+History->Database:insertMessage(message)
+activate Database
+Database-->History:
+deactivate Database
+space
+deactivate History
+
+ClientHandler->>GUI:setTextfield(message)
+User<<-GUI : printMessage()
+end
