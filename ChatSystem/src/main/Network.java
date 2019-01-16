@@ -2,23 +2,20 @@ package main;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import main.gui.Contact;
-
 
 
 public class Network {
 	private Controller contr;
 	private ArrayList<User> listUsers;
-	private UDPListener UDPListener;
-	private DatagramSocket UDPsocket;
 	private HashMap<String,User> hmap;
-    private ManagerServer server=null;
-    private Thread manager;
+	private DatagramSocket UDPsocket;
+	
+	private UDPListener UDPListener;
+    private ManagerServer server = null;
+    
+    private boolean connected = false; //true if the local user is connected
         
     protected static int portUDP = 1233;
     protected static int portTCP = 1234;
@@ -35,7 +32,7 @@ public class Network {
 			Thread threadListener = new Thread(this.UDPListener);
 			threadListener.start();	
 			/* Send a request of listUsers */
-			this.sendUDPPacketRequestListUsers();
+			this.sendUDPPacketBroadcast("RequestListUsers");
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
@@ -49,7 +46,8 @@ public class Network {
 	}
 	
 	/* Send the UDP packet in broadcast */
-	public void sendUDPPacketBroadcast(UDPPacket packet) {
+	public void sendUDPPacketBroadcast(String motive) {
+		UDPPacket packet = new UDPPacket(this.contr.getUser(),null,motive);
 		try {
 			UDPSender sender = new UDPSender(packet, InetAddress.getByName("255.255.255.255"), Network.portUDP);
 			Thread threadSender = new Thread(sender);
@@ -71,25 +69,7 @@ public class Network {
 		}
 		return unicity;
 	}
-	
-	/* Send a request to have the list of users, in broadcast */
-	public void sendUDPPacketRequestListUsers() {
-		System.out.println("Send a request of user list");
-		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"RequestListUsers"));
-	}
-	/* Send the identity of the new user to all connected users */
-	public void sendUDPPacketUserConnected() {
-		for (User destUser : this.listUsers) {
-			this.sendUDPPacketUnicast(new UDPPacket(this.contr.getUser(),destUser,"UserConnected"), destUser.getAddress());
-		}
-	}
-	/* Send the identity of the updated user to all connected users */
-	public void sendUDPPacketUserUpdated() {
-		for (User destUser : this.listUsers) {
-			this.sendUDPPacketUnicast(new UDPPacket(this.contr.getUser(),destUser,"UserUpdated"), destUser.getAddress());
-		}
-	}
-	
+		
 	/* Send the list of users */
 	public void sendListUsersUDPPacket(User userDest, InetAddress address) {
 		this.sendUDPPacketUnicast(new ListUsersUDPPacket(this.contr.getUser(),userDest,this.listUsers),address);
@@ -100,8 +80,14 @@ public class Network {
 		boolean last = true;
 		User localUser = this.contr.getUser();
 		Iterator<User> usersIter = this.listUsers.iterator();
+		/* If the local user is not connected */
+		if (!this.connected) {
+			last = false;
+		}
+		/* While we don't find a user connected after the local user */
 		while (last && usersIter.hasNext()) {
 			User nextUser = usersIter.next();
+			/* If a remote user has a connection time more recent than the local user */
 			if (nextUser.getTimeConnection()>localUser.getTimeConnection()) {
 				last = false;
 			}
@@ -153,10 +139,24 @@ public class Network {
 		this.listUsers = listUsers;
 	}
 	
-	public void closeNetwork() {
-		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserDisconnected"));
-		this.UDPsocket.close();
+	/* Connect the local user */
+	public void connectLocalUser() {
+		System.out.println("You are connected");
+		this.launchManagerServer();
+        this.sendUDPPacketBroadcast("UserConnected");
+	}
+	
+	/* Disconnect the local user */
+	public void disconnectLocalUser() {
+		System.out.println("You are disconnected");
+		this.sendUDPPacketBroadcast("UserDisconnected");
         this.server.closeServer();
+	}
+	
+	public void closeNetwork() {
+		//this.sendUDPPacketBroadcast("UserDisconnected");
+		this.UDPListener.stop();
+        //this.server.closeServer();
 	}
 		
 	public Controller getController() {
@@ -180,8 +180,9 @@ public class Network {
     public void launchManagerServer() {
         try {
             this.server=new ManagerServer(Network.portTCP,this) ;
-            manager = new Thread(server);
+            Thread manager = new Thread(server);
             manager.start();
+            this.connected = true; //the local user is now connected
         } catch (IOException e) {
         	e.printStackTrace();
 		}
@@ -191,16 +192,18 @@ public class Network {
         return server;
     }
 
-    public Thread getManager() {
-        return manager;
-    }
-
     public void setServer(ManagerServer server) {
         this.server = server;
     }
-
-    public void setManager(Thread manager) {
-        this.manager = manager;
+    
+    /* Return true if the local user is connected */
+    public boolean getConnectionStatus() {
+    	return this.connected;
+    }
+    
+    /* Set the connection status of the local user */
+    public void setConnectionStatus(boolean connected) {
+    	this.connected = connected;
     }
 
 }

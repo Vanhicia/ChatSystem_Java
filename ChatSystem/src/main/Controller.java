@@ -57,6 +57,10 @@ public class Controller {
 	}
 	
 	public void disconnect() {
+		this.nwk.disconnectLocalUser();
+	}
+	
+	public void closeApplication() {
 		this.nwk.closeNetwork();
 		this.db.closeDatabase();
 	}
@@ -73,21 +77,19 @@ public class Controller {
 			user.setPseudo(pseudo);
 			/* If a new user choose his/her pseudo */
 			if (option == 0) {
-							this.nwk.launchManagerServer();
-                            System.out.println("You are connected");
-                            this.user.setTimeConnection();
-                            this.nwk.sendUDPPacketUserConnected();
-                            this.contacts = new Contact(this.nwk.getServer(),Network.portTCP, this.user,this);
-                            try {
-                                this.contacts.displayWindow();
-                            } catch (IOException ex) {
-                                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+				this.user.setTimeConnection();
+				this.nwk.connectLocalUser();
+                this.contacts = new Contact(this.nwk.getServer(),Network.portTCP, this.user,this);
+                try {
+                    this.contacts.displayWindow();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
 			} 
 			/* If the user updates his/her pseudo */
 			else {
 				System.out.println("Your pseudo is updated");
-				this.nwk.sendUDPPacketUserUpdated();
+				this.nwk.sendUDPPacketBroadcast("UserUpdated");
 			}
 			return 1;
 		} 
