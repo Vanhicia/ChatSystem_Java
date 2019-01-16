@@ -108,6 +108,7 @@ public class Network {
 			User nextUser = usersIter.next();
 			if (nextUser.getId().equals(user.getId())) {
 				this.listUsers.remove(nextUser);
+				delete=true;
 			}
 		}
 		if (!delete) {
