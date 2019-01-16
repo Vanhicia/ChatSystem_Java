@@ -42,14 +42,17 @@ public class ClientHandler  extends Observable implements Runnable{
 		System.out.println("Paquet envoyé : "+message.msg);
 		if(!isSystemMessage) {
 			this.history.addEntry(message);
+		} 
+        try {
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+            chat.refreshWindow("SYSTEM", "Dest unreachable, you should close this window. \n "
+                    + "Click on disconnect button");
+        }
+        if (message.getSrcUser()==null) {
+        	this.close();
 		}
-            try {
-                out.writeObject(message);
-                out.flush();
-            } catch (IOException ex) {
-                chat.refreshWindow("SYSTEM", "Dest unreachable, you should close this window. \n "
-                        + "Click on disconnect button");
-            }
 	}
 		
 

@@ -67,9 +67,14 @@ public class ClientTCP implements Runnable {
                 Message data;
                 data = receiveData();
 	    		if (data!=null) {
+	    			if (data.getSrcUser()==null) {
+    		    		this.closeConnection();
+    		    		chat.closeWindow();
+    		    	} else {
 		    			System.out.println("Paquet reçu :" +data.msg);
 			    		this.history.addEntry(data);
 		                chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
+    		    	}
 	    		}
 	    		
 			} catch (ClassNotFoundException e) {}

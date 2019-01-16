@@ -164,7 +164,12 @@ public class ChatWindow extends javax.swing.JFrame {
 			}
             c.closeConnection();
         } else if (this.m!=null){
-            m.getHmap().get(this.dest).close();
+        	try {
+				m.sendMessage(new Message("Close", null,this.dest), true);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
