@@ -47,7 +47,7 @@ public class UDPListener implements Runnable {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("Close application");
 			}
 		}
 	}

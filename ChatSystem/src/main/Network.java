@@ -156,7 +156,6 @@ public class Network {
 	public void closeNetwork() {
 		this.sendUDPPacketBroadcast(new UDPPacket(this.contr.getUser(),null,"UserDisconnected"));
 		this.UDPsocket.close();
-        this.server.closeManagerServer();
 	}
 		
 	public Controller getController() {
