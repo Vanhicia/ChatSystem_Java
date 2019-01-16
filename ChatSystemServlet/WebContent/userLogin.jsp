@@ -14,8 +14,8 @@
                     <input type="text" id="pseudo" name="pseudo" value="" size="20" maxlength="20" /> <br />
 				 </fieldset>
                 <fieldset>
-                    <label for="type">Type</label>
-                    <input type="text" id="type" name="type" value="" size="20" maxlength="20" /> <br />
+                    <label for="action">Action</label>
+                    <input type="text" id="action" name="action" value="" size="20" maxlength="20" /> <br />
 				 </fieldset>
                 <input type="submit" value="Valider"  />
                 <input type="reset" value="Remettre à zéro" /> <br />

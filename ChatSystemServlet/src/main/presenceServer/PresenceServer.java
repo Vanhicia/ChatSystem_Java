@@ -41,11 +41,11 @@ public class PresenceServer extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		String pseudo = request.getParameter("pseudo");
-		String type = request.getParameter("type");
+		String action = request.getParameter("action");
 		PrintWriter out = response.getWriter();
 		
 		
-		if(type.equals("login")) {
+		if(action.equals("connect")) {
 			if(InetAddress.getByName(request.getRemoteAddr()).isLoopbackAddress()) {
 				InetAddress adr = InetAddress.getByName(request.getLocalAddr());
 				if(adr!=null) {
@@ -56,14 +56,17 @@ public class PresenceServer extends HttpServlet {
 							adr, System.currentTimeMillis()));
 				}
 			}
-		} else {
-			listUsers.add(new User(UUID.randomUUID(), pseudo, 
-							InetAddress.getByName(request.getRemoteAddr()), System.currentTimeMillis()));
+		} 
+		
+		if (action.equals("disconnect")) {
+			out.println("Someone disconnt");
+			for(User u:listUsers) {
+				if (u.getPseudo().equals(pseudo)) {
+					listUsers.remove(u);
+					break;
+				}
+			}
 		}
-		/*
-		if (type.equals("disconnect")) {
-			listUsers.remove(o)
-		}*/
 		out.println("List of online users");
 		out.println("<br>");
 		for(User u:listUsers) {
