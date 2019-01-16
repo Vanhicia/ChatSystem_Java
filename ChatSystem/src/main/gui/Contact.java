@@ -201,7 +201,7 @@ public class Contact extends javax.swing.JFrame {
     }//GEN-LAST:event_pseudoConnectedActionPerformed
 
     private void disconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectActionPerformed
-            this.server.closeServer();
+            this.server.closeManagerServer();
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();

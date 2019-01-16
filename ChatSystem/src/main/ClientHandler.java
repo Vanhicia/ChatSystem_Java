@@ -51,7 +51,7 @@ public class ClientHandler  extends Observable implements Runnable{
                     + "Click on disconnect button");
         }
         if (message.getSrcUser()==null) {
-        	this.close();
+        	this.closeClientHandler();
 		}
 	}
 		
@@ -71,7 +71,7 @@ public class ClientHandler  extends Observable implements Runnable{
                         chat.getWindowChatText().append(this.history.printHistory());
 	    		    } else{
 	    		    	if (data.getSrcUser()==null) {
-	    		    		this.close();
+	    		    		this.closeClientHandler();
 	    		    		chat.closeWindow();
 	    		    	} else {
 	                        chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
@@ -87,13 +87,12 @@ public class ClientHandler  extends Observable implements Runnable{
          }
         }
         
-	   public void close() {
+	   public void closeClientHandler() {
 	      try {
 	          // Close all streams and sockets
 	          out.close();
 	          in.close();
 	          clientSocket.close();
-              //chat.closeWindow();
 	      } catch (IOException e) {
 	          e.printStackTrace();
 	      }

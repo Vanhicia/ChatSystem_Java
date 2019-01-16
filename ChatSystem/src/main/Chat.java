@@ -13,7 +13,7 @@ import java.io.IOException;
 public class Chat {
     public static void main(String[] args) throws IOException{
     	Controller contr = new Controller();
-         LoginWindow loginWindow = new LoginWindow(contr);
-         loginWindow.displayWindow();
+        LoginWindow loginWindow = new LoginWindow(contr);
+        loginWindow.displayWindow();
     }
 }

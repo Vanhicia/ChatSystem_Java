@@ -15,10 +15,9 @@ public class TCPListener implements Runnable, Observer{
 	private static Thread thread;
 	private HashMap<UUID, ClientHandler> hmap;
 	private ClientHandler userdestupdate=null;
-	private volatile boolean running;
+	private volatile boolean running=true;
 	
 	public TCPListener(ServerSocket serverSocket, Network network) throws IOException {
-		this.running =true;
 		this.serverSocket = serverSocket;
 		this.network =network;
 	}
@@ -30,9 +29,7 @@ public class TCPListener implements Runnable, Observer{
 			this.hmap = new HashMap<UUID, ClientHandler>();
 			System.out.println("Waiting for a client ..."); 
 	    	Socket clientsocket;
-
 			clientsocket = serverSocket.accept();
-
 	        clientHandler = new ClientHandler(clientsocket, network);
 
 	        thread = new Thread(clientHandler);
@@ -42,17 +39,10 @@ public class TCPListener implements Runnable, Observer{
 
 	        clientHandler.addObserver(this);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("We do not accept client connections anymore.");
 			}
 		}
-		try {
-                        clientHandler.close();
-			this.serverSocket.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println("Try to close listenner");
 	}
 
 	public HashMap<UUID, ClientHandler> getHmap() {
@@ -70,8 +60,16 @@ public class TCPListener implements Runnable, Observer{
 
 	}
 
-	public void setRunning(boolean running) {
-		this.running = running;
+	public void closeListenner(){
+		//We do not accept connections anymore
+		this.running =false;
+		System.out.println("Close TCP listenner");
+		try {
+			serverSocket.close();
+			System.out.println("Close Server Socket");
+		} catch (IOException e) {
+			System.out.println("ERROR : Cannot close Server Socket");
+		}
 	}
 	
 	

@@ -14,40 +14,34 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
 public class ManagerServer  implements Runnable{
-	//
 	private static Thread threadlistener;
 	private ServerSocket serverSocket;
 	private Network network;
-	//private History history;
 	private TCPListener listener;
-	//private HashMap<User, ClientHandler> hmap;
 	private HashMap<UUID, ClientHandler> hmap;
+	
 	public ManagerServer(int port, Network network) throws IOException {
 		System.out.println("Binding to port " + port + ", please wait  ...");
 		serverSocket = new ServerSocket(port);
 		System.out.println("Server started: " + serverSocket);
 		this.network=network;
-    	//
 
 	}
         
 	public void run() {
 		try {
+			System.out.println("Run TCP listenner");
 			listener = new TCPListener(serverSocket,network);
+			threadlistener = new Thread(listener);
+			threadlistener.start();
+			threadlistener.join();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
-                threadlistener = new Thread(listener);
-                threadlistener.start();
-    	try {
-			threadlistener.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-          
- 
     }
 	
 	public void sendMessage(Message message, boolean isSystemMessage) throws IOException {
@@ -58,17 +52,12 @@ public class ManagerServer  implements Runnable{
 		this.hmap.get(message.getDestUser().getId()).sendData(message, isSystemMessage);
 	}
 	
-	public void closeServer() {
+	public void closeManagerServer() {
 		System.out.println("Close Server");
-		listener.setRunning(false);
+		listener.closeListenner();
 	}
 
 	public HashMap<UUID, ClientHandler> getHmap() {
 		return hmap;
 	}
-
-	
-
-
-	
 }
