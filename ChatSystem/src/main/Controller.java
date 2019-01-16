@@ -1,4 +1,5 @@
 package main;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -7,7 +8,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import main.database.Database;
 import main.gui.Contact;
 import main.gui.LoginWindow;
@@ -37,18 +37,6 @@ public class Controller {
 			e.printStackTrace();
 		}
 		this.nwk = new Network(this);
-	}
-	
-	public User getUser() {
-		return user;
-	}
-	
-	public Network getNetwork() {
-		return this.nwk;
-	}
-	
-	public Database getDatabase() {
-		return this.db;
 	}
 	
 	/* Return 1 if the connection has succeeded */
@@ -118,13 +106,6 @@ public class Controller {
 		}
 	}
 
-    public void setLogin(LoginWindow login) {
-        this.login = login;
-    }
-
-    public LoginWindow getLogin() {
-        return login;
-    }
     
     /* Function called at the first launch of the application
      * It creates the tables of the databases and a local user */
@@ -139,5 +120,26 @@ public class Controller {
 		this.db.insertLocalUser(id);
 		System.out.println("A local user is created in the database");
     }
+
+    //Getters
+	public User getUser() {
+		return user;
+	}
+	
+	public Network getNetwork() {
+		return this.nwk;
+	}
+	
+	public Database getDatabase() {
+		return this.db;
+	}
+	
+    public LoginWindow getLogin() {
+        return login;
+    }
     
+    //Setter
+    public void setLogin(LoginWindow login) {
+        this.login = login;
+    }
 }

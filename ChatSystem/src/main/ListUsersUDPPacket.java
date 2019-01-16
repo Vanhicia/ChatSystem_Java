@@ -1,4 +1,5 @@
 package main;
+
 import java.util.ArrayList;
 
 /* UDP packet which contains the user list */
@@ -11,6 +12,7 @@ public class ListUsersUDPPacket extends UDPPacket {
 		this.listUsers = listUsers;
 	}
 	
+	//Getter
 	public ArrayList<User> getListUsers() {
 		return this.listUsers;
 	}

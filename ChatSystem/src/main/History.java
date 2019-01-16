@@ -1,7 +1,6 @@
 package main;
 
 import java.util.List;
-
 import main.database.Database;
 
 public class History {
@@ -36,6 +35,7 @@ public class History {
         return hist;
 	}
 	
+	//Getters 
 	public List<Message> getHistory() {
 		return history;
 	}

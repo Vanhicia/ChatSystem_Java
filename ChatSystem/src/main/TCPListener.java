@@ -59,7 +59,7 @@ public class TCPListener implements Runnable, Observer{
 
 	}
 
-	public void closeListenner(){
+	public void closeListener(){
 		//We do not accept connections anymore
 		this.running =false;
 		System.out.println("Close TCP listenner");

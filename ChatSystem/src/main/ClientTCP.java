@@ -14,7 +14,6 @@ public class ClientTCP implements Runnable {
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private History history;
-	private User userdistant;
     private ChatWindow chat;
 	
 	public ClientTCP (InetAddress address, int port, User userdistant, Network nwk) {
@@ -22,69 +21,76 @@ public class ClientTCP implements Runnable {
 			System.out.println("Establishing connection. Please wait ...");
  			this.link = new Socket(address,port);
  			System.out.println("Connected: " + link);
+ 			
+ 			// Create input buffer and output buffer
 			this.out = new ObjectOutputStream(new BufferedOutputStream(link.getOutputStream()));
 			this.in = new ObjectInputStream(link.getInputStream());
-			this.userdistant =userdistant;
+			
 			this.history = new History(nwk.getController().getUser(), userdistant, nwk.getController().getDatabase());
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error : Cannot create input and output buffers");
 		}
 	}
 	
-	public Message receiveData () throws ClassNotFoundException {
-		Message input = null;
-		try {
-          input = (Message) in.readObject();
-		} catch (IOException e) {
-
-		}
-		return input;
+	// Return the message that we have received from input buffer
+	public Message receiveData () throws ClassNotFoundException, IOException  {
+		return (Message) in.readObject();
 	}
 	
-	
+	// Send a message from System or user (Client)
 	public void sendData(Message message, boolean isSystemMessage) throws IOException {
 		System.out.println("Paquet envoyé : "+message.msg);
-		out.writeObject(message);
-		out.flush();
+		
+		//We do not add system messages in user's history
 		if(!isSystemMessage) {
 			this.history.addEntry(message);
 		}
+		
+		// We write message in output buffer to send this message
+		out.writeObject(message);
+		out.flush();
 	}
+	
 	public void closeConnection() {
 		try {   
-                    System.out.println("Client close");
-                    in.close();
-                    out.close();
-                    link.close();
+            System.out.println("Client close");
+            // Close all streams and sockets
+            in.close();
+            out.close();
+            link.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error : Cannot close connection");
 		}
 	}
 	
 	public void run() {
 		while(true) {
 			try {
-                Message data;
-                data = receiveData();
-	    		if (data!=null) {
+                Message data = receiveData();
+	    		if (data!=null) { // We receive a message
 	    			if (data.getSrcUser()==null) {
+	    				// We receive a closure message (src=null) 
+	    				// We close this connection and the chat window that it associated
     		    		this.closeConnection();
     		    		chat.closeWindow();
     		    	} else {
+    		    		// We receive a message, we print it and add it in history
 		    			System.out.println("Paquet reçu :" +data.msg);
+		    			chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
 			    		this.history.addEntry(data);
-		                chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
     		    	}
 	    		}
-	    		
-			} catch (ClassNotFoundException e) {}
+			} catch (ClassNotFoundException e) {				
+				System.out.println("Error : Cannot receive message because Message class not found");
+			} catch (NullPointerException e) {
+				System.out.println("Error : Null PointerException");
+			} catch (Exception e) {
+				System.out.println("Error : Exception has been raised in ClientTCP class");
+			}
 		}
 	}
-
-    public void setChat(ChatWindow chat) {
-        this.chat = chat;
-    }
-
+	
+	//Getters
     public ChatWindow getChat(ChatWindow chat){
         return chat;
     }
@@ -92,6 +98,10 @@ public class ClientTCP implements Runnable {
     public History getHistory() {
         return history;
     }
-        
-        
+    
+    //Setters
+    public void setChat(ChatWindow chat) {
+        this.chat = chat;
+    }
+
 }
