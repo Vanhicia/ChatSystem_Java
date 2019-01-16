@@ -1,6 +1,7 @@
 package main;
 import java.util.ArrayList;
 
+/* UDP packet which contains the user list */
 public class ListUsersUDPPacket extends UDPPacket {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<User> listUsers;

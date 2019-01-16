@@ -31,6 +31,7 @@ public class Database {
 		}
 	}
 	
+	/* Create the tables of the database */
 	public void createTables() {
 			this.createUserTable();
 			this.createLocalUserTable();
@@ -38,7 +39,8 @@ public class Database {
 			this.createMessageTable();
 	}
 		
-	public void createUserTable() {
+	/* Create the user table */
+	private void createUserTable() {
 		String sql = "CREATE TABLE User ("
 				+ "id VARCHAR(36) PRIMARY KEY)";
 		try {
@@ -48,6 +50,7 @@ public class Database {
 		}
 	}
 	
+	/* Insert a user in the user table */
 	public void insertUser(UUID id) {
 		String sql = "INSERT INTO User(id) "
 				+ "VALUES('"+ id +"')";
@@ -58,7 +61,8 @@ public class Database {
 		}
 	}
 	
-	public void createLocalUserTable() {
+	/* Create the local user table */
+	private void createLocalUserTable() {
 		String sql = "CREATE TABLE LocalUser ("
 				+ "id VARCHAR(36) PRIMARY KEY REFERENCES User(id)"
 				+ ")";
@@ -69,6 +73,7 @@ public class Database {
 		}
 	}
 	
+	/* Insert the local user in the local user table */
 	public void insertLocalUser(UUID id) {
 		String sql1 = "INSERT INTO User(id) "
 				+ "VALUES('"+ id + "')";
@@ -82,7 +87,8 @@ public class Database {
 		}
 	}
 	
-	public void createHistoryTable() {
+	/* Create the history table */
+	private void createHistoryTable() {
 		String sql = "CREATE TABLE History ("
 				+ "id INTEGER AUTO_INCREMENT PRIMARY KEY,"
 				+ "user VARCHAR(36) REFERENCES User(id)"
@@ -94,8 +100,8 @@ public class Database {
 		}
 	}
 	
-	/* Insert a new history */
-	/* Return the generated key */
+	/* Insert a new history
+	 * Return the generated key */
 	public int insertHistory(UUID id) {
 		ResultSet rs;
 		int i = 0;
@@ -115,7 +121,8 @@ public class Database {
 		return i;
 	}
 	
-	public void createMessageTable() {
+	/* Create the message table */
+	private void createMessageTable() {
 		String sql = "CREATE TABLE Message ("
 				+ "id INTEGER AUTO_INCREMENT PRIMARY KEY,"
 				+ "history INTEGER NOT NULL REFERENCES History(id),"
@@ -131,6 +138,7 @@ public class Database {
 		}
 	}
 	
+	/* Get the local user id */
 	public UUID getLocalUserId() throws SQLException {
 		String sql = "SELECT id FROM LocalUser";
 		ResultSet rs = this.stat.executeQuery(sql);
@@ -143,7 +151,7 @@ public class Database {
 	}
 	
 	/* Get the history id associated to this user id */
-	public int getHistoryId(UUID userId) {
+	private int getHistoryId(UUID userId) {
 		String sql = "SELECT id FROM History WHERE user='"+ userId +"'";
 		ResultSet rs;
 		int histId = 0;
@@ -169,6 +177,7 @@ public class Database {
 		return histId;
 	}
 	
+	/* Get the history associated to a remote user in the database */
 	public List<Message> getHistory(User local, User dist) {
 		List<Message> history = new ArrayList<>();
 		int histId = getHistoryId(dist.getId());
@@ -198,6 +207,7 @@ public class Database {
 		return history;
 	}
 	
+	/* Insert a message from/to a distant user */
 	public void insertMessage(User user, Message msg) {
 		int histId = this.getHistoryId(user.getId());
 		String sql = "INSERT INTO Message(history,sender,receiver,message,date) "

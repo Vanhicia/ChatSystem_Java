@@ -1,5 +1,6 @@
 package main;
 
+/* A packet with an indicated motive */
 public class UDPPacket extends Packet{
 	private static final long serialVersionUID = 1L;
 	private String motive;

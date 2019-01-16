@@ -1,7 +1,6 @@
 package main;
 import java.io.File;
 import java.sql.Timestamp;
-import java.util.UUID;
 
 public class Message extends Packet {
 	private static final long serialVersionUID = 1L;

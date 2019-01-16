@@ -1,16 +1,10 @@
 package main;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.HashMap;
 import java.util.UUID;
+
 public class ManagerServer  implements Runnable{
 	private static Thread threadlistener;
 	private ServerSocket serverSocket;

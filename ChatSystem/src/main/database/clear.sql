@@ -1,7 +1,7 @@
--- commands :
+-- commands to delete the tables :
 -- mysql chat_system -u chat_user -p
--- exit
 -- source clear.sql
+-- exit
 
 USE chat_system;
 DROP TABLE User;
