@@ -61,6 +61,7 @@ public class ManagerServer  implements Runnable{
 	public void closeServer() {
 		System.out.println("Close Server");
 		listener.setRunning(false);
+		this.network.setConnectionStatus(false); //the local user is now disconnected
 	}
 
 	public HashMap<UUID, ClientHandler> getHmap() {

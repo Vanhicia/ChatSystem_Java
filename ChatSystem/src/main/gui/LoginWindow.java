@@ -146,7 +146,7 @@ public class LoginWindow extends javax.swing.JFrame {
     private void closeAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAppActionPerformed
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        contr.disconnect();  
+        contr.closeApplication();  
         this.dispose();
     }//GEN-LAST:event_closeAppActionPerformed
 

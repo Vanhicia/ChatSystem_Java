@@ -201,11 +201,11 @@ public class Contact extends javax.swing.JFrame {
     }//GEN-LAST:event_pseudoConnectedActionPerformed
 
     private void disconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectActionPerformed
-            this.server.closeServer();
+            this.contr.disconnect();
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
-            contr.getLogin().displayWindow();
+            this.contr.getLogin().displayWindow();
         
     }//GEN-LAST:event_disconnectActionPerformed
 
