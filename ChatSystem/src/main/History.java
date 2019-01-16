@@ -1,7 +1,8 @@
 package main;
 
 import java.util.List;
-import database.Database;
+
+import main.database.Database;
 
 public class History {
 	private	List<Message> history;

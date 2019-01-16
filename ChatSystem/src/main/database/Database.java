@@ -1,4 +1,4 @@
-package database;
+package main.database;
 
 import main.Message;
 import main.User;

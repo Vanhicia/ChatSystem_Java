@@ -8,7 +8,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import database.Database;
+import main.database.Database;
 import main.gui.Contact;
 import main.gui.LoginWindow;
 
