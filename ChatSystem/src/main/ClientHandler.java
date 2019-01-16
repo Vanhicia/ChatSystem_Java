@@ -42,14 +42,17 @@ public class ClientHandler  extends Observable implements Runnable{
 		System.out.println("Paquet envoyé : "+message.msg);
 		if(!isSystemMessage) {
 			this.history.addEntry(message);
+		} 
+        try {
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+            chat.refreshWindow("SYSTEM", "Dest unreachable, you should close this window. \n "
+                    + "Click on disconnect button");
+        }
+        if (message.getSrcUser()==null) {
+        	this.closeClientHandler();
 		}
-            try {
-                out.writeObject(message);
-                out.flush();
-            } catch (IOException ex) {
-                chat.refreshWindow("SYSTEM", "Dest unreachable, you should close this window. \n "
-                        + "Click on disconnect button");
-            }
 	}
 		
 
@@ -68,7 +71,7 @@ public class ClientHandler  extends Observable implements Runnable{
                         chat.getWindowChatText().append(this.history.printHistory());
 	    		    } else{
 	    		    	if (data.getSrcUser()==null) {
-	    		    		this.close();
+	    		    		this.closeClientHandler();
 	    		    		chat.closeWindow();
 	    		    	} else {
 	                        chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
@@ -84,13 +87,12 @@ public class ClientHandler  extends Observable implements Runnable{
          }
         }
         
-	   public void close() {
+	   public void closeClientHandler() {
 	      try {
 	          // Close all streams and sockets
 	          out.close();
 	          in.close();
 	          clientSocket.close();
-              //chat.closeWindow();
 	      } catch (IOException e) {
 	          e.printStackTrace();
 	      }

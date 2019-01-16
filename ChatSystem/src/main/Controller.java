@@ -58,6 +58,7 @@ public class Controller {
 	
 	public void disconnect() {
 		this.nwk.disconnectLocalUser();
+		this.getLogin().displayWindow();
 	}
 	
 	public void closeApplication() {

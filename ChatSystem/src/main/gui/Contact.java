@@ -204,9 +204,7 @@ public class Contact extends javax.swing.JFrame {
             this.contr.disconnect();
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            this.dispose();
-            this.contr.getLogin().displayWindow();
-        
+            this.dispose();        
     }//GEN-LAST:event_disconnectActionPerformed
 
     /**

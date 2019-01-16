@@ -150,13 +150,12 @@ public class Network {
 	public void disconnectLocalUser() {
 		System.out.println("You are disconnected");
 		this.sendUDPPacketBroadcast("UserDisconnected");
-        this.server.closeServer();
+		this.server.closeManagerServer();
 	}
 	
 	public void closeNetwork() {
-		//this.sendUDPPacketBroadcast("UserDisconnected");
 		this.UDPListener.stop();
-        //this.server.closeServer();
+		//this.UDPsocket.close();
 	}
 		
 	public Controller getController() {
