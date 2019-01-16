@@ -8,6 +8,9 @@ package main.gui;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import main.ClientTCP;
@@ -32,6 +35,7 @@ public class ChatWindow extends javax.swing.JFrame {
         this.src = src;
         this.dest = dest;
         this.c = c;
+        this.getWindowChatText().append(c.getHistory().printHistory());
     }
     
     public ChatWindow(ManagerServer m, User src, User dest) {
@@ -39,6 +43,7 @@ public class ChatWindow extends javax.swing.JFrame {
         this.src = src;
         this.dest = dest;
         this.m = m;
+       
     }
     
     public void displayWindow() throws IOException{
@@ -152,9 +157,19 @@ public class ChatWindow extends javax.swing.JFrame {
 
     private void DisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisconnectActionPerformed
         if (this.c !=null){
+        	try {
+				c.sendData(new Message("Close", null,this.dest), true);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
             c.closeConnection();
         } else if (this.m!=null){
-            m.closeServer();
+        	try {
+				m.sendMessage(new Message("Close", null,this.dest), true);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -163,22 +178,27 @@ public class ChatWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_DisconnectActionPerformed
 
     private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed
-        if (this.c !=null){
-            try {
-                this.c.sendData(new Message(messagetosend.getText(),this.src,this.dest));
-            } catch (IOException ex) {
-                Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }  
-        } else if (this.m!=null) {
-        	try {
-                this.m.sendMessage(new Message(messagetosend.getText(),this.src,this.dest));
-            } catch (IOException ex) {
-                Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }  
-        }
-        refreshWindow(this.src.getPseudo(),messagetosend.getText());
-        this.messagetosend.setText("");
-
+        if (messagetosend.getText().length()==0){
+            JOptionPane.showMessageDialog(new JFrame("Send Message"), "Write a message before sending please");
+        } else {
+	    	Message message = new Message(messagetosend.getText(),this.src,this.dest);
+	    	if (this.c !=null){
+	            try {
+	                this.c.sendData(message,false);
+	                
+	            } catch (IOException ex) {
+	                Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+	            }  
+	        } else if (this.m!=null) {
+	        	try {
+	                this.m.sendMessage(message,false);
+	            } catch (IOException ex) {
+	                Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+	            }  
+	        }
+	        refreshWindow(this.src.getPseudo(),messagetosend.getText());
+	        this.messagetosend.setText("");
+      }
     }//GEN-LAST:event_sendActionPerformed
 
     private void messagetosendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messagetosendActionPerformed

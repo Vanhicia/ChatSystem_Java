@@ -10,6 +10,9 @@ import java.util.logging.Logger;
 import main.User;
 import main.Controller;
 import main.ManagerServer;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 /**
  *
@@ -123,11 +126,22 @@ public class LoginWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
-            contr.connect(Pseudo.getText());
-            contr.setLogin(this);
-            this.setVisible(false);
-            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            this.dispose();
+            if(Pseudo.getText().length()==0) {
+            	JOptionPane.showMessageDialog(new JFrame("LoginWindow"), "Write a pseudo please");
+            } else {
+        		/* If the connection has succeeded */
+        		if (contr.connect(Pseudo.getText()) == 1 ) {
+                	contr.setLogin(this);
+                    this.setVisible(false);
+                    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                    this.dispose();
+                }
+        		/* Else the connection has failed */
+                else {
+                	JOptionPane.showMessageDialog(new JFrame("LoginWindow"), "Invalid pseudo : it is already used");
+                }	
+            }
+
     }//GEN-LAST:event_LogInButtonActionPerformed
 
     private void PseudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PseudoActionPerformed
@@ -135,7 +149,10 @@ public class LoginWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_PseudoActionPerformed
 
     private void closeAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAppActionPerformed
-        contr.disconnect();
+        this.setVisible(false);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        contr.closeApplication();  
+        this.dispose();
     }//GEN-LAST:event_closeAppActionPerformed
 
     /**

@@ -17,7 +17,7 @@ public class TestServer {
 		
 		ManagerServer server = new ManagerServer(1234,contr.getNetwork());
 		server.run();
-		server.sendMessage(new Message("Hello there", destUser,srcUser));
-		server.sendMessage(new Message("LOL", destUser,srcUser));
+		server.sendMessage(new Message("Hello there", destUser,srcUser),false);
+		server.sendMessage(new Message("LOL", destUser,srcUser),false);
 	}
 }

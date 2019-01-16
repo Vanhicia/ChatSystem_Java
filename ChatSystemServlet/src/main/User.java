@@ -19,9 +19,6 @@ public class User implements Serializable{
 		this.timeConnection = timeConnection;
 	}
 	
-
-	
-	
 	public UUID getId() {
 		return id;
 	}

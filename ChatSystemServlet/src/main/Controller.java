@@ -2,30 +2,40 @@ package main;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import main.database.Database;
 import main.gui.Contact;
 import main.gui.LoginWindow;
-import main.presenceServer.PresenceServer;
 
 
 public class Controller {
+	private Database db;
 	private User user;
 	private Contact contacts;
 	private Network nwk = null;
     private LoginWindow login = null;
-   // private PresenceServer pServer;
+
 	public Controller() {
+		this.db= new Database();
+		System.out.println("Database opened");
 		try {
-			this.user = new User(UUID.randomUUID(), "", InetAddress.getLocalHost(), 0);
+			/* Get in the database the local user's id */
+			UUID id = this.db.getLocalUserId();
+			this.user = new User(id, "", InetAddress.getLocalHost(), 0);
+			System.out.println("Local user exists and its id = " + id);
+		} catch (SQLException e) {
+			/* The application is launched for the first time */
+			System.out.println("The application is launched for the first time");
+			this.launchFirstTime();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 		this.nwk = new Network(this);
-		//this.view = new Window();
 	}
 	
 	public User getUser() {
@@ -36,45 +46,58 @@ public class Controller {
 		return this.nwk;
 	}
 	
-	public void connect(String pseudo) {
-		changePseudo(0, pseudo);
+	public Database getDatabase() {
+		return this.db;
+	}
+	
+	/* Return 1 if the connection has succeeded */
+	/* Else return 0 */
+	public int connect(String pseudo) {
+		return changePseudo(0, pseudo);
 	}
 	
 	public void disconnect() {
+		this.nwk.disconnectLocalUser();
+		this.getLogin().displayWindow();
+	}
+	
+	public void closeApplication() {
 		this.nwk.closeNetwork();
+		this.db.closeDatabase();
 	}
 	
 	/* Change the pseudo */
 	/* Option = 0 : pseudo of a new user */
 	/* Option =/= 0 : pseudo updated */
-	public void changePseudo(int option, String pseudo) {
+	/* Return 1 if the pseudo has been changed */
+	/* Else return 0 */
+	public int changePseudo(int option, String pseudo) {
 		/* If the wanted pseudo is unique */
 		if (this.nwk.checkUnicityPseudo(pseudo)==true) {
 			System.out.println("Your pseudo is unique");
 			user.setPseudo(pseudo);
 			/* If a new user choose his/her pseudo */
 			if (option == 0) {
-                            System.out.println("You are connected");
-                            this.user.setTimeConnection();
-                            this.nwk.sendUDPPacketUserConnected();
-                            this.contacts = new Contact(this.nwk.getServer(),this.nwk.portTCP, this.user,this);
-                         //   this.pServer = new PresenceServer(this.nwk);
-                            try {
-                                contacts.displayWindow();
-                            } catch (IOException ex) {
-                                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+				this.user.setTimeConnection();
+				this.nwk.connectLocalUser();
+                this.contacts = new Contact(this.nwk.getServer(),Network.portTCP, this.user,this);
+                try {
+                    this.contacts.displayWindow();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
 			} 
 			/* If the user updates his/her pseudo */
 			else {
 				System.out.println("Your pseudo is updated");
-				this.nwk.sendUDPPacketUserUpdated();
+				this.nwk.sendUDPPacketBroadcast("UserUpdated");
 			}
+			return 1;
 		} 
 		else {
 			/* Print an error message */
 			System.out.println("Your pseudo is refused, it is not unique");
-			//TODO : integrate in the graphical interface
+			return 0;
 		}		
 	}
 	
@@ -88,8 +111,9 @@ public class Controller {
 	}
 
 	public void refreshWindows() {
-		contacts.refreshContacts();
-		
+		if (this.contacts != null) {
+			this.contacts.refreshContacts();
+		}
 	}
 
     public void setLogin(LoginWindow login) {
@@ -99,7 +123,17 @@ public class Controller {
     public LoginWindow getLogin() {
         return login;
     }
-        
-
-
+    
+    public void launchFirstTime() {
+    	UUID id = UUID.randomUUID();
+		try {
+			this.user = new User(id, "", InetAddress.getLocalHost(), 0);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		this.db.createTables();
+		this.db.insertLocalUser(id);
+		System.out.println("A local user is created in the database");
+    }
+    
 }

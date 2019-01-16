@@ -15,22 +15,9 @@ public class ClientTCP implements Runnable {
 	private ObjectOutputStream out;
 	private History history;
 	private User userdistant;
-        private ChatWindow chat;
-/*	public ClientTCP (InetAddress address, int port) {
-		try {
-			System.out.println("Establishing connection. Please wait ...");
- 			this.link = new Socket(address,port);
- 			System.out.println("Connected: " + link);
-			this.out = new ObjectOutputStream(new BufferedOutputStream(link.getOutputStream()));
-			this.in = new ObjectInputStream(link.getInputStream());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-*/
+    private ChatWindow chat;
 	
-	public ClientTCP (InetAddress address, int port, User userdistant) {
+	public ClientTCP (InetAddress address, int port, User userdistant, Network nwk) {
 		try {
 			System.out.println("Establishing connection. Please wait ...");
  			this.link = new Socket(address,port);
@@ -38,7 +25,7 @@ public class ClientTCP implements Runnable {
 			this.out = new ObjectOutputStream(new BufferedOutputStream(link.getOutputStream()));
 			this.in = new ObjectInputStream(link.getInputStream());
 			this.userdistant =userdistant;
-			this.history = new History(userdistant);
+			this.history = new History(nwk.getController().getUser(), userdistant, nwk.getController().getDatabase());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -54,20 +41,21 @@ public class ClientTCP implements Runnable {
 		return input;
 	}
 	
-	public void sendData(Message message) throws IOException {
+	
+	public void sendData(Message message, boolean isSystemMessage) throws IOException {
 		System.out.println("Paquet envoyé : "+message.msg);
 		out.writeObject(message);
 		out.flush();
-		this.history.addEntry(message);
+		if(!isSystemMessage) {
+			this.history.addEntry(message);
+		}
 	}
-	
 	public void closeConnection() {
 		try {   
                     System.out.println("Client close");
                     in.close();
                     out.close();
                     link.close();
-                    chat.closeWindow();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -76,12 +64,17 @@ public class ClientTCP implements Runnable {
 	public void run() {
 		while(true) {
 			try {
-                            Message data;
-                            data = receiveData();
+                Message data;
+                data = receiveData();
 	    		if (data!=null) {
-	    			System.out.println("Paquet reçu :" +data.msg);
-		    		this.history.addEntry(data);
-                                chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
+	    			if (data.getSrcUser()==null) {
+    		    		this.closeConnection();
+    		    		chat.closeWindow();
+    		    	} else {
+		    			System.out.println("Paquet reçu :" +data.msg);
+			    		this.history.addEntry(data);
+		                chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
+    		    	}
 	    		}
 	    		
 			} catch (ClassNotFoundException e) {}

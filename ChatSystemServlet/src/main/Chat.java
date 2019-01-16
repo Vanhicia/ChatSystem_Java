@@ -5,8 +5,6 @@
  */
 package main;
 import main.gui.LoginWindow;
-import main.presenceServer.PresenceServer;
-
 import java.io.IOException;
 /**
  *
@@ -14,9 +12,8 @@ import java.io.IOException;
  */
 public class Chat {
     public static void main(String[] args) throws IOException{
-    	 Controller contr = new Controller();
-         LoginWindow loginWindow = new LoginWindow(contr);
-         loginWindow.displayWindow();
-         new PresenceServer();
+    	Controller contr = new Controller();
+        LoginWindow loginWindow = new LoginWindow(contr);
+        loginWindow.displayWindow();
     }
 }

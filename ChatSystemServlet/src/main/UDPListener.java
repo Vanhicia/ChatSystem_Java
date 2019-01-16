@@ -47,7 +47,7 @@ public class UDPListener implements Runnable {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("Close application");
 			}
 		}
 	}
@@ -99,11 +99,14 @@ public class UDPListener implements Runnable {
 				srcUser.setAddress(address);
 				this.nwk.addUser(srcUser);
 				this.nwk.getController().displayAllUsers();
-
 				break;
 			default :
 				System.out.println("The UDP packet motive is not recognized !");
 		}
+	}
+	
+	public void stop() {
+		this.socket.close();
 	}
 	
 	
