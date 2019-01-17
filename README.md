@@ -28,14 +28,14 @@ mysql> exit
 ```
 #### 2. Presence server 
 
-*NOTE : If you use Eclipse, check that supports dynamic web projects in others word, check if you use Eclipse for Java EE or not.
-If not, you should install it. Go to this following link, to see how to install it : `https://www.eclipse.org/downloads/`*
+*NOTE : If you use Eclipse, check that it supports dynamic web projects in other words, check if you use Eclipse for Java EE or not.
+If not, you should install it. Go to this following link to see how to install it : `https://www.eclipse.org/downloads/`*
 
 Install a server such as Tomcat. `Servers` folder should to do this. 
 
 If it does not work, unzip `apache-tomcat-9.0.14.zip` file.
 
-When you run `userLogin.jsp` file, you have `Run On Server` window that will pop up. 
+When you run `userLogin.jsp` file, you will have `Run On Server` window that will pop up. 
 
 Click on `Manually define a new server`. 
 
