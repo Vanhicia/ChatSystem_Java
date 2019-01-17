@@ -82,7 +82,6 @@ public class ClientTCP implements Runnable {
 		    			chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
 			    		this.history.addEntry(data);
     		    	}
-	    			System.out.println("Paquet reçu :" +data.msg);
 	    		}
 			} catch (ClassNotFoundException e) {				
 				System.out.println("Error : Cannot receive message because Message class not found");
