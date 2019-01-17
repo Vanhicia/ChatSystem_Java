@@ -206,8 +206,6 @@ public class Contact extends javax.swing.JFrame {
                  ChatWindow chat =new ChatWindow(c,this.user,destUser);
                  chat.displayWindow();
                  c.setChat(chat);
-                 /* Print history */
-                // chat.getWindowChatText().append(c.getHistory().printHistory());
                  Thread t = new Thread (c);
                  t.start();
              }
