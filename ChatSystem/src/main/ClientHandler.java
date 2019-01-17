@@ -99,6 +99,7 @@ public class ClientHandler  extends Observable implements Runnable {
 	public void closeClientHandler() {
 	      try {
 	          // Close all streams and sockets
+	    	  running=false;
 	          out.close();
 	          in.close();
 	          clientSocket.close();

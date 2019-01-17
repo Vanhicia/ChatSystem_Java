@@ -60,6 +60,7 @@ public class ClientTCP implements Runnable {
             in.close();
             out.close();
             link.close();
+            running=false;
 		} catch (IOException e) {
 			System.out.println("Error : Cannot close connection");
 		}
