@@ -219,6 +219,7 @@ public class Database {
 		}
 	}
 	
+	/* Close the connection to the database */
 	public void closeDatabase() {
 		try {
 			if (this.stat != null) {

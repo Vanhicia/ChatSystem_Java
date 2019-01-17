@@ -1,5 +1,6 @@
 -- commands to delete the tables :
 -- mysql chat_system -u chat_user -p
+--[Enter password : pwd]
 -- source clear.sql
 -- exit
 
