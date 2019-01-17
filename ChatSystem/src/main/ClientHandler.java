@@ -92,16 +92,13 @@ public class ClientHandler  extends Observable implements Runnable {
 				System.out.println("Error : Cannot receive message because Message class not found");
 			} catch (NullPointerException e) {
 				System.out.println("Error : Null PointerException");
-			} catch (Exception e) {
-				System.out.println("Client handler has been closed, cannot accept client connections anymore");
-			}
+			} catch (Exception e) {}
 		}
 	}
 	    
 	public void closeClientHandler() {
 	      try {
 	          // Close all streams and sockets
-	    	  this.running=false;
 	          out.close();
 	          in.close();
 	          clientSocket.close();

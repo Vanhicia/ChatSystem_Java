@@ -15,6 +15,7 @@ public class ClientTCP implements Runnable {
 	private ObjectOutputStream out;
 	private History history;
     private ChatWindow chat;
+    private boolean running;
 	
 	public ClientTCP (InetAddress address, int port, User userdistant, Network nwk) {
 		try {
@@ -64,7 +65,7 @@ public class ClientTCP implements Runnable {
 	}
 	
 	public void run() {
-		while(true) {
+		while(running) {
 			try {
                 Message data = receiveData();
 	    		if (data!=null) { // We receive a message
@@ -73,6 +74,7 @@ public class ClientTCP implements Runnable {
 	    				// We close this connection and the chat window that it associated
     		    		this.closeConnection();
     		    		chat.closeWindow();
+    		    		running=false;
     		    	} else {
     		    		// We receive a message, we print it and add it in history
 		    			System.out.println("Paquet reçu :" +data.msg);
@@ -85,7 +87,7 @@ public class ClientTCP implements Runnable {
 			} catch (NullPointerException e) {
 				System.out.println("Error : Null PointerException");
 			} catch (Exception e) {
-				System.out.println("Error : Exception has been raised in ClientTCP class");
+				System.out.println("ClientTCP has been closed");
 			}
 		}
 	}
