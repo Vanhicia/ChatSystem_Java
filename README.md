@@ -21,6 +21,7 @@ $ sudo mysql -u root -p
 
 [enter root password]
 ```
+In MySQL, write : 
 ```mysql
 mysql> source database.sql
 mysql> exit
@@ -30,10 +31,8 @@ mysql> exit
 *NOTE : If you use Eclipse, check that supports dynamic projects in others word, check if you use Eclipse for Java EE or not.
 If not, you should install it. Go to this following link, to see how to install it : `https://www.eclipse.org/downloads/` *
 
-
-
 Application
 -------------------
-Open the directory "ChatSystem" in Eclipse and run the class `Chat.java` (in the folder ChatSystem/src/main)
+Open `ChatSystem` directory in Eclipse and run `Chat.java` (You will find it in `ChatSystem/src/main` folder. )
 
 *NOTE : To chat you should have at least two computers*
