@@ -88,9 +88,7 @@ public class ClientTCP implements Runnable {
 				System.out.println("Error : Cannot receive message because Message class not found");
 			} catch (NullPointerException e) {
 				System.out.println("Error : Null PointerException");
-			} catch (Exception e) {
-				System.out.println("ClientTCP has been closed");
-			}
+			} catch (Exception e) {}
 		}
 	}
 	
