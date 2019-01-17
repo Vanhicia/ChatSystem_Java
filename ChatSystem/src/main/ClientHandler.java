@@ -51,9 +51,9 @@ public class ClientHandler  extends Observable implements Runnable {
         out.flush();
 
         //We send a closure message (src=null) for client and we close our window
-        if (message.getSrcUser()==null) {
+      /*  if (message.getSrcUser()==null) {
         	this.closeClientHandler();
-		}
+		}*/
 	}
 		
 	public void run() {
@@ -76,8 +76,8 @@ public class ClientHandler  extends Observable implements Runnable {
 				    	if (data.getSrcUser()==null) {
 				    		// We receive a closure message (src=null)
 				    		// We close this connection and the chat window that it associated
-				    		this.closeClientHandler();
 				    		chat.closeWindow();
+				    		this.closeClientHandler();
 				    	} else {
 				    		// We receive a message, we print it and add it in history
 				    		System.out.println("Paquet reçu : "+data.msg);

@@ -28,6 +28,7 @@ public class ClientTCP implements Runnable {
 			this.in = new ObjectInputStream(link.getInputStream());
 			
 			this.history = new History(nwk.getController().getUser(), userdistant, nwk.getController().getDatabase());
+			this.running=true;
 		} catch (IOException e) {
 			System.out.println("Error : Cannot create input and output buffers");
 		}
@@ -74,13 +75,14 @@ public class ClientTCP implements Runnable {
 	    				// We close this connection and the chat window that it associated
     		    		this.closeConnection();
     		    		chat.closeWindow();
-    		    		running=false;
+    		    		this.running=false;
     		    	} else {
     		    		// We receive a message, we print it and add it in history
 		    			System.out.println("Paquet reçu :" +data.msg);
 		    			chat.refreshWindow(data.getSrcUser().getPseudo(), data.msg);
 			    		this.history.addEntry(data);
     		    	}
+	    			System.out.println("Paquet reçu :" +data.msg);
 	    		}
 			} catch (ClassNotFoundException e) {				
 				System.out.println("Error : Cannot receive message because Message class not found");
