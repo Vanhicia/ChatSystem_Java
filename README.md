@@ -29,7 +29,8 @@ mysql> exit
 #### 2. Presence server 
 
 *NOTE : If you use Eclipse, check that supports dynamic projects in others word, check if you use Eclipse for Java EE or not.
-If not, you should install it. Go to this following link, to see how to install it : `https://www.eclipse.org/downloads/` *
+If not, you should install it. Go to this following link, to see how to install it : `https://www.eclipse.org/downloads/`*
+
 
 Application
 -------------------
