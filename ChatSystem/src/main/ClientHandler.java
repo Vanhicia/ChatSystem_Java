@@ -93,7 +93,7 @@ public class ClientHandler  extends Observable implements Runnable {
 			} catch (NullPointerException e) {
 				System.out.println("Error : Null PointerException");
 			} catch (Exception e) {
-				System.out.println("Error : Exception has been raised in ClientHandler class");
+				System.out.println("Client handler has been close, cannot accept client connections anymore");
 			}
 		}
 	}
@@ -101,6 +101,7 @@ public class ClientHandler  extends Observable implements Runnable {
 	public void closeClientHandler() {
 	      try {
 	          // Close all streams and sockets
+	    	  this.running=false;
 	          out.close();
 	          in.close();
 	          clientSocket.close();
