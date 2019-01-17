@@ -34,15 +34,25 @@ If not, you should install it. Go to this following link, to see how to install 
 Install a server such as Tomcat. `Servers` folder should to do this. 
 
 If it does not work, unzip `apache-tomcat-9.0.14.zip` file.
+
 When you run `userLogin.jsp` file, you have `Run On Server` window that will pop up. 
-Click on `Manually define a new server`. Select Apache > Tomcat v9.0 Server. Click on `Next` then `Browse` and add the directory Apache that you have just unzipped. Click on `Finish`.
+
+Click on `Manually define a new server`. 
+
+Select Apache > Tomcat v9.0 Server. 
+
+Click on `Next` then `Browse` and add the directory Apache that you have just unzipped. 
+
+Click on `Finish`.
 
 #### 3. Recurrent errors
 
 __Error :__`The superclass "javax.servlet.http.HttpServlet" was not found on the Java Build Path`
+
 You should add `javax.servlet_3.0.0.v201112011016.jar` in your libaries.
 
 In Eclipse, Project > Properties > Java Build Path > Libraries > Add External JARs 
+
 
 Application
 -------------------
