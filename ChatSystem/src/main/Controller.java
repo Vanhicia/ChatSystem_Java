@@ -22,7 +22,7 @@ public class Controller {
 
 	public Controller() {
 		this.db= new Database();
-		System.out.println("Database opened");
+		System.out.println("Open Database");
 		try {
 			/* Get in the database the local user's id */
 			UUID id = this.db.getLocalUserId();
@@ -53,7 +53,7 @@ public class Controller {
 	public void closeApplication() {
 		this.nwk.closeNetwork();
 		this.db.closeDatabase();
-		System.out.println("Database closed");
+		System.out.println("Close Database");
 	}
 	
 	/* Change the pseudo */
@@ -92,7 +92,7 @@ public class Controller {
 	}
 	
 	public void displayAllUsers() {
-		System.out.println("List of users :");
+		System.out.println("User list:");
 		ArrayList<User> listUsers = this.nwk.getListUsers();
 		for (User user : listUsers) {
 			System.out.println(user.getPseudo() + ": @IP = " + user.getAddress());

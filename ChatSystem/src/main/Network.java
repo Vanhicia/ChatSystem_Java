@@ -28,18 +28,18 @@ public class Network {
 		try {
 			/* Create a socket to communicate in UDP */
 			this.UDPsocket = new DatagramSocket(portUDP);
-			/* Create a thread UDPListener */
+			/* Create a thread UDPListener, which manages the received UDP packets */
 			this.UDPListener = new UDPListener(this, this.UDPsocket);
 			Thread threadListener = new Thread(this.UDPListener);
 			threadListener.start();	
-			/* Send a request of listUsers */
+			/* Send a request of the user list */
 			this.sendUDPPacketBroadcast("RequestListUsers");
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
 	}
 
-	/* Send the UDP packet to the address indicated */
+	/* Send the UDP packet to the indicated address */
 	public void sendUDPPacketUnicast(UDPPacket packet, InetAddress address) {
 		UDPSender sender = new UDPSender(packet, address, Network.portUDP);
 		Thread threadSender = new Thread(sender);
@@ -71,7 +71,7 @@ public class Network {
 		return unicity;
 	}
 		
-	/* Send the list of users */
+	/* Send the user list */
 	public void sendListUsersUDPPacket(User userDest, InetAddress address) {
 		this.sendUDPPacketUnicast(new ListUsersUDPPacket(this.contr.getUser(),userDest,this.listUsers),address);
 	}
@@ -96,12 +96,12 @@ public class Network {
 		return last;
 	}
 	
-	/* Add a User in the listUsers */
+	/* Add a user in the user list */
 	public void addUser(User user) {
 		this.listUsers.add(user);
 	}
 	
-	/* Remove a User from the listUsers */
+	/* Remove a user from the user list*/
 	public void deleteUser(User user) {
 		boolean delete = false;
 		Iterator<User> usersIter = this.listUsers.iterator();
@@ -117,7 +117,7 @@ public class Network {
 		}
 	}
 	
-	/* Update a User, ie change his/her pseudo */
+	/* Update a user, ie change his/her pseudo */
 	public void updateUser(User user) {
 		boolean update = false;
 		Iterator<User> usersIter = this.listUsers.iterator();

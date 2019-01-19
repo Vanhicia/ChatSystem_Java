@@ -6,7 +6,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-/* Listen and notify when a packet is received */
+/* Listen on the UDP socket and manage the received UDP packets */
 
 public class UDPListener implements Runnable {
 	private Network nwk;
@@ -55,6 +55,7 @@ public class UDPListener implements Runnable {
 	public void handlePacket(UDPPacket packet, InetAddress address) {
 		String motive = packet.getMotive();
 		switch(motive) {
+			/* If a user list request is received */
 			case "RequestListUsers":
 				/* If the local user is the last user connected, 
 				 * send the list of users
@@ -64,9 +65,10 @@ public class UDPListener implements Runnable {
 					this.nwk.sendListUsersUDPPacket(packet.getSrcUser(), address);
 				}
 			break;
+			/* If a new user is connected */
 			case "UserConnected":
 				System.out.println("A new user is connected : " + packet.getSrcUser().getPseudo() + " " + address);
-				/* Add the new user to the list of users */
+				/* Add the new user to the user list */
 				User newUser = packet.getSrcUser();
 				newUser.setAddress(address);
 				this.nwk.addUser(newUser);
@@ -75,6 +77,7 @@ public class UDPListener implements Runnable {
 				break;
 			/* If a user has changed his/her pseudo */
 			case "UserUpdated":
+				/* Update his/her pseudo */
 				System.out.println("A user has changed his/her pseudo");
 				nwk.updateUser(packet.getSrcUser());
 				System.out.println("The list of users is updated");
@@ -83,17 +86,18 @@ public class UDPListener implements Runnable {
 				break;
 			/* If a user is disconnected */
 			case "UserDisconnected":
+				/* Delete this user from the connected user list */
 				System.out.println("A user is disconnected");
 				this.nwk.deleteUser(packet.getSrcUser());
 				this.nwk.getController().displayAllUsers();
 				this.nwk.getController().refreshWindows();
 				break;
-			/* If the list of Users is received */
+			/* If the user list is received */
 			case "ReplyListUsers":
 				System.out.println("The list of users is received");
-				/* Get the list of Users */
+				/* Get the user list */
 				this.nwk.setListUsers(((ListUsersUDPPacket) packet).getListUsers());
-				/* Add the user, who sent the packet, to the list of Users */
+				/* Add the user, who sent the packet, to the user list */
 				User srcUser = packet.getSrcUser();
 				srcUser.setAddress(address);
 				this.nwk.addUser(srcUser);

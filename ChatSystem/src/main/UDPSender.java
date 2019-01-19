@@ -39,7 +39,7 @@ public class UDPSender implements Runnable {
 	        socket.send(outPacket);
 	        socket.close();
 	        
-	        System.out.println("UDP packet sent");
+	        System.out.println("A UDP packet is sent");
     	} catch (IOException e) {
 			e.printStackTrace();
 		}
