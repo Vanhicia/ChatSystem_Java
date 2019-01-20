@@ -5,7 +5,7 @@ This repository contains a Java chat application. It is a 4th-year project for s
 Autors
 -------------------
 * [Kim-Anh TRAN](mailto:katran@etud.insa-toulouse.fr)
-* [Alicia Vanhulle](mailto:vanhulle@etud.insa-toulouse.fr)
+* [Alicia VANHULLE](mailto:vanhulle@etud.insa-toulouse.fr)
 
 Prerequisites
 -------------------
