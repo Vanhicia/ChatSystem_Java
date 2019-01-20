@@ -2,7 +2,7 @@ Chat System
 ===================================
 This repository contains a Java chat application. It is a 4th-year project for students in Computer Science at INSA Toulouse (France)
 
-Autors
+Authors
 -------------------
 * [Kim-Anh TRAN](mailto:katran@etud.insa-toulouse.fr)
 * [Alicia VANHULLE](mailto:vanhulle@etud.insa-toulouse.fr)
