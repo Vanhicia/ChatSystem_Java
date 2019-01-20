@@ -65,12 +65,18 @@ In Eclipse, Project > Properties > Java Build Path > Libraries > Add External JA
 
 Application
 -------------------
-#### 1. Installation
-
-#### 2. Execution
+#### 1. Setup
+Clone this repo to your desktop. 
+```bash
+$ git clone https://github.com/Vanhicia/ChatSystem_Java/
+```
 Open `ChatSystem` directory in Eclipse and run `Chat.java` (You will find it in `ChatSystem/src/main` folder. )
 
-
-
-#### 3. Usage
+#### 2. Usage - Demo
 *NOTE : To chat you should have at least two computers*
+<p>
+<a href="https://github.com/Vanhicia/ChatSystem_Java/">
+    <img src="https://raw.githubusercontent.com/Vanhicia/ChatSystem_Java/master/Conception/Demo.gif" />
+</a></p>
+
+For more information, check our user manual.
