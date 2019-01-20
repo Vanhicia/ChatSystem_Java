@@ -79,7 +79,7 @@ Open `ChatSystem` directory in Eclipse and run `Chat.java` (You will find it in 
 
 Open `ChatSystemServlet` directory in Eclipse and run `userLogin.jsp`
 
-*NOTE : This improved version does not finished yet. You can log in and log out but your remote user will not see you and could not contact you for the moment.*
+*NOTE : This improved version is not finished yet. You can log in and log out but your remote user will not see you and could not contact you for the moment.*
 
 #### 2. Usage - Demo
 *NOTE : To chat you should have at least two computers*
