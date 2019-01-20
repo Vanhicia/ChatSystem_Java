@@ -11,6 +11,7 @@ Prerequisites
 -------------------
 #### 1. OS & Java vers.
 Linux, Window or MacOS
+
 Java 1.8.0 (1.8.0_191 preferred)
 
 #### 2. MySQL
